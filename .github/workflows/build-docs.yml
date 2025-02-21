@@ -1,0 +1,59 @@
+name: Build MD and Docs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'docs/*.md'
+
+concurrency:
+  group: build-gh-pages
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: create file list
+        id: files_list
+        working-directory: docs
+        run: |
+          echo "files=$(printf '"docs/%s" ' *.md)" > $GITHUB_OUTPUT
+
+      - name: list files
+        run: echo "${{ steps.files_list.outputs.files }}"
+
+      - uses: docker://pandoc/latex:latest
+        with:
+          args: >-
+            --output=./.github/pages/main.pdf
+            --resource-path=docs
+            --resource-path=.
+            ${{ steps.files_list.outputs.files }}
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload PDF artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./.github/pages/
+
+  deploy_gh_pages:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
