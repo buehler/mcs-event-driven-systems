@@ -1,0 +1,25 @@
+include:
+  - path:
+      - ../docker-compose.yml
+      - ./docker-compose.override.yml
+
+services:
+  producer:
+    build:
+      context: ./Producer
+      dockerfile: Dockerfile
+    environment:
+      - Kafka__Servers__0=kafka:9092
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  consumer:
+    build:
+      context: ./Consumer
+      dockerfile: Dockerfile
+    environment:
+      - Kafka__Servers__0=kafka:9092
+    depends_on:
+      kafka:
+        condition: service_healthy

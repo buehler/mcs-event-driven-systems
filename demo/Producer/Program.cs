@@ -3,9 +3,13 @@ using Producer.Producers;
 
 var builder = Host.CreateApplicationBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables();
 var config = builder.Configuration.GetRequiredSection("Kafka").Get<KafkaSettings>() ??
              throw new ApplicationException("Config not parsed.");
 builder.Services.AddSingleton(config);
+
+Console.WriteLine("FUUUCK");
+Console.WriteLine($"FUUUCK {string.Join(',', config.Servers)}");
 
 builder.AddKafkaProducer<string, long>("clock", settings =>
 {

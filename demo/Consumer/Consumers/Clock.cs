@@ -10,9 +10,9 @@ public class Clock(ILogger<Clock> logger, IConsumer<string, long> consumer) : IH
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        logger.LogInformation("Kafka Consumer started.");
         _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         _backgroundTask = Task.Run(() => RunAsync(_cts.Token), CancellationToken.None);
+        logger.LogInformation("Kafka Consumer started.");
 
         return Task.CompletedTask;
     }
@@ -52,6 +52,10 @@ public class Clock(ILogger<Clock> logger, IConsumer<string, long> consumer) : IH
         catch (OperationCanceledException)
         {
             logger.LogDebug("Cancellation of consumer loop requested.");
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Could not connect / subscribe / listen to Kafka.");
         }
         finally
         {

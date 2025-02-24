@@ -29,7 +29,7 @@ public class Clock(ILogger<Clock> logger, IProducer<string, long> producer) : IH
     {
         try
         {
-            logger.LogTrace("Producing message.");
+            logger.LogDebug("Producing message.");
             var msg = new ClockEvent();
             await producer.ProduceAsync(Topic, msg);
         }

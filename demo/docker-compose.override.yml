@@ -1,0 +1,5 @@
+services:
+  kafka:
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
