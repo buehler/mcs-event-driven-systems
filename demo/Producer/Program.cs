@@ -8,9 +8,6 @@ var config = builder.Configuration.GetRequiredSection("Kafka").Get<KafkaSettings
              throw new ApplicationException("Config not parsed.");
 builder.Services.AddSingleton(config);
 
-Console.WriteLine("FUUUCK");
-Console.WriteLine($"FUUUCK {string.Join(',', config.Servers)}");
-
 builder.AddKafkaProducer<string, long>("clock", settings =>
 {
     settings.Config.BootstrapServers = string.Join(',', config.Servers);
