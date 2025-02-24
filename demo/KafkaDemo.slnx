@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="Consumer\Consumer.csproj" Type="Classic C#" />
+  <Project Path="Producer\Producer.csproj" Type="Classic C#" />
+</Solution>

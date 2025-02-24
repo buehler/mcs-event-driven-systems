@@ -26,7 +26,7 @@
     --topic '{{name}}' \
     --from-beginning
 
-@produce-topic name message:
+@cli-produce name:
     docker compose exec kafka \
     /opt/bitnami/kafka/bin/kafka-console-producer.sh \
     --bootstrap-server 'kafka:9092' \
