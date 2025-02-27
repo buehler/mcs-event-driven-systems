@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'docs/*.md'
+      - '../../doc/exercises/*.md'
 
 concurrency:
   group: build-gh-pages
@@ -23,9 +23,9 @@ jobs:
 
       - name: create file list
         id: files_list
-        working-directory: docs
+        working-directory: doc/exercises
         run: |
-          echo "files=$(printf '"docs/%s" ' *.md)" > $GITHUB_OUTPUT
+          echo "files=$(printf '"doc/exercises/%s" ' *.md)" > $GITHUB_OUTPUT
 
       - name: list files
         run: echo "${{ steps.files_list.outputs.files }}"
@@ -34,7 +34,7 @@ jobs:
         with:
           args: >-
             --output=./.github/pages/main.pdf
-            --resource-path=docs
+            --resource-path=doc/exercises
             --resource-path=.
             ${{ steps.files_list.outputs.files }}
 
