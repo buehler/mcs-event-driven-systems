@@ -15,12 +15,13 @@ delivery notice. Then, the warehouse inventory system will start the process of 
 the delivery. The happy-path includes:
 
 - Each part is picked up by the robot in one of the 3x3 grid cells of the predefined location
-- Each available part is then put onto the conveyor and driven down to the color sensor
+- Then the robot places the part onto the NFC reader and associates the part with a unique ID
+- The robot then places the part onto the conveyor belt
+- The part on the belt is driven down to the color sensor
 - The second robot will pick it up and puts it onto the color sensor
 - After the color has been determined, the robot puts it back to the conveyor
 - After being driven back, the first robot sorts the color onto the respective stack
-- If a part is marked with an NFC tag, it means that the part is defective and should
-  be put into the defective stack, regardless the color
+- With a small chance, the orchestrator will deem a part "broken" and put it onto the broken stack
 
 ## Sequence
 
