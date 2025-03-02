@@ -26,7 +26,7 @@ func sendRotaryEvents(ctx context.Context, wg *sync.WaitGroup) {
 
 	appConfig := config.GetConfig()
 	opts := mqtt.NewClientOptions()
-	opts.AddBroker(fmt.Sprintf("tcp://%s:%d", appConfig.MqttBrokerAddress, appConfig.MqttPort))
+	opts.AddBroker(fmt.Sprintf("tcp://%s:%d", appConfig.MqttHost, appConfig.MqttPort))
 	opts.SetClientID("rotary_events")
 
 	client := mqtt.NewClient(opts)

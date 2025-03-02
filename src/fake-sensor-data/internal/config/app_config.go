@@ -3,8 +3,8 @@ package config
 import "github.com/kelseyhightower/envconfig"
 
 type AppConfig struct {
-	MqttBrokerAddress string `envconfig:"MQTT_BROKER_ADDRESS" required:"true"`
-	MqttPort          uint16 `envconfig:"MQTT_PORT" default:"1883"`
+	MqttHost string `envconfig:"MQTT_HOST" required:"true"`
+	MqttPort uint16 `envconfig:"MQTT_PORT" default:"1883"`
 }
 
 var config AppConfig

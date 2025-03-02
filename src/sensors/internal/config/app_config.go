@@ -3,9 +3,10 @@ package config
 import "github.com/kelseyhightower/envconfig"
 
 type AppConfig struct {
-	MqttBrokerAddress string `required:"true"`
-	MqttUsername      *string
-	MqttPassword      *string
+	MqttHost     string  `envconfig:"MQTT_HOST" required:"true"`
+	MqttPort     uint16  `envconfig:"MQTT_PORT" default:"1883"`
+	MqttUsername *string `envconfig:"MQTT_USER"`
+	MqttPassword *string `envconfig:"MQTT_PASS"`
 }
 
 var config AppConfig
