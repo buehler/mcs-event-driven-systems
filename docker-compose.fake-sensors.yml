@@ -27,5 +27,12 @@ services:
     environment:
       - MQTT_HOST=mqtt
 
+  sensors:
+    depends_on:
+      kafka:
+        condition: service_healthy
+      mqtt:
+        condition: service_healthy
+
 volumes:
   mqtt:

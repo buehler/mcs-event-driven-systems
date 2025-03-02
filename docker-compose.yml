@@ -45,4 +45,15 @@ services:
       kafka:
         condition: service_healthy
 
-  # sensors:
+  sensors:
+    build:
+      context: .
+      dockerfile: src/sensors/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      - KAFKA_HOST=kafka
+      - KAFKA_TOPIC=sensors
+      - MQTT_HOST=mqtt

@@ -1,0 +1,5 @@
+doc/
+demo/
+**/node_modules/
+**/Dockerfile
+**/gen

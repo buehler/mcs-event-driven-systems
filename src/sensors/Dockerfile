@@ -1,14 +1,31 @@
-FROM golang:1.23-alpine AS go_builder
+FROM bufbuild/buf:1.50 AS proto_builder
 WORKDIR /src
 
-COPY go.mod go.sum ./
+COPY ./buf* ./
+COPY ./src ./src
+
+RUN buf generate
+
+FROM golang:1.23 AS go_builder
+WORKDIR /src
+
+RUN apt-get update && apt-get install -y gcc librdkafka-dev
+
+ENV KAFKA_NO_VENDOR=1 \
+    CGO_ENABLED=1 \
+    GOOS=linux
+
+COPY src/sensors/go.mod src/sensors/go.sum ./
 RUN --mount=type=cache,target=/go/pkg/mod go mod download
 
-COPY . .
+COPY --from=proto_builder /src/src/sensors .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o sensors ./cmd
+RUN go build -tags dynamic -a -installsuffix cgo -o sensors ./cmd
 
-FROM scratch
+FROM debian:stable-slim
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y librdkafka1 ca-certificates && rm -rf /var/lib/apt/lists/*
 
 COPY --from=go_builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=go_builder /src/sensors /app/sensors

@@ -5,9 +5,9 @@ managed:
   enabled: true
   override:
     - file_option: go_package_prefix
-      value: github.com/buehler/mcs-event-driven-systems/sensors/gen/events
+      value: github.com/buehler/mcs-event-driven-systems/sensors/gen
 
 plugins:
   - remote: buf.build/protocolbuffers/go:v1.36.5
-    out: src/sensors/gen/events
+    out: src/sensors/gen
     opt: paths=source_relative
