@@ -7,13 +7,17 @@ type AppConfig struct {
 	MqttPort     uint16  `envconfig:"MQTT_PORT" default:"1883"`
 	MqttUsername *string `envconfig:"MQTT_USER"`
 	MqttPassword *string `envconfig:"MQTT_PASS"`
+
+	KafkaHost  string `envconfig:"KAFKA_HOST" required:"true"`
+	KafkaPort  uint16 `envconfig:"KAFKA_PORT" default:"9092"`
+	KafkaTopic string `envconfig:"KAFKA_TOPIC" required:"true"`
 }
 
 var config AppConfig
 var initialized bool
 
 func InitConfig() error {
-	err := envconfig.Process("sensors", config)
+	err := envconfig.Process("sensors", &config)
 	initialized = true
 	return err
 }

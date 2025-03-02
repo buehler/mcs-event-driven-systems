@@ -3,6 +3,8 @@ services:
     build:
       context: src/fake-sensor-data/mqtt
       dockerfile: Dockerfile
+    ports:
+      - 1883:1883
     restart: unless-stopped
     healthcheck:
       test: ['CMD-SHELL', 'mosquitto_sub -h localhost -p 1883 -E -i healthcheck-client --insecure -t test']
