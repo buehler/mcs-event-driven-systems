@@ -1,10 +1,10 @@
-import EventEmitter from 'events';
-
-export const eventEmitter = new EventEmitter();
+import { getNotificationEventEmitter } from '@/lib/events';
 
 export async function GET(request: Request) {
   const stream = new ReadableStream({
     start(controller) {
+      const eventEmitter = getNotificationEventEmitter();
+
       const onMessage = (data: string) => {
         controller.enqueue(`data: ${data}\n\n`);
       };

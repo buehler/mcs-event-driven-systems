@@ -1,5 +1,7 @@
 import type { Notification } from '@/lib/types';
-import { eventEmitter } from './sse/route';
+import EventEmitter from 'events';
+
+const eventEmitter = new EventEmitter();
 
 const notifications: Notification[] = [
   {
@@ -8,6 +10,10 @@ const notifications: Notification[] = [
     details: 'The warehouse system is now online.',
   },
 ];
+
+export function getNotificationEventEmitter() {
+  return eventEmitter;
+}
 
 export function sendNotification(notification: Notification) {
   console.log(`Send notification: ${notification.title}`);

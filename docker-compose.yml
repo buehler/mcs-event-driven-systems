@@ -31,3 +31,13 @@ services:
     depends_on:
       zookeeper:
         condition: service_healthy
+
+  inventory-system:
+    build:
+      context: src/inventory
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      kafka:
+        condition: service_healthy
