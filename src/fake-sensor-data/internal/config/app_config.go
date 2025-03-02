@@ -3,16 +3,15 @@ package config
 import "github.com/kelseyhightower/envconfig"
 
 type AppConfig struct {
-	MqttBrokerAddress string `required:"true"`
-	MqttUsername      *string
-	MqttPassword      *string
+	MqttBrokerAddress string `envconfig:"MQTT_BROKER_ADDRESS" required:"true"`
+	MqttPort          uint16 `envconfig:"MQTT_PORT" default:"1883"`
 }
 
 var config AppConfig
 var initialized bool
 
 func InitConfig() error {
-	err := envconfig.Process("sensors", config)
+	err := envconfig.Process("", &config)
 	initialized = true
 	return err
 }

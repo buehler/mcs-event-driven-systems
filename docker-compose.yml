@@ -3,6 +3,7 @@ services:
     image: bitnami/zookeeper:latest
     environment:
       ALLOW_ANONYMOUS_LOGIN: yes
+    restart: unless-stopped
     healthcheck:
       test: nc -z localhost 2181 || exit -1
       interval: 10s
@@ -16,6 +17,7 @@ services:
     ports:
       - 9092:9092
       - 7203:7203
+    restart: unless-stopped
     healthcheck:
       test: /opt/bitnami/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
       interval: 10s
@@ -38,6 +40,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    restart: unless-stopped
     depends_on:
       kafka:
         condition: service_healthy
+
+  # sensors:

@@ -1,3 +1,11 @@
+@default:
+    just --list
+
+@compose +ARGS:
+    docker compose {{ARGS}}
+
+@compose-dev +ARGS:
+    docker compose -f docker-compose.yml -f docker-compose.fake-sensors.yml {{ARGS}}
 
 @create-topic name partitions='1' replication_factor='1':
     docker compose exec kafka \
