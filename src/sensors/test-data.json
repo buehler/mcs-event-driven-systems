@@ -1,0 +1,3379 @@
+[
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1738,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 437,
+    "distance": 20.8
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 434,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1739,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 432,
+    "distance": 26.5
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 438,
+    "x": 0.1677,
+    "y": -0.0014,
+    "z": 1.0184,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 434,
+    "distance": 30.2
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1740,
+    "position": 111
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 439,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.72,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1741,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 437,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1742,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 438,
+    "distance": 20.8
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 435,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1743,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 433,
+    "distance": 24.9
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 439,
+    "x": 0.1712,
+    "y": 0.0009,
+    "z": 1.0132,
+    "pitch": 10.0,
+    "roll": 0.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 435,
+    "distance": 30.2
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1744,
+    "position": 111
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 440,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.72,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1745,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 438,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1746,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 439,
+    "distance": 20.7
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 436,
+    "distance": 30.0
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 152,
+    "readingID": 0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1747,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 434,
+    "distance": 25.7
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 440,
+    "x": 0.1729,
+    "y": -0.004,
+    "z": 1.0167,
+    "pitch": 10.0,
+    "roll": -0.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 436,
+    "distance": 30.2
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1748,
+    "position": 111
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 441,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.72,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1749,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 439,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1750,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 440,
+    "distance": 20.8
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 437,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1751,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 435,
+    "distance": 27.5
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 441,
+    "x": 0.1682,
+    "y": -0.0031,
+    "z": 1.0156,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 437,
+    "distance": 30.1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1752,
+    "position": 111
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 442,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.72,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1753,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 440,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 441,
+    "distance": 20.7
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1754,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 438,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1755,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 436,
+    "distance": 25.1
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 442,
+    "x": 0.1688,
+    "y": -0.0029,
+    "z": 1.0158,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 438,
+    "distance": 30.2
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1756,
+    "position": 111
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 443,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.71,
+    "air_pressure": 951.83
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1757,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 441,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 442,
+    "distance": 20.6
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1758,
+    "position": 111
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 153,
+    "readingID": 0
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 439,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1759,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 437,
+    "distance": 25.9
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 443,
+    "x": 0.1704,
+    "y": -0.0042,
+    "z": 1.0123,
+    "pitch": 10.0,
+    "roll": -0.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 439,
+    "distance": 30.3
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 444,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.71,
+    "air_pressure": 951.83
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1760,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1761,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 442,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 443,
+    "distance": 20.8
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1762,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 440,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1763,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 438,
+    "distance": 25.9
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 444,
+    "x": 0.1694,
+    "y": -0.0037,
+    "z": 1.0139,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 440,
+    "distance": 30.1
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 445,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.71,
+    "air_pressure": 951.83
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1764,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1765,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 443,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 444,
+    "distance": 20.8
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1766,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 441,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1767,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 439,
+    "distance": 25.1
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 445,
+    "x": 0.1691,
+    "y": -0.004,
+    "z": 1.0119,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 441,
+    "distance": 30.1
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 446,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.71,
+    "air_pressure": 951.81
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1768,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1769,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 444,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 445,
+    "distance": 20.6
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1770,
+    "position": 111
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 154,
+    "readingID": 0
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 442,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1771,
+    "position": 111
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 446,
+    "x": 0.1677,
+    "y": -0.0012,
+    "z": 1.0149,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 440,
+    "distance": 27.2
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 442,
+    "distance": 30.3
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 447,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.71,
+    "air_pressure": 951.81
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1772,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1773,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 445,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 446,
+    "distance": 20.7
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1774,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 443,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1775,
+    "position": 111
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 447,
+    "x": 0.1676,
+    "y": -0.0015,
+    "z": 1.0123,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 441,
+    "distance": 25.8
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 443,
+    "distance": 30.1
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 448,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.71,
+    "air_pressure": 951.81
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1776,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1777,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 446,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 447,
+    "distance": 20.8
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1778,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 444,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 448,
+    "x": 0.1699,
+    "y": -0.0045,
+    "z": 1.0151,
+    "pitch": 10.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1779,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 442,
+    "distance": 24.7
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 444,
+    "distance": 30.2
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 449,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.7,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1780,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1781,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 447,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 448,
+    "distance": 20.7
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1782,
+    "position": 111
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 155,
+    "readingID": 0
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 445,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 449,
+    "x": 0.1677,
+    "y": -0.0034,
+    "z": 1.0151,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1783,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 443,
+    "distance": 27.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 445,
+    "distance": 30.3
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 450,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.7,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1784,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1785,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 448,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 449,
+    "distance": 20.7
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1786,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 446,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 450,
+    "x": 0.1713,
+    "y": -0.0032,
+    "z": 1.0131,
+    "pitch": 10.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1787,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 444,
+    "distance": 25.7
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 446,
+    "distance": 30.2
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 451,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.7,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1788,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1789,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 449,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 450,
+    "distance": 20.7
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1790,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 447,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 451,
+    "x": 0.1732,
+    "y": -0.0028,
+    "z": 1.0093,
+    "pitch": 10.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1791,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 445,
+    "distance": 25.3
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 452,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.7,
+    "air_pressure": 951.81
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 447,
+    "distance": 30.2
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1792,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1793,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 450,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 451,
+    "distance": 20.9
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1794,
+    "position": 111
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 156,
+    "readingID": 0
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 448,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 452,
+    "x": 0.1658,
+    "y": -0.003,
+    "z": 1.0133,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1795,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 446,
+    "distance": 25.9
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 453,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.7,
+    "air_pressure": 951.81
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 448,
+    "distance": 30.1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1796,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1797,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 451,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 452,
+    "distance": 20.9
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1798,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 449,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 453,
+    "x": 0.1699,
+    "y": 0.0006,
+    "z": 1.0119,
+    "pitch": 10.0,
+    "roll": 0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1799,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 447,
+    "distance": 26.4
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 454,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.7,
+    "air_pressure": 951.81
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 449,
+    "distance": 30.2
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1800,
+    "position": 111
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1801,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 452,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 453,
+    "distance": 20.7
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1802,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 450,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 454,
+    "x": 0.1657,
+    "y": -0.0029,
+    "z": 1.0103,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1803,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 448,
+    "distance": 30.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 455,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.7,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 450,
+    "distance": 30.1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1804,
+    "position": 111
+  },
+  {
+    "type": "rgb_button_leftcheck",
+    "UID": "24dY",
+    "location": "HumanWS",
+    "messageID": 9,
+    "state": "PRESSED!",
+    "state_pressed": 1,
+    "color": "green"
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1805,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 453,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 454,
+    "distance": 20.7
+  },
+  {
+    "type": "rgb_button_leftcheck",
+    "UID": "24dY",
+    "location": "HumanWS",
+    "messageID": 10,
+    "state": "RELEASED!",
+    "state_pressed": 0,
+    "color": "green"
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1806,
+    "position": 111
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 157,
+    "readingID": 0
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 451,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 455,
+    "x": 0.1685,
+    "y": -0.0006,
+    "z": 1.0122,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1807,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 449,
+    "distance": 30.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 456,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.7,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 451,
+    "distance": 30.3
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1808,
+    "position": 111
+  },
+  {
+    "type": "rgb_button_rightcheck",
+    "UID": "24er",
+    "location": "HumanWS",
+    "messageID": 7,
+    "state": "PRESSED!",
+    "state_pressed": 1,
+    "color": "red"
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1809,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 454,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 455,
+    "distance": 20.7
+  },
+  {
+    "type": "rgb_button_rightcheck",
+    "UID": "24er",
+    "location": "HumanWS",
+    "messageID": 8,
+    "state": "RELEASED!",
+    "state_pressed": 0,
+    "color": "red"
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1810,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 452,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 456,
+    "x": 0.165,
+    "y": -0.0014,
+    "z": 1.0132,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1811,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 450,
+    "distance": 30.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 457,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.7,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 452,
+    "distance": 30.2
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1812,
+    "position": 111
+  },
+  {
+    "type": "dual_button",
+    "UID": "UZN",
+    "location": "HumanWS",
+    "messageID": 17,
+    "left_button": "Released",
+    "left_button_pressed": 0,
+    "right_button": "Pressed",
+    "right_button_pressed": 1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1813,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 455,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 456,
+    "distance": 20.7
+  },
+  {
+    "type": "dual_button",
+    "UID": "UZN",
+    "location": "HumanWS",
+    "messageID": 18,
+    "left_button": "Released",
+    "left_button_pressed": 0,
+    "right_button": "Pressed",
+    "right_button_pressed": 1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1814,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 453,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 457,
+    "x": 0.166,
+    "y": -0.0011,
+    "z": 1.0159,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1815,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 451,
+    "distance": 30.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 458,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.69,
+    "air_pressure": 951.83
+  },
+  {
+    "type": "dual_button",
+    "UID": "UZN",
+    "location": "HumanWS",
+    "messageID": 19,
+    "left_button": "Released",
+    "left_button_pressed": 0,
+    "right_button": "Released",
+    "right_button_pressed": 0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 453,
+    "distance": 30.1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1816,
+    "position": 111
+  },
+  {
+    "type": "dual_button",
+    "UID": "UZN",
+    "location": "HumanWS",
+    "messageID": 20,
+    "left_button": "Released",
+    "left_button_pressed": 0,
+    "right_button": "Released",
+    "right_button_pressed": 0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1817,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 456,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 457,
+    "distance": 20.7
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 158,
+    "readingID": 0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1818,
+    "position": 111
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 454,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 458,
+    "x": 0.1705,
+    "y": -0.0038,
+    "z": 1.0128,
+    "pitch": 10.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1819,
+    "position": 111
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 459,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.69,
+    "air_pressure": 951.83
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 452,
+    "distance": 29.6
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 454,
+    "distance": 30.2
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1820,
+    "position": 127
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1821,
+    "position": 150
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 457,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 458,
+    "distance": 20.6
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1822,
+    "position": 150
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 455,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 459,
+    "x": 0.1663,
+    "y": -0.0004,
+    "z": 1.0112,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1823,
+    "position": 139
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 460,
+    "iaq_index": 29,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.69,
+    "air_pressure": 951.83
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 453,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 455,
+    "distance": 30.1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1824,
+    "position": 81
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1825,
+    "position": 55
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 458,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 459,
+    "distance": 20.9
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1826,
+    "position": 94
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 456,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 460,
+    "x": 0.1684,
+    "y": 0.0001,
+    "z": 1.0151,
+    "pitch": 9.0,
+    "roll": 0.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 461,
+    "iaq_index": 28,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.69,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1827,
+    "position": 120
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 454,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 456,
+    "distance": 30.1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1828,
+    "position": 80
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1829,
+    "position": 94
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 459,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 460,
+    "distance": 20.7
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 159,
+    "readingID": 0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1830,
+    "position": 125
+  },
+  {
+    "type": "motion_detector",
+    "UID": "SmQ",
+    "location": "HumanWS",
+    "messageID": 13,
+    "detection": "Motion Started",
+    "motion_detection": 1
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 457,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 461,
+    "x": 0.1738,
+    "y": -0.0058,
+    "z": 1.0135,
+    "pitch": 10.0,
+    "roll": -0.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 462,
+    "iaq_index": 28,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.69,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1831,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 455,
+    "distance": 25.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 457,
+    "distance": 30.3
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1832,
+    "position": 125
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1833,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 460,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 461,
+    "distance": 20.6
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1834,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 458,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 462,
+    "x": 0.1692,
+    "y": -0.0014,
+    "z": 1.0159,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 463,
+    "iaq_index": 28,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.69,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1835,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 456,
+    "distance": 27.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 458,
+    "distance": 30.5
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1836,
+    "position": 125
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1837,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 461,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 462,
+    "distance": 20.9
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1838,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 459,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 463,
+    "x": 0.1665,
+    "y": -0.0012,
+    "z": 1.0161,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 464,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.69,
+    "air_pressure": 951.83
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1839,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 457,
+    "distance": 20.2
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 459,
+    "distance": 31.5
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 160,
+    "ID": "ID 0x04 0x2F 0xAC 0x4A 0x61 0x60 0x80",
+    "readingID": 1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1840,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 462,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1841,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 463,
+    "distance": 20.9
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1842,
+    "position": 125
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 464,
+    "x": 0.1685,
+    "y": -0.0018,
+    "z": 1.0104,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1843,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 460,
+    "distance": 31.5
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 161,
+    "readingID": 0
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 162,
+    "ID": "ID 0x04 0x2F 0xAC 0x4A 0x61 0x60 0x80",
+    "readingID": 1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1844,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 463,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1845,
+    "position": 125
+  },
+  {
+    "type": "motion_detector",
+    "UID": "SmQ",
+    "location": "HumanWS",
+    "messageID": 14,
+    "detection": "Motion Ended",
+    "motion_detection": 0
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 464,
+    "distance": 20.8
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1846,
+    "position": 125
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 465,
+    "x": 0.1697,
+    "y": -0.0004,
+    "z": 1.0123,
+    "pitch": 10.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1847,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 461,
+    "distance": 31.5
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 163,
+    "readingID": 0
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 460,
+    "distance": 30.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 465,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.69,
+    "air_pressure": 951.83
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 458,
+    "distance": 29.8
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 164,
+    "ID": "ID 0x04 0x2F 0xAC 0x4A 0x61 0x60 0x80",
+    "readingID": 1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1848,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 464,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1849,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 465,
+    "distance": 20.8
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1850,
+    "position": 125
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 466,
+    "x": 0.1663,
+    "y": -0.0014,
+    "z": 1.0142,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1851,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 462,
+    "distance": 31.5
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 165,
+    "readingID": 0
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 461,
+    "distance": 30.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 466,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.69,
+    "air_pressure": 951.83
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 459,
+    "distance": 28.3
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 166,
+    "ID": "ID 0x04 0x2F 0xAC 0x4A 0x61 0x60 0x80",
+    "readingID": 1
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1852,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 465,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1853,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 466,
+    "distance": 20.7
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1854,
+    "position": 125
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 467,
+    "x": 0.1696,
+    "y": 0.0,
+    "z": 1.013,
+    "pitch": 10.0,
+    "roll": 0.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1855,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 463,
+    "distance": 31.6
+  },
+  {
+    "type": "rgb_button_leftred",
+    "UID": "M5X",
+    "location": "Factory",
+    "messageID": 7,
+    "state": "PRESSED!",
+    "state_pressed": 1,
+    "color": "red"
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 167,
+    "readingID": 0
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 462,
+    "distance": 30.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 467,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.7,
+    "air_pressure": 951.81
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 460,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 463,
+    "distance": 30.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 468,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.7,
+    "air_pressure": 951.81
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 461,
+    "distance": 28.3
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1856,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 466,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1857,
+    "position": 125
+  },
+  {
+    "type": "rgb_button_leftred",
+    "UID": "M5X",
+    "location": "Factory",
+    "messageID": 8,
+    "state": "RELEASED!",
+    "state_pressed": 0,
+    "color": "red"
+  },
+  {
+    "type": "rgb_button_midwhite",
+    "UID": "M47",
+    "location": "Factory",
+    "messageID": 7,
+    "state": "PRESSED!",
+    "state_pressed": 1,
+    "color": "white"
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 467,
+    "distance": 20.6
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1858,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 464,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 468,
+    "x": 0.1683,
+    "y": -0.0016,
+    "z": 1.0106,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "rgb_button_midwhite",
+    "UID": "M47",
+    "location": "Factory",
+    "messageID": 8,
+    "state": "RELEASED!",
+    "state_pressed": 0,
+    "color": "white"
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 469,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.98,
+    "humidity": 25.7,
+    "air_pressure": 951.81
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1859,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 462,
+    "distance": 26.8
+  },
+  {
+    "type": "rgb_button_rightblue",
+    "UID": "M3X",
+    "location": "Factory",
+    "messageID": 7,
+    "state": "PRESSED!",
+    "state_pressed": 1,
+    "color": "blue"
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 464,
+    "distance": 31.6
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 168,
+    "readingID": 0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1860,
+    "position": 125
+  },
+  {
+    "type": "rgb_button_rightblue",
+    "UID": "M3X",
+    "location": "Factory",
+    "messageID": 8,
+    "state": "RELEASED!",
+    "state_pressed": 0,
+    "color": "blue"
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 467,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1861,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 468,
+    "distance": 20.7
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1862,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 465,
+    "distance": 30.0
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 469,
+    "x": 0.168,
+    "y": -0.0009,
+    "z": 1.0103,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 470,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.7,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1863,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 463,
+    "distance": 27.2
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 465,
+    "distance": 31.7
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1864,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 468,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1865,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 469,
+    "distance": 20.8
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 466,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1866,
+    "position": 125
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 470,
+    "x": 0.1691,
+    "y": -0.005,
+    "z": 1.0181,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 471,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.7,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1867,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 464,
+    "distance": 29.6
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 466,
+    "distance": 31.5
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1868,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 469,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1869,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 470,
+    "distance": 21.6
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 467,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1870,
+    "position": 125
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 471,
+    "x": 0.1697,
+    "y": -0.0006,
+    "z": 1.0156,
+    "pitch": 9.0,
+    "roll": -0.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 472,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.7,
+    "air_pressure": 951.82
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1871,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 465,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 467,
+    "distance": 31.6
+  },
+  {
+    "type": "nfc",
+    "UID": "22Mp",
+    "location": "Conveyor",
+    "messageID": 169,
+    "readingID": 0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1872,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "TG2",
+    "location": "HumanWS",
+    "messageID": 470,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1873,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_mid",
+    "UID": "2a8w",
+    "location": "HumanWS",
+    "messageID": 471,
+    "distance": 20.8
+  },
+  {
+    "type": "distance_IR_short_left",
+    "UID": "TFu",
+    "location": "Conveyor",
+    "messageID": 468,
+    "distance": 30.0
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1874,
+    "position": 125
+  },
+  {
+    "type": "accelerometer",
+    "UID": "VEg",
+    "location": "HumanWS",
+    "messageID": 472,
+    "x": 0.1706,
+    "y": -0.0026,
+    "z": 1.0086,
+    "pitch": 10.0,
+    "roll": -0.0
+  },
+  {
+    "type": "air_quality",
+    "UID": "X2n",
+    "location": "Conveyor",
+    "messageID": 473,
+    "iaq_index": 27,
+    "iaq_index_accuracy_unreliable": 0,
+    "iaq_index_accuracy_low": 0,
+    "iaq_index_accuracy_medium": 0,
+    "iaq_index_accuracy_high": 1,
+    "iaq_index_accuracy": "High",
+    "temperature": 23.97,
+    "humidity": 25.72,
+    "air_pressure": 951.8
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1875,
+    "position": 125
+  },
+  {
+    "type": "distance_IR_short",
+    "UID": "2a7C",
+    "location": "Conveyor",
+    "messageID": 466,
+    "distance": 30.0
+  },
+  {
+    "type": "distance_IR_long",
+    "UID": "YZN",
+    "location": "Factory",
+    "messageID": 468,
+    "distance": 31.5
+  },
+  {
+    "type": "rotary",
+    "UID": "KVx",
+    "location": "HumanWS",
+    "messageID": 1876,
+    "position": 125
+  }
+]
