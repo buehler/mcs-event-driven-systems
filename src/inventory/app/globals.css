@@ -127,3 +127,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.radius-inherit {
+  border-radius: inherit;
+}

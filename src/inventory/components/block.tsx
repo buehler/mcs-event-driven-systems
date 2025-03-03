@@ -12,9 +12,9 @@ const colorClasses = {
 };
 
 export function Block({ color }: BlockProps) {
-  return <div className={`h-full w-full border-2 ${colorClasses[color]}`}></div>;
+  return <div className={`h-full w-full border-2 ${colorClasses[color]} radius-inherit`}></div>;
 }
 
 export function EmptyBlock() {
-  return <div className="h-full w-full bg-gray-200 border-2 border-dashed border-gray-400"></div>;
+  return <div className="h-full w-full bg-gray-200 border-2 border-dashed border-gray-400 radius-inherit"></div>;
 }
