@@ -1,17 +1,19 @@
-Hier ist nur der Bericht. Experimente sind im Moment noch hier:
-https://github.com/Obiratus/EDPO_T1_E1?tab=readme-ov-file
-
-Bleibt wohl für die Abgabe die Woche auch da.
-
-
 # Exercise 1 - Getting started with Kafka
-## Basic setup
-Set the correct KAFKA_ADVERTISED_HOST_NAME in [docker-compose.yml](../docker/docker-compose.yml)
 
+The demo implementation (and further down the line all other implementation) has been done in a GitHub repository: `https://github.com/buehler/mcs-event-driven-systems/`.
+
+Inside the`./demo` directory, there is a small demo of Kafka using Docker Compose and dotnet. The consumer and producer are implemented in C# using the Confluent.Kafka library. The producer sends one message each second with the unix timestamp and the topic is called `clock`. To run the application, go into the `./demo` directory and run `docker compose up`. It includes and configures Kafka from the root directory and also fires up the producer and consumer (and builds them first if necessary). If any changes are made to the code of the producer and/or consumer, you'll need to rebuild the docker files using `docker compose build`.
 
 ## Task 2 - Experiments with Kafka
+All code for the experiments regarding exercise 2 are exclusively under /exercise1
+
+This means all commands shown below must be run from the corresponding path.
+### Basic setup
+Set the correct KAFKA_ADVERTISED_HOST_NAME in [docker-compose.yml](../../exercise1/docker/docker-compose.yml) (exercise1/docker/)
+
+
 ### 1. Producer Experiments
-Start docker with the producer profile
+Start docker with the producer profile (run from /experiments1/docker)
 
 ```
 $  docker compose --profile producer up -d
@@ -27,9 +29,9 @@ To run the services the correct main class must be stated in the command.
 #### Batch Size & Processing Latency
 
 
-Uses this main class for this test: [ProducerExperimentBatchSizeClicksProducer.java](../producerTests/src/main/java/com/experiments/ProducerExperimentBatchSizeClicksProducer.java)
+Uses this main class for this test: [ProducerExperimentBatchSizeClicksProducer.java](../../exercise1/producerTests/src/main/java/com/experiments/ProducerExperimentBatchSizeClicksProducer.java)
 
-**Note**: Must be run from the producerTests/target subfolder.
+**Note**: Must be run from the exercise1/producerTests/target subfolder.
 ```
 $  java -cp pubsub-producer-1.0-SNAPSHOT-jar-with-dependencies.jar com.experiments.ProducerExperimentBatchSizeClicksProducer
 ``` 
@@ -87,9 +89,9 @@ Large Batch Sizes:
 ---
 
 #### Load Testing
-Uses this main class for this test: [ProducerExperimentLoadTestClicksProducer.java](../producerTests/src/main/java/com/experiments/ProducerExperimentLoadTestClicksProducer.java)
+Uses this main class for this test: [ProducerExperimentLoadTestClicksProducer.java](../../exercise1/producerTests/src/main/java/com/experiments/ProducerExperimentLoadTestClicksProducer.java)
 
-**Note**: Must be run from the producerTests/target subfolder.
+**Note**: Must be run from the exercise1/producerTests/target subfolder.
 ```
 $  java -cp pubsub-producer-1.0-SNAPSHOT-jar-with-dependencies.jar com.experiments.ProducerExperimentLoadTestClicksProducer
 ``` 
@@ -158,7 +160,7 @@ $  docker compose --profile producer up -d
 To run the services the correct main class must be stated in the command.
 #### Consumer Lag & Data Loss Risks
 
-**Note**: Must be run from the consumerTests/target subfolder.
+**Note**: Must be run from the /exercise1/consumerTests/target subfolder.
 ```
 $  java -jar target/pubsub-consumer-1.0-SNAPSHOT-jar-with-dependencies.jar
 ``` 
