@@ -18,7 +18,18 @@ repositories {
     mavenCentral()
 }
 
+val protobufSrc by sourceSets.creating {
+    kotlin.srcDir("src/main/proto")
+}
+
+sourceSets.main {
+    compileClasspath += protobufSrc.output
+    runtimeClasspath += protobufSrc.output
+}
+
 dependencies {
+    protobufSrc.apiConfigurationName("com.google.protobuf:protobuf-kotlin:4.29.3")
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -26,12 +37,13 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.springframework.kafka:spring-kafka")
-    implementation("com.google.protobuf:protobuf-kotlin")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
     testImplementation("org.springframework.kafka:spring-kafka-test")
+
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
