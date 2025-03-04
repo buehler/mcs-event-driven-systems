@@ -1,0 +1,22 @@
+<MudCard>
+    <MudCardContent>
+        <MudText Align="Align.Center" GutterBottom="true">Defect Blocks</MudText>
+        <MudStack Row="true"
+                  Wrap="Wrap.Wrap"
+                  Justify="Justify.Center"
+                  Style="@($"background-color:{Colors.Gray.Lighten2}")" 
+                  Class="rounded-lg pa-2 mb-2">
+            @foreach (var block in Blocks)
+            {
+                <div style="height: 2rem; width: 2rem" class="rounded">
+                    <Block Element="block"/>
+                </div>
+            }
+        </MudStack>
+        <MudText Align="Align.Center">@Blocks.Count</MudText>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    [Parameter] public required IReadOnlyList<Database.Block> Blocks { get; set; }
+}

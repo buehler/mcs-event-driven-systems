@@ -1,0 +1,47 @@
+﻿@page "/"
+
+<PageTitle>Inventory Warehouse System</PageTitle>
+
+<MudText Typo="Typo.h4" GutterBottom="true">Warehouse Management System</MudText>
+
+<MudGrid>
+    <MudItem xs="12" sm="8">
+        <MudCard>
+            <MudCardHeader>
+                <div>
+                    <MudText Typo="Typo.h5">Current Warehouse State</MudText>
+                    <MudText Typo="Typo.body2">Overview of block inventory and storage</MudText>
+                </div>
+            </MudCardHeader>
+            <MudCardContent>
+                <WarehouseView/>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="4">
+        <MudCard Class="mb-8">
+            <MudCardHeader>
+                <MudText Typo="Typo.h5">Actions</MudText>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudLink Href="/delivery">
+                    <MudButton>
+                        <MudIcon Icon="@Icons.Material.Filled.Add"/>
+                        Create Delivery Notice
+                    </MudButton>
+                </MudLink>
+            </MudCardContent>
+        </MudCard>
+        <MudCard>
+            <MudCardHeader>
+                <div>
+                    <MudText Typo="Typo.h5">Notifications</MudText>
+                    <MudText Typo="Typo.body2">Real-Time System Updates</MudText>
+                </div>
+            </MudCardHeader>
+            <MudCardContent>
+                <NotificationArea />
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>

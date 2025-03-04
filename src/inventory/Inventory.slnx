@@ -1,0 +1,3 @@
+﻿<Solution>
+  <Project Path="Inventory\Inventory.csproj" Type="Classic C#" />
+</Solution>

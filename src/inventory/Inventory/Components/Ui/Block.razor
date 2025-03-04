@@ -1,0 +1,25 @@
+@using Inventory.Database
+
+<div class="border-dashed border-2"
+     style="width:100%; height: 100%; background-color: @BgColor; border-color: @BorderColor; border-radius: inherit"></div>
+
+@code {
+    [Parameter] public required Database.Block Element { get; set; }
+
+    private string BgColor => Element.Color switch
+    {
+        BlockColor.Red => Colors.Red.Lighten3,
+        BlockColor.Yellow => Colors.Yellow.Lighten3,
+        BlockColor.Blue => Colors.Blue.Lighten3,
+        _ => Colors.Green.Lighten3,
+    };
+
+    private string BorderColor => Element.Color switch
+    {
+        BlockColor.Red => Colors.Red.Darken4,
+        BlockColor.Yellow => Colors.Yellow.Darken4,
+        BlockColor.Blue => Colors.Blue.Darken4,
+        _ => Colors.Green.Darken4,
+    };
+
+}

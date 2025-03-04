@@ -1,0 +1,30 @@
+<MudCard>
+    <MudCardContent>
+        <MudText Align="Align.Center" GutterBottom="true">@ColorText Blocks</MudText>
+        <MudStack Style="@($"background-color:{Colors.Gray.Lighten2}")" Class="rounded-lg pa-2 mb-2">
+            @for (var i = 0; i < EmptySlots; i++)
+            {
+                <div style="height: 2rem; width: 100%" class="rounded">
+                    <EmptyBlock/>
+                </div>
+            }
+            @foreach (var block in Blocks)
+            {
+                <div style="height: 2rem; width: 100%" class="rounded">
+                    <Block Element="block"/>
+                </div>
+            }
+        </MudStack>
+        <MudText Align="Align.Center">@Blocks.Count / @MaxBlocks</MudText>
+    </MudCardContent>
+</MudCard>
+
+@code {
+    private const int MaxBlocks = 5;
+
+    [Parameter] public required IReadOnlyList<Database.Block> Blocks { get; set; }
+
+    private int EmptySlots => Math.Max(0, MaxBlocks - Blocks.Count);
+
+    private string ColorText => Blocks.FirstOrDefault()?.Color.ToString() ?? "N/A";
+}
