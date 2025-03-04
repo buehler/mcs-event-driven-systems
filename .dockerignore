@@ -3,3 +3,6 @@ demo/
 **/node_modules/
 **/Dockerfile
 **/gen
+**/*.g.cs
+**/bin
+**/obj

@@ -6,8 +6,15 @@ managed:
   override:
     - file_option: go_package_prefix
       value: github.com/buehler/mcs-event-driven-systems/sensors/gen
+    - file_option: csharp_namespace_prefix
+      value: Inventory.Proto
 
 plugins:
-  - remote: buf.build/protocolbuffers/go:v1.36.5
+  - remote: buf.build/protocolbuffers/go
     out: src/sensors/gen
     opt: paths=source_relative
+  - remote: buf.build/protocolbuffers/csharp
+    out: src/inventory/Inventory/Proto
+    opt:
+      - base_namespace=
+      - file_extension=.g.cs

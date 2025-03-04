@@ -36,8 +36,8 @@ services:
 
   inventory-system:
     build:
-      context: src/inventory
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: src/inventory/Dockerfile
     ports:
       - 3000:3000
     restart: unless-stopped

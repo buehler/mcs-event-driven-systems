@@ -6,6 +6,7 @@ COPY ./src ./src
 
 RUN buf generate
 
+
 FROM golang:1.23 AS go_builder
 WORKDIR /src
 
@@ -21,6 +22,7 @@ RUN --mount=type=cache,target=/go/pkg/mod go mod download
 COPY --from=proto_builder /src/src/sensors .
 
 RUN go build -tags dynamic -a -installsuffix cgo -o sensors ./cmd
+
 
 FROM debian:stable-slim
 WORKDIR /app
