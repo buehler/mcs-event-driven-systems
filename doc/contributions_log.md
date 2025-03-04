@@ -1,11 +1,11 @@
 # Ex 1
 
-- Christoph: 
-- Simon: 
-- Gero: 
+- Simon: implementation of tests, documentation & evaluation
+- Christoph: supporting
+- Gero:
 
 # Ex 2
 
-- Christoph:
-- Simon:
-- Gero: 
+- Christoph: architectual discussions, implementation of MQTT to kafka broker, implementation of further services
+- Simon: architectual discussions, supporting
+- Gero:  architectual discussions, adrs
