@@ -125,7 +125,7 @@ jobs:
       - name: Prepare Pages Templates
         working-directory: ./.github/pages
         run: |
-          for file in echo *.pdf; do;
+          for file in *.pdf; do;
             sed "s/\$FILE/$file/" _template.html > $file.html
           done;
 
