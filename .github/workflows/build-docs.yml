@@ -3,8 +3,10 @@ name: Build Docs
 on:
   workflow_dispatch:
   push:
-    paths:
-      - doc/**/*.md
+    branches:
+      - main
+    # paths:
+    #   - doc/**/*.md
 
 concurrency:
   group: build-gh-pages
@@ -126,11 +128,11 @@ jobs:
         working-directory: ./.github/pages
         run: |
           files=""
-          for file in $(printf "%s " *.pdf); do
-            sed "s/__FILE__/$file/" _template.html > $file.html
+          for file in *.pdf; do
+            sed "s|__FILE__|$file|g" _template.html > "$file.html"
             files="$files <li><a href='$file.html'>$file</a></li>"
           done
-          sed "s/__FILES__/$files/" _index.html > index.html
+          sed "s|__FILES__|$files|g" _index.html > index.html
 
       - run: echo $(ls -la ./.github/pages)
 
