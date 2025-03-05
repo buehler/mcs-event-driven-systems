@@ -3,8 +3,6 @@ name: Build Docs
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
     paths:
       - doc/**/*.md
 
@@ -127,28 +125,31 @@ jobs:
       - name: Prepare Pages Templates
         working-directory: ./.github/pages
         run: |
+          files=""
           for file in $(printf '%s ' *.pdf); do
             sed "s/\$FILE/$file/" _template.html > $file.html
+            files="$files <li><a href='$file.html'>$file</a></li>"
           done
+          sed "s/\$FILES/$files/" _index.html > index.html
 
       - run: echo $(ls -la ./.github/pages)
 
-      # - name: Setup Pages
-      #   id: pages
-      #   uses: actions/configure-pages@v5
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
 
-      # - name: Upload PDF artifact
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: ./.github/pages/
+      - name: Upload PDF artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./.github/pages/
 
-  # deploy_gh_pages:
-  #   runs-on: ubuntu-latest
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   needs: build
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
+  deploy_gh_pages:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
