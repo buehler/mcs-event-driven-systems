@@ -43,6 +43,71 @@ jobs:
           name: adrs
           path: adrs.pdf
 
+  build-contributions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker://pandoc/latex:latest
+        with:
+          args: >-
+            --output=./contribution.pdf
+            --resource-path=doc/
+            --resource-path=.
+            doc/contributions_log.md
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: contribution
+          path: contribution.pdf
+
+  find-exercises:
+    runs-on: ubuntu-latest
+    outputs:
+      files_list: ${{ steps.files_list.outputs.files }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: create file list
+        id: files_list
+        working-directory: doc/exercises
+        run: |
+          echo files=$(jq -n --argjson files "$(printf 'doc/exercises/%s\n' *.md | jq -R . | jq -s .)" '$files') > $GITHUB_OUTPUT
+
+      - name: list files
+        run: echo "${{ fromJson(steps.files_list.outputs.files) }}"
+
+  build-exercises:
+    runs-on: ubuntu-latest
+    name: Build Exercise ${{ matrix.file }}
+    needs: find-exercises
+    strategy:
+      matrix:
+        file: ${{fromJson(needs.find-exercises.outputs.files_list)}}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: prepare vars
+        id: vars
+        run: |
+          ex_pdf=$(basename "${{ matrix.file }}" | sed "s/\.md/.pdf/")
+          ex=$(basename "${{ matrix.file }}")
+          echo "ex_pdf=$ex_pdf" > $GITHUB_OUTPUT
+          echo "ex=$ex" >> $GITHUB_OUTPUT
+
+      - uses: docker://pandoc/latex:latest
+        with:
+          args: >-
+            --output=./${{ steps.vars.outputs.ex_pdf }}
+            --resource-path=doc/
+            --resource-path=.
+            ${{ matrix.file }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.vars.outputs.ex }}
+          path: ${{ steps.vars.outputs.ex_pdf }}
+
   # build:
   #   runs-on: ubuntu-latest
   #   steps:
