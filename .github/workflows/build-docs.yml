@@ -91,7 +91,7 @@ jobs:
         id: vars
         run: |
           ex_pdf=$(basename "${{ matrix.file }}" | sed "s/\.md/.pdf/")
-          ex=$(basename "${{ matrix.file }}")
+          ex=$(basename "${{ matrix.file }}" | sed "s/\.md//")
           echo "ex_pdf=$ex_pdf" > $GITHUB_OUTPUT
           echo "ex=$ex" >> $GITHUB_OUTPUT
 
@@ -108,36 +108,29 @@ jobs:
           name: ${{ steps.vars.outputs.ex }}
           path: ${{ steps.vars.outputs.ex_pdf }}
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
+  build:
+    runs-on: ubuntu-latest
+    needs:
+      - build-adrs
+      - build-contributions
+      - build-exercises
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: create file list
-  #       id: files_list
-  #       working-directory: doc/exercises
-  #       run: |
-  #         echo "files=$(printf '"doc/exercises/%s" ' *.md)" > $GITHUB_OUTPUT
+      - uses: actions/download-artifact@v4
+        with:
+          path: ./.github/pages/
+          merge-multiple: true
+      - run: echo $(ls -la ./.github/pages/)
 
-  #     - name: list files
-  #       run: echo "${{ steps.files_list.outputs.files }}"
+      # - name: Setup Pages
+      #   id: pages
+      #   uses: actions/configure-pages@v5
 
-  #     - uses: docker://pandoc/latex:latest
-  #       with:
-  #         args: >-
-  #           --output=./.github/pages/main.pdf
-  #           --resource-path=doc/exercises
-  #           --resource-path=.
-  #           ${{ steps.files_list.outputs.files }}
-
-  #     - name: Setup Pages
-  #       id: pages
-  #       uses: actions/configure-pages@v5
-
-  #     - name: Upload PDF artifact
-  #       uses: actions/upload-pages-artifact@v3
-  #       with:
-  #         path: ./.github/pages/
+      # - name: Upload PDF artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: ./.github/pages/
 
   # deploy_gh_pages:
   #   runs-on: ubuntu-latest
