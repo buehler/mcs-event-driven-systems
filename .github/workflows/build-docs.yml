@@ -1,10 +1,10 @@
-name: Build MD and Docs
+name: Build Docs
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - '../../doc/exercises/*.md'
+      - doc/**/*.md
 
 concurrency:
   group: build-gh-pages
@@ -16,16 +16,16 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-adrs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: create file list
         id: files_list
-        working-directory: doc/exercises
+        working-directory: doc/adr
         run: |
-          echo "files=$(printf '"doc/exercises/%s" ' *.md)" > $GITHUB_OUTPUT
+          echo "files=$(printf '"doc/adr/%s" ' *.md)" > $GITHUB_OUTPUT
 
       - name: list files
         run: echo "${{ steps.files_list.outputs.files }}"
@@ -33,27 +33,54 @@ jobs:
       - uses: docker://pandoc/latex:latest
         with:
           args: >-
-            --output=./.github/pages/main.pdf
-            --resource-path=doc/exercises
+            --output=./adrs.pdf
+            --resource-path=doc/adr
             --resource-path=.
             ${{ steps.files_list.outputs.files }}
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload PDF artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          path: ./.github/pages/
+          name: adrs
+          path: adrs.pdf
 
-  deploy_gh_pages:
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - name: create file list
+  #       id: files_list
+  #       working-directory: doc/exercises
+  #       run: |
+  #         echo "files=$(printf '"doc/exercises/%s" ' *.md)" > $GITHUB_OUTPUT
+
+  #     - name: list files
+  #       run: echo "${{ steps.files_list.outputs.files }}"
+
+  #     - uses: docker://pandoc/latex:latest
+  #       with:
+  #         args: >-
+  #           --output=./.github/pages/main.pdf
+  #           --resource-path=doc/exercises
+  #           --resource-path=.
+  #           ${{ steps.files_list.outputs.files }}
+
+  #     - name: Setup Pages
+  #       id: pages
+  #       uses: actions/configure-pages@v5
+
+  #     - name: Upload PDF artifact
+  #       uses: actions/upload-pages-artifact@v3
+  #       with:
+  #         path: ./.github/pages/
+
+  # deploy_gh_pages:
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: github-pages
+  #     url: ${{ steps.deployment.outputs.page_url }}
+  #   needs: build
+  #   steps:
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
