@@ -121,7 +121,15 @@ jobs:
         with:
           path: ./.github/pages/
           merge-multiple: true
-      - run: echo $(ls -la ./.github/pages/)
+
+      - name: Prepare Pages Templates
+        working-directory: ./.github/pages
+        run: |
+          for file in echo *.pdf; do;
+            sed "s/\$FILE/$file/" _template.html > $file.html
+          done;
+
+      - run: echo $(ls -la ./.github/pages)
 
       # - name: Setup Pages
       #   id: pages
