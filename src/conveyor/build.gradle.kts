@@ -21,13 +21,13 @@ repositories {
 sourceSets{
     main {
         kotlin.srcDir("src/main/kotlin")
-        kotlin.srcDir("src/main/proto")
-        java.srcDir("src/main/proto")
+        kotlin.srcDir("src/main/proto/kotlin")
+        java.srcDir("src/main/proto/java")
     }
 }
 
 dependencies {
-    implementation("com.google.protobuf:protobuf-kotlin:4.29.3")
+    implementation("com.google.protobuf:protobuf-kotlin:4.30.0")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

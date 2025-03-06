@@ -33,11 +33,6 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true \
     LANG=en_US.UTF-8 \
     TZ=Europe/Zurich
 
-# RUN apt-get update && apt-get install -y \
-#     curl \
-#     && rm -rf /var/lib/apt/lists/*
-
-
 COPY --from=build /src/artifacts .
 
 CMD [ "/app/Inventory" ]

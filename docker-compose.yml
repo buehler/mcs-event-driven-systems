@@ -58,3 +58,21 @@ services:
       - KAFKA_PORT=29092
       - KAFKA_TOPIC=sensors
       - MQTT_HOST=mqtt
+
+  conveyor:
+    build:
+      context: .
+      dockerfile: src/conveyor/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/healthz']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+      start_interval: 3s
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:29092

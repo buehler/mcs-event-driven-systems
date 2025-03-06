@@ -21,6 +21,6 @@ plugins:
       - base_namespace=
       - file_extension=.g.cs
   - remote: buf.build/protocolbuffers/kotlin
-    out: src/conveyor/src/main/proto
+    out: src/conveyor/src/main/proto/kotlin
   - remote: buf.build/protocolbuffers/java
-    out: src/conveyor/src/main/proto
+    out: src/conveyor/src/main/proto/java
