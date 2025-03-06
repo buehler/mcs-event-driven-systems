@@ -18,18 +18,16 @@ repositories {
     mavenCentral()
 }
 
-val protobufSrc by sourceSets.creating {
-    kotlin.srcDir("src/main/proto")
-}
-
-sourceSets.main {
-    compileClasspath += protobufSrc.output
-    runtimeClasspath += protobufSrc.output
+sourceSets{
+    main {
+        kotlin.srcDir("src/main/kotlin")
+        kotlin.srcDir("src/main/proto")
+        java.srcDir("src/main/proto")
+    }
 }
 
 dependencies {
-    protobufSrc.apiConfigurationName("com.google.protobuf:protobuf-kotlin:4.29.3")
-
+    implementation("com.google.protobuf:protobuf-kotlin:4.29.3")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
