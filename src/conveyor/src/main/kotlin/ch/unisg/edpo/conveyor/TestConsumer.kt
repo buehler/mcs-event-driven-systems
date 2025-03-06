@@ -11,10 +11,9 @@ class TestConsumer {
 
     @KafkaListener(
         topics = ["\${topics.sensors}"],
-        groupId = "sensor-reader",
-        containerFactory = "kafkaListenerStringFactory"
+        containerFactory = "kafkaListenerSensorEventFactory"
     )
-    fun consume(message: String) {
-        logger.info("Consumed message: $message")
+    fun consumeMessage(message: SensorEvent) {
+        logger.info("**** -> Consumed message -> {}", message)
     }
 }

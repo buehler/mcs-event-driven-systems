@@ -30,6 +30,7 @@ func SendKafkaEvent[TMsg proto.Message](protoMsg TMsg) {
 	err = producer.Produce(&msg, nil)
 	if err != nil {
 		logrus.WithError(err).Error("Failed to produce / send message")
+		return
 	}
 	logrus.Info("Successfully sent Kafka message")
 }
