@@ -72,7 +72,43 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 15s
+      start_period: 30s
+      start_interval: 3s
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:29092
+
+  colors:
+    build:
+      context: .
+      dockerfile: src/colors/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/healthz']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+      start_interval: 3s
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:29092
+
+  picker:
+    build:
+      context: .
+      dockerfile: src/picker/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/healthz']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
       start_interval: 3s
     environment:
       - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:29092

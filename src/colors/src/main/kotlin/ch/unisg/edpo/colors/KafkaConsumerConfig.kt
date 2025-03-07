@@ -1,6 +1,6 @@
-package ch.unisg.edpo.conveyor
+package ch.unisg.edpo.colors
 
-import ch.unisg.edpo.conveyor.deserializers.SensorEventDeserializer
+import ch.unisg.edpo.colors.deserializers.SensorEventDeserializer
 import ch.unisg.edpo.proto.events.sensors.v1.SensorEvent
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -29,7 +29,7 @@ class KafkaConsumerConfig {
         val config: MutableMap<String, Any> = HashMap()
 
         config[ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG] = bootstrapServers!!
-        config[ConsumerConfig.GROUP_ID_CONFIG] = "conveyor-sensor-reader"
+        config[ConsumerConfig.GROUP_ID_CONFIG] = "colors-sensor-reader"
         config[ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG] = StringDeserializer::class.java
         config[ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG] = SensorEventDeserializer::class.java
 

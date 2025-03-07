@@ -24,3 +24,11 @@ plugins:
     out: src/conveyor/src/main/proto/kotlin
   - remote: buf.build/protocolbuffers/java
     out: src/conveyor/src/main/proto/java
+  - remote: buf.build/protocolbuffers/kotlin
+    out: src/colors/src/main/proto/kotlin
+  - remote: buf.build/protocolbuffers/java
+    out: src/colors/src/main/proto/java
+  - remote: buf.build/protocolbuffers/kotlin
+    out: src/picker/src/main/proto/kotlin
+  - remote: buf.build/protocolbuffers/java
+    out: src/picker/src/main/proto/java

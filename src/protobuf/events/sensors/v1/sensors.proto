@@ -6,6 +6,9 @@ import "google/protobuf/timestamp.proto";
 
 option optimize_for = SPEED;
 
+// Event that comes from the sensors of the inventory system.
+// The sensors talk over MQTT and this events get translated
+// into this format.
 message SensorEvent {
   string sensor_id = 1;
   string location = 2;
