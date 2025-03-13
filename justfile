@@ -5,7 +5,14 @@
     docker compose {{ARGS}}
 
 @compose-dev +ARGS:
-    docker compose -f docker-compose.yml -f docker-compose.fake-sensors.yml {{ARGS}}
+    docker compose -f docker-compose.yml -f docker-compose.dev.yml {{ARGS}}
+
+@send-rotary-data value:
+    #!/bin/bash
+    timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+    echo "send {\"sensor_id\": \"abc\", \"location\": \"HumanWS\", \"timestamp\": \"$timestamp\", \"rotary\": {\"position\": {{value}} } }"
+    result="{\"sensor_id\": \"abc\", \"location\": \"HumanWS\", \"timestamp\": \"$timestamp\", \"rotary\": {\"position\": {{value}} } }"
+    docker compose exec mqtt mosquitto_pub -t Tinkerforge/HumanWS/rotary_abc -m "$result"
 
 @create-topic name partitions='1' replication_factor='1':
     docker compose exec kafka \

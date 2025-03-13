@@ -1,0 +1,87 @@
+[
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/run_flow"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["text/plain"]
+      },
+      "body": "ok",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 1000
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/conveyor"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["text/plain"]
+      },
+      "body": "ok",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 250
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/robot_speed"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["text/plain"]
+      },
+      "body": "ok",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 500
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/home"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["text/plain"]
+      },
+      "body": "ok",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 2000
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/read_color"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": ["text/plain"]
+      },
+      "body": "{\"color\": [true, false, false]}",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 450
+      }
+    }
+  }
+]

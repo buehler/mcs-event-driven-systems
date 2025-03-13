@@ -17,6 +17,8 @@ services:
       - mqtt:/mosquitto/data
 
   fake-sensor-data:
+    profiles:
+      - fake-sensors
     build:
       context: src/fake-sensor-data
       dockerfile: Dockerfile
@@ -33,6 +35,28 @@ services:
         condition: service_healthy
       mqtt:
         condition: service_healthy
+
+  mock-robot:
+    image: mockserver/mockserver
+    ports:
+      - '5001:5001'
+    environment:
+      - MOCKSERVER_SERVER_PORT=5001
+      - MOCKSERVER_INITIALIZATION_JSON_PATH=/tmp/mockserver/robot.json
+    volumes:
+      - ./src/mockserver/robot.json:/tmp/mockserver/robot.json:ro
+    restart: unless-stopped
+
+  mock-robot-conveyor:
+    image: mockserver/mockserver
+    ports:
+      - '5000:5000'
+    environment:
+      - MOCKSERVER_SERVER_PORT=5000
+      - MOCKSERVER_INITIALIZATION_JSON_PATH=/tmp/mockserver/robot_and_conveyor.json
+    volumes:
+      - ./src/mockserver/robot_and_conveyor.json:/tmp/mockserver/robot_and_conveyor.json:ro
+    restart: unless-stopped
 
 volumes:
   mqtt:
