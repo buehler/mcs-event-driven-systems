@@ -1,23 +1,35 @@
-using Inventory.Components;
-using Inventory.Database;
-using Inventory.Hubs;
+using Confluent.Kafka;
 
-using Microsoft.AspNetCore.ResponseCompression;
+using Inventory.Components;
+using Inventory.Config;
+using Inventory.Database;
+using Inventory.Kafka;
+using Inventory.Kafka.Listener;
+using Inventory.Proto.Commands.Inventory.V1;
 
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var config = builder.Configuration.GetRequiredSection("Kafka").Get<KafkaSettings>() ??
+             throw new ApplicationException("Config not parsed.");
+builder.Services.AddSingleton(config);
+
+builder.Services.AddSingleton<ConsumerFactory>();
+
+builder.AddKafkaConsumer<string, AddToInventory>("commands", settings =>
+{
+    settings.Config.BootstrapServers = string.Join(',', config.Servers);
+    settings.Config.GroupId = "inventory-commands";
+    settings.Config.AutoOffsetReset = AutoOffsetReset.Latest;
+});
+
+builder.Services.AddHostedService<AddToInventoryListener>();
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddMudServices();
-builder.Services.AddSignalR();
-builder.Services.AddResponseCompression(opts =>
-{
-    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-        ["application/octet-stream"]);
-});
+builder.Services.AddResponseCompression();
 
 builder.Services.AddSingleton<BlockStore>();
 builder.Services.AddSingleton<NotificationStore>();
@@ -37,6 +49,5 @@ app.UseResponseCompression();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-app.MapHub<NotificationHub>("/hubs/notifications");
 
 await app.RunAsync();

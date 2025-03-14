@@ -1,20 +1,37 @@
 @using Inventory.Database
 @inject BlockStore Store
 
+@implements IDisposable
+
+@rendermode InteractiveServer
+
 <MudGrid>
     <MudItem xs="12" sm="6" md="3">
-        <BlockStack Blocks="Store.Red"/>
+        <BlockStack ColorText="Red" Blocks="Store.ColoredBlocks(BlockColor.Red)"/>
     </MudItem>
     <MudItem xs="12" sm="6" md="3">
-        <BlockStack Blocks="Store.Blue"/>
+        <BlockStack ColorText="Blue" Blocks="Store.ColoredBlocks(BlockColor.Blue)"/>
     </MudItem>
     <MudItem xs="12" sm="6" md="3">
-        <BlockStack Blocks="Store.Yellow"/>
+        <BlockStack ColorText="Yellow" Blocks="Store.ColoredBlocks(BlockColor.Yellow)"/>
     </MudItem>
     <MudItem xs="12" sm="6" md="3">
-        <BlockStack Blocks="Store.Green"/>
-    </MudItem>
-    <MudItem xs="12" sm="12" md="3">
-        <DefectBlockStack Blocks="Store.Defects"/>
+        <BlockStack ColorText="Green" Blocks="Store.ColoredBlocks(BlockColor.Green)"/>
     </MudItem>
 </MudGrid>
+
+@code {
+
+    private readonly List<Notification> _notifications = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Store.OnChange += NotificationReceived;
+        await base.OnInitializedAsync();
+    }
+
+    public void Dispose() => Store.OnChange -= NotificationReceived;
+
+    private void NotificationReceived() => InvokeAsync(StateHasChanged);
+
+}

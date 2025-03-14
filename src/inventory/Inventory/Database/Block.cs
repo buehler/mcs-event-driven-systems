@@ -8,4 +8,4 @@ public enum BlockColor
     Green,
 }
 
-public record Block(string Id, BlockColor Color, bool IsDefect = false);
+public record Block(BlockColor Color);

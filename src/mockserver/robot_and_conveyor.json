@@ -75,7 +75,7 @@
     "httpResponse": {
       "statusCode": 200,
       "headers": {
-        "Content-Type": ["text/plain"]
+        "Content-Type": ["application/json"]
       },
       "body": "{\"color\": [true, false, false]}",
       "delay": {

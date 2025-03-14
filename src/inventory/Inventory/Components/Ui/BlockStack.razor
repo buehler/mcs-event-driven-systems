@@ -24,7 +24,7 @@
 
     [Parameter] public required IReadOnlyList<Database.Block> Blocks { get; set; }
 
-    private int EmptySlots => Math.Max(0, MaxBlocks - Blocks.Count);
+    [Parameter] public required string ColorText { get; set; }
 
-    private string ColorText => Blocks.FirstOrDefault()?.Color.ToString() ?? "N/A";
+    private int EmptySlots => Math.Max(0, MaxBlocks - Blocks.Count);
 }

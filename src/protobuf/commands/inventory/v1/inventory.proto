@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package commands.inventory.v1;
+
+option optimize_for = SPEED;
+
+enum BlockColor {
+    BLOCK_COLOR_UNSPECIFIED = 0;
+    BLOCK_COLOR_RED = 1;
+    BLOCK_COLOR_BLUE = 2;
+    BLOCK_COLOR_YELLOW = 3;
+    BLOCK_COLOR_GREEN = 4;
+}
+
+// Command to add a specific block to the inventory.
+message AddToInventory {
+  BlockColor color = 1;
+}
+
+message ProcessNewShipment{
+    
+}

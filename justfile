@@ -10,9 +10,21 @@
 @send-rotary-data value:
     #!/bin/bash
     timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-    echo "send {\"sensor_id\": \"abc\", \"location\": \"HumanWS\", \"timestamp\": \"$timestamp\", \"rotary\": {\"position\": {{value}} } }"
     result="{\"sensor_id\": \"abc\", \"location\": \"HumanWS\", \"timestamp\": \"$timestamp\", \"rotary\": {\"position\": {{value}} } }"
+    echo "send $result to mqtt sensor topic"
     docker compose exec mqtt mosquitto_pub -t Tinkerforge/HumanWS/rotary_abc -m "$result"
+
+@send-add-to-inventory-command color:
+    #!/bin/bash
+    result="{\"color\": \"BLOCK_COLOR_{{uppercase(color)}}\"}"
+
+    echo "send $result"
+    result=$(echo "$result" | \
+            buf convert \
+                src/protobuf/commands/inventory/v1/inventory.proto \
+                --type commands.inventory.v1.AddToInventory \
+                --from -#format=json --to -#format=binpb)
+    just cli-produce commands "$result"
 
 @create-topic name partitions='1' replication_factor='1':
     docker compose exec kafka \
@@ -41,8 +53,8 @@
     --topic '{{name}}' \
     --from-beginning
 
-@cli-produce name:
+@cli-produce name value:
     docker compose exec kafka \
-    /opt/bitnami/kafka/bin/kafka-console-producer.sh \
+    sh -c "echo '{{value}}' | /opt/bitnami/kafka/bin/kafka-console-producer.sh \
     --bootstrap-server 'kafka:9092' \
-    --topic '{{name}}'
+    --topic '{{name}}'"

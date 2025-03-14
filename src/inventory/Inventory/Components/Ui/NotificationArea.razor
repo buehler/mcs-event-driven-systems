@@ -4,7 +4,9 @@
 @inject NotificationStore Store
 @inject NavigationManager Navigation
 
-@implements IAsyncDisposable
+@rendermode InteractiveServer
+
+@implements IDisposable
 
 <div style="height: 24rem; overflow: auto">
     @foreach (var notification in Store.Notifications.OrderByDescending(n => n.Date))
@@ -25,24 +27,17 @@
 </div>
 
 @code {
-    private HubConnection? _hubConnection;
+
+    private readonly List<Notification> _notifications = new();
 
     protected override async Task OnInitializedAsync()
     {
-        _hubConnection = new HubConnectionBuilder()
-            .WithAutomaticReconnect()
-            .WithUrl(Navigation.ToAbsoluteUri("/hubs/notifications"))
-            .Build();
-        
-        await _hubConnection.StartAsync();
+        Store.OnChange += NotificationReceived;
         await base.OnInitializedAsync();
     }
 
-    public async ValueTask DisposeAsync()
-    {
-        if (_hubConnection is not null)
-        {
-            await _hubConnection.DisposeAsync();
-        }
-    }
+    public void Dispose() => Store.OnChange -= NotificationReceived;
+
+    private void NotificationReceived() => InvokeAsync(StateHasChanged);
+
 }
