@@ -1,0 +1,32 @@
+@using Inventory.Database
+
+<div 
+    class="border-dashed border-2" 
+    style="width: 120px; height: 120px; background-color: @BgColor; border-color: @BorderColor; border-radius: inherit; cursor: pointer;"
+    @onclick="() => OnClick()">
+</div>
+
+@code {
+
+    [Parameter] public BlockColor? Color { get; set; }
+    
+    [Parameter] public required Action OnClick { get; set; }
+
+    private string BgColor => Color switch
+    {
+        BlockColor.Red => Colors.Red.Lighten3,
+        BlockColor.Yellow => Colors.Yellow.Lighten3,
+        BlockColor.Blue => Colors.Blue.Lighten3,
+        BlockColor.Green => Colors.Green.Lighten3,
+        _ => Colors.Gray.Lighten3,
+    };
+
+    private string BorderColor => Color switch
+    {
+        BlockColor.Red => Colors.Red.Darken4,
+        BlockColor.Yellow => Colors.Yellow.Darken4,
+        BlockColor.Blue => Colors.Blue.Darken4,
+        BlockColor.Green => Colors.Green.Darken4,
+        _ => Colors.Gray.Darken4,
+    };
+}

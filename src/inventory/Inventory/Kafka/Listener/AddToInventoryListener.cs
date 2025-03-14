@@ -8,7 +8,7 @@ using BlockColor = Inventory.Proto.Commands.Inventory.V1.BlockColor;
 namespace Inventory.Kafka.Listener;
 
 public class AddToInventoryListener(
-    ConsumerFactory factory,
+    KafkaFactory factory,
     ILogger<AddToInventoryListener> logger,
     NotificationStore notifications,
     BlockStore blocks)

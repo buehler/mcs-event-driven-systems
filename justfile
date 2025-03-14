@@ -17,14 +17,8 @@
 @send-add-to-inventory-command color:
     #!/bin/bash
     result="{\"color\": \"BLOCK_COLOR_{{uppercase(color)}}\"}"
-
     echo "send $result"
-    result=$(echo "$result" | \
-            buf convert \
-                src/protobuf/commands/inventory/v1/inventory.proto \
-                --type commands.inventory.v1.AddToInventory \
-                --from -#format=json --to -#format=binpb)
-    just cli-produce commands "$result"
+    just produce commands "AddToInventory" "$result"
 
 @create-topic name partitions='1' replication_factor='1':
     docker compose exec kafka \
@@ -53,8 +47,6 @@
     --topic '{{name}}' \
     --from-beginning
 
-@cli-produce name value:
-    docker compose exec kafka \
-    sh -c "echo '{{value}}' | /opt/bitnami/kafka/bin/kafka-console-producer.sh \
-    --bootstrap-server 'kafka:9092' \
-    --topic '{{name}}'"
+[working-directory: 'src/test-kafka-publisher']
+@produce topic eventname data:
+    go run main.go '{{topic}}' '{{eventname}}' '{{data}}'

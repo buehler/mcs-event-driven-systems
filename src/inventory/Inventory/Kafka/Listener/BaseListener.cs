@@ -1,3 +1,5 @@
+using System.Text;
+
 using Confluent.Kafka;
 
 using Google.Protobuf;
@@ -5,7 +7,7 @@ using Google.Protobuf;
 namespace Inventory.Kafka.Listener;
 
 public abstract class BaseListener<T>(
-    ConsumerFactory factory,
+    KafkaFactory factory,
     string topic,
     string groupId,
     AutoOffsetReset autoOffsetReset) : IHostedService where T : IMessage<T>
@@ -48,7 +50,11 @@ public abstract class BaseListener<T>(
             while (!token.IsCancellationRequested)
             {
                 var result = consumer.Consume(token);
-                await Handle(result.Message.Value);
+                if (result.Message.Headers.TryGetLastBytes("messageType", out var data) &&
+                    Encoding.UTF8.GetString(data) == typeof(T).Name)
+                {
+                    await Handle(result.Message.Value);
+                }
             }
         }
         finally

@@ -15,7 +15,7 @@ var config = builder.Configuration.GetRequiredSection("Kafka").Get<KafkaSettings
              throw new ApplicationException("Config not parsed.");
 builder.Services.AddSingleton(config);
 
-builder.Services.AddSingleton<ConsumerFactory>();
+builder.Services.AddSingleton<KafkaFactory>();
 
 builder.AddKafkaConsumer<string, AddToInventory>("commands", settings =>
 {
