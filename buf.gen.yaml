@@ -4,6 +4,8 @@ clean: true
 managed:
   enabled: true
   override:
+    - file_option: optimize_for
+      value: SPEED
     - file_option: go_package_prefix
       value: gen
     - file_option: csharp_namespace_prefix

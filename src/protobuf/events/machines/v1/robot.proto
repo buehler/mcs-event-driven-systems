@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package events.machines.v1;
+
+import "models/v1/block.proto";
+
+// Event that is fired from the robot service when
+// a block has been picked up and placed on the NFC reader.
+message BlockPositionedOnNfc {}
+
+// Event that is fired from the robot service when
+// a block has been picked up from the NFC reader and placed
+// on the conveyor belt.
+message BlockPositionedOnConveyor {}
+
+// Event that is fired from the robot service when
+// a block has been picked up from the conveyor belt and placed
+// on the color detector.
+message BlockPositionedOnColorDetector {}
+
+// Event that is fired from the robot service when
+// a block has been sorted.
+message BlockSorted {
+  models.v1.BlockColor color = 1;
+}

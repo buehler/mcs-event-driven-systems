@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package events.inventory.v1;
+
+// Event that is fired when a shipment has been processed.
+message ShipmentProcessed {
+  string shipment_id = 1;
+}

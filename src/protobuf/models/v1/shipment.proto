@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package models.v1;
+
+// Position of the block to pickup (within a new shipment).
+// Resembles a 3x3 grid.
+enum PickupPosition {
+  PICKUP_POSITION_UNSPECIFIED = 0;
+  PICKUP_POSITION_TOP_LEFT = 1;
+  PICKUP_POSITION_TOP_MIDDLE = 2;
+  PICKUP_POSITION_TOP_RIGHT = 3;
+  PICKUP_POSITION_MIDDLE_LEFT = 4;
+  PICKUP_POSITION_MIDDLE_MIDDLE = 5;
+  PICKUP_POSITION_MIDDLE_RIGHT = 6;
+  PICKUP_POSITION_BOTTOM_LEFT = 7;
+  PICKUP_POSITION_BOTTOM_MIDDLE = 8;
+  PICKUP_POSITION_BOTTOM_RIGHT = 9;
+}

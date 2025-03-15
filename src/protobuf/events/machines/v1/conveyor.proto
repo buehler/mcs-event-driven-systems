@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package events.machines.v1;
+
+// Event that is fired from the conveyor service when
+// a block has been moved from the right robot to the left robot.
+message ConveyorBlockMoved {}

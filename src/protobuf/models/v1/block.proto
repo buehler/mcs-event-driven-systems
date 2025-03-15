@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package models.v1;
+
+// Color of a block in the system.
+enum BlockColor {
+  BLOCK_COLOR_UNSPECIFIED = 0;
+  BLOCK_COLOR_RED = 1;
+  BLOCK_COLOR_BLUE = 2;
+  BLOCK_COLOR_YELLOW = 3;
+  BLOCK_COLOR_GREEN = 4;
+}

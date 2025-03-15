@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package commands.machines.v1;
+
+import "models/v1/block.proto";
+import "models/v1/shipment.proto";
+
+// Command that instructs the picker robot (right)
+// to pickup a block at a certain position and
+// place it on the NFC reader.
+message MoveBlockFromShipmentToNfc {
+  models.v1.PickupPosition position = 1;
+}
+
+// Command that instructs the picker robot (right)
+// to pickup a block from the NFC reader and place
+// it on the conveyor belt.
+message MoveBlockFromNfcToConveyor {}
+
+// Command that instructs the colors robot (left)
+// to pickup a block from the conveyor belt and
+// place it on the color detector.
+message MoveBlockFromConveyorToColorDetector {}
+
+// Command that instructs both the robots to sort a certain block.
+// If the NFC reader submitted an ID, then the block is "green",
+// and the right robot (picker) will sort it. Otherwise, the left
+// robot (colors) has checked the color and will sort it accordingly.
+message SortBlock {
+  models.v1.BlockColor color = 1;
+}

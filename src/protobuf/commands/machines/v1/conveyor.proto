@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package commands.machines.v1;
+
+// Command that instructs the conveyor belt to move a block
+// from the right robot to the left robot.
+message ConveyorMoveBlock {}

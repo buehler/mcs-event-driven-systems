@@ -2,22 +2,15 @@ syntax = "proto3";
 
 package commands.inventory.v1;
 
-option optimize_for = SPEED;
-
-enum BlockColor {
-  BLOCK_COLOR_UNSPECIFIED = 0;
-  BLOCK_COLOR_RED = 1;
-  BLOCK_COLOR_BLUE = 2;
-  BLOCK_COLOR_YELLOW = 3;
-  BLOCK_COLOR_GREEN = 4;
-}
+import "models/v1/block.proto";
 
 // Command to add a specific block to the inventory.
 message AddToInventory {
-  BlockColor color = 1;
+  models.v1.BlockColor color = 1;
 }
 
+// Command that starts a new inventory run.
 message ProcessNewShipment {
   string shipment_id = 1;
-  repeated BlockColor blocks = 2;
+  repeated models.v1.BlockColor blocks = 2;
 }

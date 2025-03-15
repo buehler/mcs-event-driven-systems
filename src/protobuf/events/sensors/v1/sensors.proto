@@ -4,8 +4,6 @@ package events.sensors.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option optimize_for = SPEED;
-
 // Event that comes from the sensors of the inventory system.
 // The sensors talk over MQTT and this events get translated
 // into this format.
