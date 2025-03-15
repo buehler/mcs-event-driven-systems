@@ -38,7 +38,8 @@ public class KafkaFactory(IServiceProvider serviceProvider)
         var settings = serviceProvider.GetRequiredService<KafkaSettings>();
         var config = new ProducerConfig
         {
-            BootstrapServers = string.Join(',', settings.Servers), MessageSendMaxRetries = 3,
+            BootstrapServers = string.Join(',', settings.Servers),
+            MessageSendMaxRetries = 3,
         };
 
         var builder = new ProducerBuilder<string, T>(config);
@@ -53,7 +54,8 @@ public class KafkaFactory(IServiceProvider serviceProvider)
         await producer.ProduceAsync(topic,
             new Message<string, T>
             {
-                Value = data, Headers = [new Header("messageType", Encoding.UTF8.GetBytes(typeof(T).Name))],
+                Value = data,
+                Headers = [new Header("messageType", Encoding.UTF8.GetBytes(typeof(T).Name))],
             });
         producer.Flush(TimeSpan.FromMilliseconds(500));
     }

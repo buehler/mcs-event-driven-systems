@@ -18,7 +18,7 @@ repositories {
     mavenCentral()
 }
 
-sourceSets{
+sourceSets {
     main {
         kotlin.srcDir("src/main/kotlin")
         kotlin.srcDir("src/main/proto/kotlin")
@@ -27,7 +27,7 @@ sourceSets{
 }
 
 dependencies {
-    implementation("com.google.protobuf:protobuf-kotlin:4.30.0")
+    implementation("com.google.protobuf:protobuf-kotlin:4.30.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -35,6 +35,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.danilopianini:khttp:1.3.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")

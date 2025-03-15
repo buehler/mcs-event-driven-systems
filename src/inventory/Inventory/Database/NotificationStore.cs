@@ -8,7 +8,7 @@ public class NotificationStore
     ];
 
     public event Action? OnChange;
-    
+
     public IReadOnlyList<Notification> Notifications => _notifications;
 
     public void Add(Notification notification)

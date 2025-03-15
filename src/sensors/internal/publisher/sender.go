@@ -25,6 +25,9 @@ func SendKafkaEvent[TMsg proto.Message](protoMsg TMsg) {
 			Partition: kafka.PartitionAny,
 		},
 		Value: msgData,
+		Headers: []kafka.Header{
+			{Key: "messageType", Value: []byte("SensorEvent")},
+		},
 	}
 
 	err = producer.Produce(&msg, nil)

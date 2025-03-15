@@ -5,6 +5,7 @@ import (
 	"os"
 
 	inventoryCmds "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/commands/inventory/v1"
+	machineCmds "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/commands/machines/v1"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
@@ -32,6 +33,12 @@ func main() {
 	switch eventType {
 	case "AddToInventory":
 		var msg inventoryCmds.AddToInventory
+		if err := protojson.Unmarshal([]byte(jsonData), &msg); err != nil {
+			log.Fatalf("failed to unmarshal JSON: %v", err)
+		}
+		msgData, _ = proto.Marshal(&msg)
+	case "ConveyorMoveBlock":
+		var msg machineCmds.ConveyorMoveBlock
 		if err := protojson.Unmarshal([]byte(jsonData), &msg); err != nil {
 			log.Fatalf("failed to unmarshal JSON: %v", err)
 		}

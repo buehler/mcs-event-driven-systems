@@ -3,7 +3,7 @@ using Confluent.Kafka;
 using Inventory.Database;
 using Inventory.Proto.Commands.Inventory.V1;
 
-using BlockColor = Inventory.Proto.Commands.Inventory.V1.BlockColor;
+using BlockColor = Inventory.Proto.Models.V1.BlockColor;
 
 namespace Inventory.Kafka.Listener;
 

@@ -18,7 +18,13 @@
     #!/bin/bash
     result="{\"color\": \"BLOCK_COLOR_{{uppercase(color)}}\"}"
     echo "send $result"
-    just produce commands "AddToInventory" "$result"
+    just produce "commands" "AddToInventory" "$result"
+
+@send-move-block-on-conveyor-command:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "commands" "ConveyorMoveBlock" "$result"
 
 @create-topic name partitions='1' replication_factor='1':
     docker compose exec kafka \
@@ -47,6 +53,7 @@
     --topic '{{name}}' \
     --from-beginning
 
+[private]
 [working-directory: 'src/test-kafka-publisher']
 @produce topic eventname data:
     go run main.go '{{topic}}' '{{eventname}}' '{{data}}'

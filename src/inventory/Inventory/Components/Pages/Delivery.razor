@@ -1,10 +1,7 @@
 ﻿@page "/delivery"
-
-@using System.Text
-@using Confluent.Kafka
 @using Inventory.Kafka
 @using Inventory.Proto.Commands.Inventory.V1
-@using ProtoBlockColor = Inventory.Proto.Commands.Inventory.V1.BlockColor
+@using ProtoBlockColor = Inventory.Proto.Models.V1.BlockColor
 @using BlockColor = Inventory.Database.BlockColor
 
 @inject KafkaFactory Factory
