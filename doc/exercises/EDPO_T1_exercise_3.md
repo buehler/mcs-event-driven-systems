@@ -1,8 +1,8 @@
 # Exercise 3 - Suggestions for Software Project
 
-The implementations that have already been developed have been pushed to our public repo: `https://github.com/buehler/mcs-event-driven-systems/`.
+The implementations that have already been developed have been pushed to our public repo: `https://github.com/buehler/mcs-event-driven-systems/`. 
 
-Down below is the PBPMN that we created for our workflow. There is an annotated version showing the flows to the different Kafak topics on our Miro board. The link to this can be found at the bottom of the page. The annotated version, shows the emiters and listeners to different events and topics with Kafka as the message broker.
+Down below is the BPMN that we created for our workflow. There is an annotated version showing the flows to the different Kafak topics on our Miro board. The link to this can be found at the bottom of the page. The annotated version, shows the emiters and listeners to different events and topics with Kafka as the message broker.
 
 ![image.png](assets/image.png)
 
