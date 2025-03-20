@@ -7,6 +7,8 @@ import (
 
 	inventoryCmds "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/commands/inventory/v1"
 	machineCmds "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/commands/machines/v1"
+	inventoryEvts "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/events/inventory/v1"
+	machineEvts "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/events/machines/v1"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
@@ -41,8 +43,8 @@ func main() {
 
 	var msgData []byte
 	switch eventType {
-	case "AddToInventory":
-		msgData = encode[*inventoryCmds.AddToInventory](jsonData)
+	case "BlockSorted":
+		msgData = encode[*machineEvts.BlockSorted](jsonData)
 	case "ConveyorMoveBlock":
 		msgData = encode[*machineCmds.ConveyorMoveBlock](jsonData)
 	case "MoveBlockFromShipmentToNfc":
@@ -55,6 +57,8 @@ func main() {
 		msgData = encode[*machineCmds.MoveBlockFromConveyorToColorDetector](jsonData)
 	case "ProcessNewShipment":
 		msgData = encode[*inventoryCmds.ProcessNewShipment](jsonData)
+	case "ShipmentProcessed":
+		msgData = encode[*inventoryEvts.ShipmentProcessed](jsonData)
 	default:
 		panic("Invalid event type")
 	}

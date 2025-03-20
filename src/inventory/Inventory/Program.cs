@@ -6,6 +6,8 @@ using Inventory.Database;
 using Inventory.Kafka;
 using Inventory.Kafka.Listener;
 using Inventory.Proto.Commands.Inventory.V1;
+using Inventory.Proto.Events.Inventory.V1;
+using Inventory.Proto.Events.Machines.V1;
 
 using MudBlazor.Services;
 
@@ -16,15 +18,10 @@ var config = builder.Configuration.GetRequiredSection("Kafka").Get<KafkaSettings
 builder.Services.AddSingleton(config);
 
 builder.Services.AddSingleton<KafkaFactory>();
+builder.Services.AddSingleton<KafkaEventsListener>();
 
-builder.AddKafkaConsumer<string, AddToInventory>("commands", settings =>
-{
-    settings.Config.BootstrapServers = string.Join(',', config.Servers);
-    settings.Config.GroupId = "inventory-commands";
-    settings.Config.AutoOffsetReset = AutoOffsetReset.Latest;
-});
-
-builder.Services.AddHostedService<AddToInventoryListener>();
+builder.Services.AddHostedService<BlockSortedListener>();
+builder.Services.AddHostedService<ShipmentProcessedListener>();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
@@ -42,6 +39,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
 }
 
+await app.Services.GetRequiredService<KafkaEventsListener>().StartAsync(CancellationToken.None);
 
 app.UseAntiforgery();
 app.UseResponseCompression();

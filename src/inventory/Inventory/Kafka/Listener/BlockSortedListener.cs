@@ -2,22 +2,23 @@ using Confluent.Kafka;
 
 using Inventory.Database;
 using Inventory.Proto.Commands.Inventory.V1;
+using Inventory.Proto.Events.Machines.V1;
 
 using BlockColor = Inventory.Proto.Models.V1.BlockColor;
 
 namespace Inventory.Kafka.Listener;
 
-public class AddToInventoryListener(
-    KafkaFactory factory,
-    ILogger<AddToInventoryListener> logger,
+public class BlockSortedListener(
+    KafkaEventsListener events,
+    ILogger<BlockSortedListener> logger,
     NotificationStore notifications,
     BlockStore blocks)
-    : BaseListener<AddToInventory>(factory, "commands", "inventory-commands", AutoOffsetReset.Latest)
+    : IHostedService
 {
-    protected override Task Handle(AddToInventory message)
+    private Task Handle(BlockSorted message)
     {
-        logger.LogInformation($"Received add to inventory {message} command");
-        notifications.Add(new($"Add new Block: {message.Color}"));
+        logger.LogInformation($"Received block sorted {message} event");
+        notifications.Add(new($"Sorted {message.Color} Block"));
         blocks.Add(new(message.Color switch
         {
             BlockColor.Red => Database.BlockColor.Red,
@@ -29,4 +30,12 @@ public class AddToInventoryListener(
 
         return Task.CompletedTask;
     }
+
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        events.AddHandler<BlockSorted>(Handle);
+        return Task.CompletedTask;
+    }
+
+    public  Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

@@ -14,11 +14,17 @@
     echo "send $result to mqtt sensor topic"
     docker compose exec mqtt mosquitto_pub -t Tinkerforge/HumanWS/rotary_abc -m "$result"
 
-@send-add-to-inventory-command color:
+@send-block-sorted-event color:
     #!/bin/bash
     result="{\"color\": \"BLOCK_COLOR_{{uppercase(color)}}\"}"
     echo "send $result"
-    just produce "commands" "AddToInventory" "$result"
+    just produce "events" "BlockSorted" "$result"
+
+@send-shipement-processed-event:
+    #!/bin/bash
+    result="{\"shipment_id\": \"shipment-123\"}"
+    echo "send $result"
+    just produce "events" "ShipmentProcessed" "$result"
 
 @send-move-block-on-conveyor-command:
     #!/bin/bash

@@ -4,11 +4,6 @@ package commands.inventory.v1;
 
 import "models/v1/block.proto";
 
-// Command to add a specific block to the inventory.
-message AddToInventory {
-  models.v1.BlockColor color = 1;
-}
-
 // Command that starts a new inventory run.
 message ProcessNewShipment {
   string shipment_id = 1;
