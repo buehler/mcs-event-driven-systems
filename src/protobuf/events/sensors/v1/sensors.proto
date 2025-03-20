@@ -2,39 +2,31 @@ syntax = "proto3";
 
 package events.sensors.v1;
 
-import "google/protobuf/timestamp.proto";
+// Object detected on top of the NFC reader.
+// If an object has no NFC tag, it will not be detected and thus
+// must be sent to the color detector.
+message NFCObjectDeteced {}
 
-// Event that comes from the sensors of the inventory system.
-// The sensors talk over MQTT and this events get translated
-// into this format.
-message SensorEvent {
-  string sensor_id = 1;
-  string location = 2;
-  google.protobuf.Timestamp timestamp = 3;
+// If an object has been detected, it will be removed afterwards
+// and sorted to the green inventory.
+message NFCObjectRemoved {}
 
-  oneof data {
-    RotaryData rotary = 4;
-    DistanceData distance = 5;
-    NFCData nfc = 6;
-  }
-}
+// The distance sensor on the right (near the picker robot)
+// has detected an object in front.
+message RightObjectDeteced {}
 
-message RotaryData {
-  uint32 position = 1;
-}
+// The distance sensor on the right (near the picker robot)
+// has detected that the object in front has been removed.
+message RightObjectRemoved {}
 
-enum DistanceRange {
-  DISTANCE_RANGE_UNSPECIFIED = 0;
-  DISTANCE_RANGE_SHORT = 1;
-  DISTANCE_RANGE_MEDIUM = 2;
-  DISTANCE_RANGE_LONG = 3;
-}
+// The distance sensor on the left (near the colors robot)
+// has detected an object in front.
+message LeftObjectDeteced {}
 
-message DistanceData {
-  float distance = 1;
-  DistanceRange range = 2;
-}
+// The distance sensor on the left (near the colors robot)
+// has detected that the object in front has been removed.
+message LeftObjectRemoved {}
 
-message NFCData {
-  string id = 1;
-}
+// The button was pressed that states that the area
+// is cleared and the robots may start working.
+message AreaClearButtonPressed {}

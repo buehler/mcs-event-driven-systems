@@ -11,6 +11,15 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+func encode[T proto.Message](jsonData string) []byte {
+	var msg T
+	if err := protojson.Unmarshal([]byte(jsonData), msg); err != nil {
+		log.Fatalf("failed to unmarshal JSON: %v", err)
+	}
+	msgData, _ := proto.Marshal(msg)
+	return msgData
+}
+
 func main() {
 	args := os.Args[1:]
 
@@ -32,17 +41,19 @@ func main() {
 	var msgData []byte
 	switch eventType {
 	case "AddToInventory":
-		var msg inventoryCmds.AddToInventory
-		if err := protojson.Unmarshal([]byte(jsonData), &msg); err != nil {
-			log.Fatalf("failed to unmarshal JSON: %v", err)
-		}
-		msgData, _ = proto.Marshal(&msg)
+		msgData = encode[*inventoryCmds.AddToInventory](jsonData)
 	case "ConveyorMoveBlock":
-		var msg machineCmds.ConveyorMoveBlock
-		if err := protojson.Unmarshal([]byte(jsonData), &msg); err != nil {
-			log.Fatalf("failed to unmarshal JSON: %v", err)
-		}
-		msgData, _ = proto.Marshal(&msg)
+		msgData = encode[*machineCmds.ConveyorMoveBlock](jsonData)
+	case "MoveBlockFromShipmentToNfc":
+		msgData = encode[*machineCmds.MoveBlockFromShipmentToNfc](jsonData)
+	case "MoveBlockFromNfcToConveyor":
+		msgData = encode[*machineCmds.MoveBlockFromNfcToConveyor](jsonData)
+	case "SortBlock":
+		msgData = encode[*machineCmds.SortBlock](jsonData)
+	case "MoveBlockFromConveyorToColorDetector":
+		msgData = encode[*machineCmds.MoveBlockFromConveyorToColorDetector](jsonData)
+	case "ProcessNewShipment":
+		msgData = encode[*inventoryCmds.ProcessNewShipment](jsonData)
 	default:
 		panic("Invalid event type")
 	}

@@ -21,6 +21,7 @@ var (
 		"distance_IR_mid":   true,
 		"distance_IR_short": true,
 		"distance_IR_long":  true,
+		"button":            true,
 	}
 )
 
