@@ -55,3 +55,5 @@ plugins:
     out: src/picker/src/main/proto/kotlin
   - remote: buf.build/protocolbuffers/java
     out: src/picker/src/main/proto/java
+  - remote: buf.build/protocolbuffers/java
+    out: src/manager/src/main/proto/java

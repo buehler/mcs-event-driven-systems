@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"reflect"
 
 	inventoryCmds "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/commands/inventory/v1"
 	machineCmds "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/commands/machines/v1"
@@ -12,7 +13,7 @@ import (
 )
 
 func encode[T proto.Message](jsonData string) []byte {
-	var msg T
+	msg := reflect.New(reflect.TypeOf((*T)(nil)).Elem().Elem()).Interface().(T)
 	if err := protojson.Unmarshal([]byte(jsonData), msg); err != nil {
 		log.Fatalf("failed to unmarshal JSON: %v", err)
 	}
@@ -69,7 +70,7 @@ func main() {
 		},
 	}
 
-	p.Produce(&msg, nil)
+	_ = p.Produce(&msg, nil)
 	p.Flush(1000)
 	log.Println("Successfully sent Kafka message")
 }
