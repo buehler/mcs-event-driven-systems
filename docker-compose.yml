@@ -56,7 +56,7 @@ services:
     environment:
       - KAFKA_HOST=kafka
       - KAFKA_PORT=29092
-      - KAFKA_TOPIC=sensors
+      - KAFKA_TOPIC=events
       - MQTT_HOST=mqtt
 
   conveyor:
