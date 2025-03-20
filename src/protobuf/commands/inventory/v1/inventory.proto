@@ -12,5 +12,8 @@ message AddToInventory {
 // Command that starts a new inventory run.
 message ProcessNewShipment {
   string shipment_id = 1;
-  repeated models.v1.BlockColor blocks = 2;
+
+  // Places in the delivery grid that are filled
+  // with a block (3x3 grid).
+  repeated bool blocks = 2;
 }

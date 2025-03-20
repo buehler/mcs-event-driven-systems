@@ -1,32 +1,28 @@
-@using Inventory.Database
-
-<div 
-    class="border-dashed border-2" 
-    style="width: 120px; height: 120px; background-color: @BgColor; border-color: @BorderColor; border-radius: inherit; cursor: pointer;"
+<div
+    class="border-dashed border-2"
+    style="width: 120px; height: 120px; background-color: @BgColor; border-color: @BorderColor; border-radius: inherit; cursor: pointer; display:  flex; justify-content: center; align-items: center;"
     @onclick="() => OnClick()">
+    @if (Filled)
+    {
+        <MudIcon
+            Icon="@Icons.Material.Filled.Check"
+            Size="Size.Large"
+            Color="@Color.Secondary"/>
+    }
 </div>
 
 @code {
 
-    [Parameter] public BlockColor? Color { get; set; }
-    
+    [Parameter] public bool Filled { get; set; }
+
     [Parameter] public required Action OnClick { get; set; }
 
-    private string BgColor => Color switch
-    {
-        BlockColor.Red => Colors.Red.Lighten3,
-        BlockColor.Yellow => Colors.Yellow.Lighten3,
-        BlockColor.Blue => Colors.Blue.Lighten3,
-        BlockColor.Green => Colors.Green.Lighten3,
-        _ => Colors.Gray.Lighten3,
-    };
+    private string BgColor => Filled
+        ? Colors.Gray.Darken3
+        : Colors.Gray.Lighten2;
 
-    private string BorderColor => Color switch
-    {
-        BlockColor.Red => Colors.Red.Darken4,
-        BlockColor.Yellow => Colors.Yellow.Darken4,
-        BlockColor.Blue => Colors.Blue.Darken4,
-        BlockColor.Green => Colors.Green.Darken4,
-        _ => Colors.Gray.Darken4,
-    };
+    private string BorderColor => Filled
+        ? Colors.Gray.Lighten3
+        : Colors.Gray.Darken4;
+
 }

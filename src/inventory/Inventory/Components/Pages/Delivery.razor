@@ -1,11 +1,11 @@
 ﻿@page "/delivery"
+@using Inventory.Database
 @using Inventory.Kafka
 @using Inventory.Proto.Commands.Inventory.V1
-@using ProtoBlockColor = Inventory.Proto.Models.V1.BlockColor
-@using BlockColor = Inventory.Database.BlockColor
 
 @inject KafkaFactory Factory
 @inject NavigationManager NavigationManager
+@inject NotificationStore Notifications
 
 @rendermode InteractiveServer
 
@@ -21,28 +21,17 @@
 <MudCard>
     <MudCardContent>
         <MudText Align="Align.Center" GutterBottom="true">Create Delivery Notice</MudText>
-        <div style="text-align: center">
-            <div
-                style="background-color: @Colors.Red.Darken3; display: inline-block; width: 24px; height: 24px; border-radius: 9999px;"></div>
-            <MudIcon Icon="@Icons.Material.Filled.ArrowRight"/>
-            <div
-                style="background-color: @Colors.Blue.Darken3; display: inline-block; width: 24px; height: 24px; border-radius: 9999px;"></div>
-            <MudIcon Icon="@Icons.Material.Filled.ArrowRight"/>
-            <div
-                style="background-color: @Colors.Yellow.Darken3; display: inline-block; width: 24px; height: 24px; border-radius: 9999px;"></div>
-            <MudIcon Icon="@Icons.Material.Filled.ArrowRight"/>
-            <div
-                style="background-color: @Colors.Green.Darken3; display: inline-block; width: 24px; height: 24px; border-radius: 9999px;"></div>
-            <MudIcon Icon="@Icons.Material.Filled.ArrowRight"/>
-            <div
-                style="border: 2px dashed @Colors.Gray.Darken3; display: inline-block; width: 24px; height: 24px; border-radius: 9999px;"></div>
-        </div>
+        <MudText Align="Align.Center" GutterBottom="true">
+            Select the blocks that are filled with inventory.
+            The inventory system will then determine the color of the
+            blocks and store them in the inventory.
+        </MudText>
         <div
             style="margin-top: 2rem; margin-bottom: 2rem; display: grid; grid-template-columns: 120px 120px 120px; gap: 8px; justify-content: center;">
             @for (var i = 0; i < 9; i++)
             {
                 var idx = i;
-                <FormBlock Color="_colors[idx]" OnClick="@(() => ChangeColor(idx))"/>
+                <FormBlock Filled="_colors[idx]" OnClick="@(() => SelectBlock(idx))"/>
             }
         </div>
         <div style="text-align: end;">
@@ -55,24 +44,17 @@
 
 @code {
 
-    private readonly BlockColor?[] _colors = new BlockColor?[9];
+    private readonly bool[] _colors = new bool[9];
 
-    private void ChangeColor(int idx)
+    private void SelectBlock(int idx)
     {
-        _colors[idx] = _colors[idx] switch
-        {
-            BlockColor.Red => BlockColor.Blue,
-            BlockColor.Blue => BlockColor.Yellow,
-            BlockColor.Yellow => BlockColor.Green,
-            BlockColor.Green => null,
-            null => BlockColor.Red,
-        };
+        _colors[idx] = !_colors[idx];
         StateHasChanged();
     }
 
     private async Task StartInventoryProcess()
     {
-        if (_colors.Count(b => b is not null) == 0)
+        if (_colors.All(b => !b))
         {
             NavigationManager.NavigateTo("/");
             return;
@@ -81,20 +63,10 @@
         var cmd = new ProcessNewShipment
         {
             ShipmentId = Guid.NewGuid().ToString(),
-            Blocks =
-            {
-                _colors.Select(b => b switch
-                {
-                    BlockColor.Red => ProtoBlockColor.Red,
-                    BlockColor.Blue => ProtoBlockColor.Blue,
-                    BlockColor.Yellow => ProtoBlockColor.Yellow,
-                    BlockColor.Green => ProtoBlockColor.Green,
-                    null => ProtoBlockColor.Unspecified,
-                    _ => throw new ArgumentOutOfRangeException(nameof(b), b, null)
-                })
-            },
+            Blocks = {_colors},
         };
         await Factory.SendMessage("commands", cmd);
+        Notifications.Add(new("Starting Inventory Process"));
         NavigationManager.NavigateTo("/");
     }
 
