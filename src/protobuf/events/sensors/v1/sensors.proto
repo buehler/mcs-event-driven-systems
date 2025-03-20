@@ -4,10 +4,16 @@ package events.sensors.v1;
 
 import "models/v1/block.proto";
 
+// The rotary sensor value was changed, this results in the conveyor
+// speed being changed.
+message ConveyorSpeedChanged {
+  int32 speed = 1;
+}
+
 // Object detected on top of the NFC reader.
 // If an object has no NFC tag, it will not be detected and thus
 // must be sent to the color detector.
-message NFCObjectDeteced {}
+message NFCObjectDetected {}
 
 // If an object has been detected, it will be removed afterwards
 // and sorted to the green inventory.
@@ -15,7 +21,7 @@ message NFCObjectRemoved {}
 
 // The distance sensor on the right (near the picker robot)
 // has detected an object in front.
-message RightObjectDeteced {}
+message RightObjectDetected {}
 
 // The distance sensor on the right (near the picker robot)
 // has detected that the object in front has been removed.
@@ -23,7 +29,7 @@ message RightObjectRemoved {}
 
 // The distance sensor on the left (near the colors robot)
 // has detected an object in front.
-message LeftObjectDeteced {}
+message LeftObjectDetected {}
 
 // The distance sensor on the left (near the colors robot)
 // has detected that the object in front has been removed.

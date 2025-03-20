@@ -4,32 +4,33 @@ import (
 	"encoding/json"
 
 	sensorsv1 "github.com/buehler/mcs-event-driven-systems/sensors/gen/events/sensors/v1"
+	"github.com/buehler/mcs-event-driven-systems/sensors/internal/publisher"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/sirupsen/logrus"
-	"google.golang.org/protobuf/proto"
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type Rotary struct {
 	Event
-	Position uint16 `json:"position"`
+	Position int32 `json:"position"`
 }
 
-func processRotary(id, location string, msg mqtt.Message) proto.Message {
+var lastPosition int32
+
+func OnRotaryMessageReceived(_ mqtt.Client, msg mqtt.Message) {
+	logger := logrus.WithField("topic", msg.Topic())
+	logger.Info("Handle received message")
+
 	var event Rotary
 	if err := json.Unmarshal(msg.Payload(), &event); err != nil {
 		logrus.Errorf("Failed to unmarshal rotary event: %v", err)
-		return nil
+		return
 	}
 
-	return &sensorsv1.SensorEvent{
-		SensorId:  id,
-		Location:  location,
-		Timestamp: timestamppb.Now(),
-		Data: &sensorsv1.SensorEvent_Rotary{
-			Rotary: &sensorsv1.RotaryData{
-				Position: uint32(event.Position),
-			},
-		},
+	if lastPosition != event.Position {
+		publisher.SendKafkaEvent(&sensorsv1.ConveyorSpeedChanged{Speed: event.Position})
+		lastPosition = event.Position
+		logger.Info("Conveyor speed changed")
+	} else {
+		logger.Warn("Conveyor speed not changed")
 	}
 }

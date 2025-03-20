@@ -1,6 +1,8 @@
 package publisher
 
 import (
+	"reflect"
+
 	"github.com/buehler/mcs-event-driven-systems/sensors/internal/config"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/sirupsen/logrus"
@@ -18,6 +20,8 @@ func SendKafkaEvent[TMsg proto.Message](protoMsg TMsg) {
 		return
 	}
 
+	msgType := reflect.ValueOf(protoMsg).Type().Elem().Name()
+
 	appConfig := config.GetConfig()
 	msg := kafka.Message{
 		TopicPartition: kafka.TopicPartition{
@@ -26,7 +30,7 @@ func SendKafkaEvent[TMsg proto.Message](protoMsg TMsg) {
 		},
 		Value: msgData,
 		Headers: []kafka.Header{
-			{Key: "messageType", Value: []byte("SensorEvent")},
+			{Key: "messageType", Value: []byte(msgType)},
 		},
 	}
 
@@ -35,5 +39,5 @@ func SendKafkaEvent[TMsg proto.Message](protoMsg TMsg) {
 		logrus.WithError(err).Error("Failed to produce / send message")
 		return
 	}
-	logrus.Info("Successfully sent Kafka message")
+	logrus.WithField("messageType", msgType).Info("Successfully sent Kafka message")
 }

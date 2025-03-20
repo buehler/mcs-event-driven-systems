@@ -1,8 +1,7 @@
 package events
 
 type Event struct {
-	UID       string `json:"UID"`
-	Type      string `json:"type"`
-	Location  string `json:"location"`
-	MessageID string `json:"messageID"`
+	UID      string `json:"UID"`
+	Type     string `json:"type"`
+	Location string `json:"location"`
 }

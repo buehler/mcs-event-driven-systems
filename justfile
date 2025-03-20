@@ -7,22 +7,42 @@
 @compose-dev +ARGS:
     docker compose -f docker-compose.yml -f docker-compose.dev.yml {{ARGS}}
 
-@send-rotary-data value:
+@sensor-button-press:
     #!/bin/bash
-    timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-    result="{\"sensor_id\": \"abc\", \"location\": \"HumanWS\", \"timestamp\": \"$timestamp\", \"rotary\": {\"position\": {{value}} } }"
-    echo "send $result to mqtt sensor topic"
-    docker compose exec mqtt mosquitto_pub -t Tinkerforge/HumanWS/rotary_abc -m "$result"
+    echo "send MQTT sensor button press"
+    just mqtt "HumanWS" "rgb_button" "24dY" '"state": "PRESSED!"'
+    sleep 1
+    just mqtt "HumanWS" "rgb_button" "24dY" '"state": "RELEASED!"'
+
+@sensor-left-distance-value value:
+    #!/bin/bash
+    echo "send MQTT left distance sensor value {{value}}"
+    just mqtt "Conveyor" "distance_IR_short" "TFu" '"distance": {{value}}'
+
+@sensor-right-distance-value value:
+    #!/bin/bash
+    echo "send MQTT right distance sensor value {{value}}"
+    just mqtt "HumanWS" "distance_IR_short" "TG2" '"distance": {{value}}'
+
+@sensor-rotary-value value:
+    #!/bin/bash
+    echo "send MQTT rotary sensor value {{value}}"
+    just mqtt "HumanWS" "rotary" "KVx" '"position": {{value}}'
+
+@sensor-nfc-value hasTag:
+    #!/bin/bash
+    echo 'send MQTT NFC sensor value {{ if hasTag == "yes" { "with tag" } else { "without tag" } }}'
+    just mqtt "Conveyor" "nfc" "22Mp" '{{ if hasTag == "yes" { "\"ID\": \"foobar\"" } else { " \"foo\": 1 " } }}'
 
 @send-block-sorted-event color:
     #!/bin/bash
-    result="{\"color\": \"BLOCK_COLOR_{{uppercase(color)}}\"}"
+    result='{"color": "BLOCK_COLOR_{{uppercase(color)}}"}'
     echo "send $result"
     just produce "events" "BlockSorted" "$result"
 
 @send-shipement-processed-event:
     #!/bin/bash
-    result="{\"shipment_id\": \"shipment-123\"}"
+    result='{"shipment_id": "shipment-123"}'
     echo "send $result"
     just produce "events" "ShipmentProcessed" "$result"
 
@@ -34,7 +54,7 @@
 
 @send-block-to-nfc-command position="top_left":
     #!/bin/bash
-    result="{\"position\": \"PICKUP_POSITION_{{uppercase(position)}}\"}"
+    result='{"position": "PICKUP_POSITION_{{uppercase(position)}}"}'
     echo "send $result"
     just produce "commands" "MoveBlockFromShipmentToNfc" "$result"
 
@@ -52,7 +72,7 @@
 
 @send-sort-block-command color:
     #!/bin/bash
-    result="{\"color\": \"BLOCK_COLOR_{{uppercase(color)}}\"}"
+    result='{"color": "BLOCK_COLOR_{{uppercase(color)}}"}'
     echo "send $result"
     just produce "commands" "SortBlock" "$result"
 
@@ -87,3 +107,7 @@
 [working-directory: 'src/test-kafka-publisher']
 @produce topic eventname data:
     go run main.go '{{topic}}' '{{eventname}}' '{{data}}'
+
+[private]
+@mqtt loc type uid data:
+    docker compose exec mqtt mosquitto_pub -t Tinkerforge/{{loc}}/{{type}}_{{uid}} -m '{ "UID": "{{uid}}", "type": "{{type}}", "location": "{{loc}}", {{data}} }'

@@ -15,7 +15,7 @@ func StartMQTTListener(ctx context.Context) {
 
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("tcp://%s:%d", appConfig.MqttHost, appConfig.MqttPort))
-	opts.SetClientID("sensor_mqtt_listener")
+	opts.SetClientID("sensors_mqtt_listener")
 	opts.SetOnConnectHandler(onConnect)
 	opts.SetConnectionLostHandler(onConnectionLost)
 
@@ -33,7 +33,28 @@ func StartMQTTListener(ctx context.Context) {
 	}
 	defer client.Disconnect(250)
 
-	if token := client.Subscribe("Tinkerforge/#", 0, onMessageReceived); token.Wait() && token.Error() != nil {
+	// Subscribe to NFC sensor data
+	if token := client.Subscribe(appConfig.SensorsNFCTopic, 0, events.OnNFCMessageReceived); token.Wait() && token.Error() != nil {
+		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
+	}
+
+	// Subscribe to rotary sensor data
+	if token := client.Subscribe(appConfig.SensorsRotaryTopic, 0, events.OnRotaryMessageReceived); token.Wait() && token.Error() != nil {
+		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
+	}
+
+	// Subscribe to left distance sensor data
+	if token := client.Subscribe(appConfig.SensorsLeftDistTopic, 0, events.OnLeftDistMessageReceived); token.Wait() && token.Error() != nil {
+		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
+	}
+
+	// Subscribe to right distance sensor data
+	if token := client.Subscribe(appConfig.SensorsRightDistTopic, 0, events.OnRightDistMessageReceived); token.Wait() && token.Error() != nil {
+		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
+	}
+
+	// Subscribe to clearance button sensor data
+	if token := client.Subscribe(appConfig.SensorsClearanceBtnTopic, 0, events.OnClearanceBtnMessageReceived); token.Wait() && token.Error() != nil {
 		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
 	}
 
@@ -47,10 +68,4 @@ func onConnect(_ mqtt.Client) {
 
 func onConnectionLost(_ mqtt.Client, err error) {
 	logrus.WithError(err).Fatal("Connection to MQTT broker lost")
-}
-
-func onMessageReceived(_ mqtt.Client, msg mqtt.Message) {
-	logger := logrus.WithField("topic", msg.Topic())
-	logger.Info("Handle received message")
-	events.HandleReceivedMQTTMessage(msg)
 }
