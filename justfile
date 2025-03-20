@@ -26,6 +26,24 @@
     echo "send $result"
     just produce "commands" "ConveyorMoveBlock" "$result"
 
+@send-block-to-nfc-command position="top_left":
+    #!/bin/bash
+    result="{\"position\": \"PICKUP_POSITION_{{uppercase(position)}}\"}"
+    echo "send $result"
+    just produce "commands" "MoveBlockFromShipmentToNfc" "$result"
+
+@send-block-to-conveyor-command:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "commands" "MoveBlockFromNfcToConveyor" "$result"
+
+@send-sort-block-command color:
+    #!/bin/bash
+    result="{\"color\": \"BLOCK_COLOR_{{uppercase(color)}}\"}"
+    echo "send $result"
+    just produce "commands" "SortBlock" "$result"
+
 @create-topic name partitions='1' replication_factor='1':
     docker compose exec kafka \
         /opt/bitnami/kafka/bin/kafka-topics.sh \
