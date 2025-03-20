@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package events.sensors.v1;
 
+import "models/v1/block.proto";
+
 // Object detected on top of the NFC reader.
 // If an object has no NFC tag, it will not be detected and thus
 // must be sent to the color detector.
@@ -30,3 +32,9 @@ message LeftObjectRemoved {}
 // The button was pressed that states that the area
 // is cleared and the robots may start working.
 message AreaClearButtonPressed {}
+
+// The robot with the color sensor has put a block
+// on the color detector and the color has been detected.
+message ColorDetected {
+  models.v1.BlockColor color = 1;
+}

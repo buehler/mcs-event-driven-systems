@@ -38,6 +38,12 @@
     echo "send $result"
     just produce "commands" "MoveBlockFromNfcToConveyor" "$result"
 
+@send-block-to-color-command:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "commands" "MoveBlockFromConveyorToColorDetector" "$result"
+
 @send-sort-block-command color:
     #!/bin/bash
     result="{\"color\": \"BLOCK_COLOR_{{uppercase(color)}}\"}"
