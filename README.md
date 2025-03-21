@@ -61,3 +61,9 @@ sequenceDiagram
 - In general: if a robot is not able to pick up a certain part
 - If the delivery contains wrong information about the amount of parts
 - If during the inventoring process, parts are lost
+
+
+## Process Model Information
+### Error Scenarios
+Error scenarios are currently managed with manual intervention. We decided to wait for 5 seconds for events to occur. 
+Otherwise a manual intervention is triggered. After resolving the last step is repeated.
