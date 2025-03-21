@@ -42,10 +42,13 @@ public class CommandListener {
                 handleProcessNewShipment(payload);
                 break;
 
+
             default:
                 logger.warn("Unhandled message type: {}", messageType);
         }
     }
+
+
 
     /**
      * Handles the 'ProcessNewShipment' command.
