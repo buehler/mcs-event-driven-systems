@@ -17,11 +17,7 @@
     <bpmn:sequenceFlow id="Flow_05svltg" sourceRef="Event_1u3sn9r" targetRef="Event_0ib7rjh" />
     <bpmn:sequenceFlow id="Flow_0f6gys1" sourceRef="Event_0ib7rjh" targetRef="Activity_0ty14so" />
     <bpmn:serviceTask id="Activity_0ty14so" name="Initialize Shipment Data" camunda:class="ch.unisg.edpo.manager.initialize.ShipmentFileInitialize">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="blocks" />
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
+      <bpmn:extensionElements />
       <bpmn:incoming>Flow_0f6gys1</bpmn:incoming>
       <bpmn:outgoing>Flow_0gx0aq0</bpmn:outgoing>
     </bpmn:serviceTask>
