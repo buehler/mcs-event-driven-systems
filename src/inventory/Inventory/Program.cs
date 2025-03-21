@@ -20,6 +20,7 @@ builder.Services.AddSingleton(config);
 builder.Services.AddSingleton<KafkaFactory>();
 builder.Services.AddSingleton<KafkaEventsListener>();
 
+builder.Services.AddHostedService<KafkaListenerService>();
 builder.Services.AddHostedService<BlockSortedListener>();
 builder.Services.AddHostedService<ShipmentProcessedListener>();
 
@@ -38,8 +39,6 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
 }
-
-await app.Services.GetRequiredService<KafkaEventsListener>().StartAsync(CancellationToken.None);
 
 app.UseAntiforgery();
 app.UseResponseCompression();
