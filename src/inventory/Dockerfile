@@ -15,9 +15,6 @@ COPY --from=proto_builder /src/src/inventory .
 RUN dotnet publish \
     --configuration Release \
     -p:PublishSingleFile=true \
-    -p:PublishReadyToRun=true \
-    -p:DebugType=None \
-    -p:DebugSymbols=false \
     -o ./artifacts \
     Inventory/Inventory.csproj
 
