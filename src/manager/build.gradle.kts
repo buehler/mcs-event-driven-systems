@@ -28,6 +28,10 @@ dependencies {
     implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-rest:7.22.0")
     implementation("org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:7.22.0")
 
+    // Camunda Spin dependencies
+    implementation("org.camunda.bpm:camunda-engine-plugin-spin:7.22.0") // Spin integration with Camunda
+    implementation("org.camunda.spin:camunda-spin-dataformat-json-jackson:1.16.0") // JSON data format support for Spin
+
     // Database support if needed for Camunda
     implementation("com.h2database:h2") // Use another DB if preferred
 
