@@ -1,4 +1,4 @@
-package ch.unisg.edpo.manager.initialize;
+package ch.unisg.edpo.manager.tasks.initialize;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,24 +8,23 @@ import org.camunda.spin.Spin;
 import org.camunda.spin.json.SpinJsonNode;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ShipmentFileInitialize implements JavaDelegate {
+public class ShipmentFileInitializeServiceTask implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) {
-        // Fetch 'blocks' variable from process scope (stored as JSON)
+        // Fetch the 'blocks' variable from process scope (stored as JSON)
         Object blocks = execution.getProcessEngineServices()
                 .getRuntimeService()
                 .getVariable(execution.getProcessInstanceId(), "blocks");
 
         if (blocks == null) {
-            log.warn("'blocks' variable is null, cannot proceed.");
+            log.warn("'blocks' variable is null; cannot proceed.");
             return;
         }
 
@@ -47,33 +46,36 @@ public class ShipmentFileInitialize implements JavaDelegate {
 
         // Ensure the list has 9 elements (as expected)
         if (blocksList.size() != 9) {
-            log.error("Unexpected size for 'blocks' list. Expected 9 elements, found {}", blocksList.size());
+            log.error("Unexpected size for 'blocks' list; expected 9 elements, found {}", blocksList.size());
             return;
         }
 
-        // Map positions to their corresponding block values
-        Map<String, Boolean> blockPositions = new HashMap<>();
-        blockPositions.put("top-left", blocksList.get(0));
-        blockPositions.put("top-middle", blocksList.get(1));
-        blockPositions.put("top-right", blocksList.get(2));
-        blockPositions.put("middle-left", blocksList.get(3));
-        blockPositions.put("middle-middle", blocksList.get(4));
-        blockPositions.put("middle-right", blocksList.get(5));
-        blockPositions.put("bottom-left", blocksList.get(6));
-        blockPositions.put("bottom-middle", blocksList.get(7));
-        blockPositions.put("bottom-right", blocksList.get(8));
+        // Array of positions corresponding to block indices
+        String[] positions = {
+                "top-left", "top-middle", "top-right",
+                "middle-left", "middle-middle", "middle-right",
+                "bottom-left", "bottom-middle", "bottom-right"
+        };
 
-        // Calculate the remaining blocks by counting 'true' values in the list
-        long blocksRemaining = blocksList.stream()
-                .filter(Boolean::booleanValue)
-                .count();
+        // Create a List to store only block positions with true values
+        List<String> blockPositions = new ArrayList<>();
+
+        // Iterate through the blocks and add positions of 'true' blocks to the list
+        for (int i = 0; i < blocksList.size(); i++) {
+            if (blocksList.get(i)) { // Only include positions with `true` status
+                blockPositions.add(positions[i]);
+            }
+        }
+
+        // Calculate the number of remaining blocks
+        long blocksRemaining = blockPositions.size(); // Only count the true positions
 
         // Log the newly created variables for debugging
         log.info("Generated 'blockPositions': {}", blockPositions);
         log.info("Calculated 'blocksRemaining': {}", blocksRemaining);
 
         // Store the new variables in the process instance scope
-        execution.setVariable("blockPositions", blockPositions);
+        execution.setVariable("blockPositions", blockPositions); // Store as a list of positions
         execution.setVariable("blocksRemaining", blocksRemaining);
     }
 }
