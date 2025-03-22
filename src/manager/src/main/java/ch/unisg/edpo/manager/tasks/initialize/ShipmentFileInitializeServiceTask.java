@@ -52,9 +52,9 @@ public class ShipmentFileInitializeServiceTask implements JavaDelegate {
 
         // Array of positions corresponding to block indices
         String[] positions = {
-                "top-left", "top-middle", "top-right",
-                "middle-left", "middle-middle", "middle-right",
-                "bottom-left", "bottom-middle", "bottom-right"
+                "top_left", "top_middle", "top_right",
+                "middle_left", "middle_middle", "middle_right",
+                "bottom_left", "bottom_middle", "bottom_right"
         };
 
         // Create a List to store only block positions with true values
