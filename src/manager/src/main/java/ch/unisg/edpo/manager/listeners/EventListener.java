@@ -7,6 +7,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
+import ch.unisg.edpo.proto.events.sensors.v1.ColorDetected;
+import ch.unisg.edpo.proto.models.v1.BlockColor;
 
 @Service
 public class EventListener {
@@ -43,6 +45,10 @@ public class EventListener {
                 handleNFCObjectDetected(payload);
                 break;
 
+            case "BlockPositionedOnConveyor":
+                handleBlockPositionedOnConveyor(payload);
+                break;
+
             case "RightObjectDetected":
                 handleRightObjectDetected(payload);
                 break;
@@ -58,6 +64,19 @@ public class EventListener {
             case "ColorDetected":
                 handleColorDetected(payload);
                 break;
+
+            case "BlockPositionedOnColorDetector":
+                handleBlockPositionedOnColorDetector(payload);
+                break;
+
+            case "RightObjectRemoved":
+                handleRightObjectRemoved(payload);
+                break;
+
+            case "LeftObjectRemoved":
+                handleLeftObjectRemoved(payload);
+                break;
+
 
             default:
                 logger.warn("Unhandled message type: {}", messageType);
@@ -89,6 +108,20 @@ public class EventListener {
             logger.info("Message `BlockPositionedOnNfc` successfully correlated in Camunda.");
         } catch (Exception e) {
             logger.error("Error while processing `BlockPositionedOnNfc` event:", e);
+        }
+    }
+
+    /**
+     * Handles the 'BlockPositionedOnConveyor' message.
+     * Correlates the event in Camunda to the waiting process instance.
+     */
+    private void handleBlockPositionedOnConveyor(byte[] payload) {
+        try {
+            logger.info("Handling 'BlockPositionedOnConveyor' event.");
+            runtimeService.createMessageCorrelation("BlockPositionedOnConveyor").correlateAll();
+            logger.info("Message `BlockPositionedOnConveyor` successfully correlated in Camunda.");
+        } catch (Exception e) {
+            logger.error("Error while processing `BlockPositionedOnConveyor` event:", e);
         }
     }
 
@@ -149,16 +182,72 @@ public class EventListener {
     }
 
     /**
+     * Handles the 'RightObjectRemoved' message.
+     * Correlates the message 'RightObjectRemoved' in Camunda.
+     */
+    private void handleRightObjectRemoved(byte[] payload) {
+        try {
+            logger.info("Handling 'RightObjectRemoved' event.");
+            runtimeService.createMessageCorrelation("RightObjectRemoved").correlateAll();
+            logger.info("Message `RightObjectRemoved` successfully correlated in Camunda.");
+        } catch (Exception e) {
+            logger.error("Error while processing `RightObjectRemoved` event:", e);
+        }
+    }
+
+    /**
+     * Handles the 'LeftObjectRemoved' message.
+     * Correlates the message 'LeftObjectRemoved' in Camunda.
+     */
+    private void handleLeftObjectRemoved(byte[] payload) {
+        try {
+            logger.info("Handling 'LeftObjectRemoved' event.");
+            runtimeService.createMessageCorrelation("LeftObjectRemoved").correlateAll();
+            logger.info("Message `LeftObjectRemoved` successfully correlated in Camunda.");
+        } catch (Exception e) {
+            logger.error("Error while processing `LeftObjectRemoved` event:", e);
+        }
+    }
+
+    /**
      * Handles the 'ColorDetected' message.
-     * Correlates the message ColorDetected in Camunda.
+     * Correlates the message 'ColorDetected' in Camunda and sets the process variable `currentBlockColor`.
      */
     private void handleColorDetected(byte[] payload) {
         try {
-            logger.info("Handling 'ColorDetected' event.");
-            runtimeService.createMessageCorrelation("ColorDetected").correlateAll();
-            logger.info("Message `ColorDetected` successfully correlated in Camunda.");
+            logger.info("Handling 'ColorDetected' event...");
+
+            // Deserialize the payload into a Protobuf message
+            ColorDetected colorDetected =
+                    ColorDetected.parseFrom(payload);
+
+            // Extract the color enum value as a string
+            BlockColor blockColor = colorDetected.getColor();
+            String blockColorValue = blockColor.name(); // E.g., "BLOCK_COLOR_RED"
+
+            logger.info("Detected block color from Enum: {}", blockColorValue);
+
+            // Correlate the message with Camunda and set the process variable
+            runtimeService.createMessageCorrelation("ColorDetected")
+                    .setVariable("currentBlockColor", blockColorValue) // Store raw enum name
+                    .correlateAll();
+
+            logger.info("Camunda process variable 'currentBlockColor' successfully set to: {}", blockColorValue);
         } catch (Exception e) {
-            logger.error("Error while processing `ColorDetected` event:", e);
+            logger.error("Error while processing 'ColorDetected' message:", e);
+        }
+    }
+    /**
+     * Handles the 'BlockPositionedOnColorDetector' message.
+     * Correlates the message 'BlockPositionedOnColorDetector' in Camunda.
+     */
+    private void handleBlockPositionedOnColorDetector(byte[] payload) {
+        try {
+            logger.info("Handling 'BlockPositionedOnColorDetector' event.");
+            runtimeService.createMessageCorrelation("BlockPositionedOnColorDetector").correlateAll();
+            logger.info("Message `BlockPositionedOnColorDetector` successfully correlated in Camunda.");
+        } catch (Exception e) {
+            logger.error("Error while processing `BlockPositionedOnColorDetector` event:", e);
         }
     }
 }
