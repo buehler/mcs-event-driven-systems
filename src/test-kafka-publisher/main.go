@@ -9,6 +9,8 @@ import (
 	machineCmds "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/commands/machines/v1"
 	inventoryEvts "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/events/inventory/v1"
 	machineEvts "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/events/machines/v1"
+	sensorEvts "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/events/sensors/v1"
+
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
@@ -59,6 +61,14 @@ func main() {
 		msgData = encode[*inventoryCmds.ProcessNewShipment](jsonData)
 	case "ShipmentProcessed":
 		msgData = encode[*inventoryEvts.ShipmentProcessed](jsonData)
+	case "RightObjectDetected":
+		msgData = encode[*sensorEvts.RightObjectDetected](jsonData)
+	case "RightObjectRemoved":
+		msgData = encode[*sensorEvts.RightObjectRemoved](jsonData)
+	case "LeftObjectDetected":
+		msgData = encode[*sensorEvts.LeftObjectDetected](jsonData)
+	case "LeftObjectRemoved":
+		msgData = encode[*sensorEvts.LeftObjectRemoved](jsonData)
 	default:
 		panic("Invalid event type")
 	}

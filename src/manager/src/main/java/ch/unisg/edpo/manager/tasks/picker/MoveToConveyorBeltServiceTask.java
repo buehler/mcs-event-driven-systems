@@ -1,5 +1,7 @@
 package ch.unisg.edpo.manager.tasks.picker;
 
+import ch.unisg.edpo.proto.commands.machines.v1.MoveBlockFromNfcToConveyor;
+import ch.unisg.edpo.manager.producer.CommandProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -9,22 +11,28 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MoveToConveyorBeltServiceTask implements JavaDelegate {
 
+    private final CommandProducer commandProducer;
+
+    // Constructor injection for the CommandProducer
+    public MoveToConveyorBeltServiceTask(CommandProducer commandProducer) {
+        this.commandProducer = commandProducer;
+    }
+
     @Override
     public void execute(DelegateExecution execution) {
-        // Log task execution
         log.info("Executing task in class: {}", this.getClass().getSimpleName());
 
-        // Example: Retrieve process variable
-        //String pickerId = (String) execution.getVariable("pickerId");
-        //log.info("Picker ID: {}", pickerId);
+        // Retrieve process variables if needed
+        String currentBlock = (String) execution.getVariable("currentBlock");
+        log.info("Block to move from NFC to conveyor: {}", currentBlock);
 
-        // Example logic: Move item to the conveyor belt
-        //log.info("Picker {} is moving the item to the conveyor belt.", pickerId);
+        // Build the Protobuf command
+        MoveBlockFromNfcToConveyor command = MoveBlockFromNfcToConveyor.newBuilder()
+                .build();
 
-        // Set a custom process variable to indicate task completion
-        //execution.setVariable("moveToConveyorStatus", "completed");
+        // Send the command using the CommandProducer
+        commandProducer.sendCommand(command, "MoveBlockFromNfcToConveyor");
 
-        // Final log message
         log.info("Task execution for MoveToConveyorBeltServiceTask completed.");
     }
 }
