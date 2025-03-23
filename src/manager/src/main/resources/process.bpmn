@@ -738,7 +738,7 @@
       <bpmndi:BPMNShape id="BPMNShape_116vec6" bpmnElement="Event_07s7r9c">
         <dc:Bounds x="1424" y="275" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_183c910" bpmnElement="Activity_0t8wayb">
+      <bpmndi:BPMNShape id="BPMNShape_183c910" bpmnElement="Activity_0t8wayb" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
         <dc:Bounds x="1532" y="303" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
