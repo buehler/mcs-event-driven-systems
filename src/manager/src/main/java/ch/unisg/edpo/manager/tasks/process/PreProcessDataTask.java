@@ -15,6 +15,10 @@ public class PreProcessDataTask implements JavaDelegate {
     public void execute(DelegateExecution execution) {
         log.info("Starting PreProcessDataTask to determine the current block...");
 
+        // Initialize 'retryCount' to 0
+        execution.setVariable("retryCount", 0);
+        log.info("Initialized 'retryCount' variable to 0.");
+
         // Retrieve 'blockPositions' from process variables
         List<String> blockPositions = (List<String>) execution.getVariable("blockPositions");
 

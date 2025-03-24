@@ -10,18 +10,28 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class InitializeProcessDelegate implements JavaDelegate {
 
-    @Value("${robot.timeout.duration}") // Default to 10000 ms if the property is missing
+    @Value("${robot.timeout.duration}")
     private String defaultTimeout;
 
-    @Value("${robot.timeout.duration2}") // Default to 10000 ms if the property is missing
+    @Value("${robot.timeout.duration2}")
     private String defaultTimeoutTwo;
+
+    @Value("${robot.auto.retry}")
+    private Boolean autoRetry;
+
+    @Value("${robot.auto.retry.count}")
+    private Integer maxRetry;
 
     @Override
     public void execute(DelegateExecution execution) {
         execution.setVariable("timeoutDuration", defaultTimeout);
         execution.setVariable("timeoutDurationTwo", defaultTimeoutTwo);
+        execution.setVariable("autoRetry", autoRetry);
+        execution.setVariable("maxRetry", maxRetry);
 
         log.info("Initializing process with timeout value: {}", defaultTimeout);
         log.info("Initializing process with timeout two value: {}", defaultTimeoutTwo);
+        log.info("Initializing process with auto-retry: {}", autoRetry);
+        log.info("Initializing process with max retry: {}", maxRetry);
     }
 }
