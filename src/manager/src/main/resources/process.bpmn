@@ -113,7 +113,7 @@
         <bpmn:extensionElements>
           <camunda:formData>
             <camunda:formField id="positionInfo" label="Block Position Information" type="string" defaultValue="The block was at the initial position: ${currentBlock}" />
-            <camunda:formField id="errorInfo" label="Problem description" type="string" defaultValue="Block did not arrive on conveyor belt" />
+            <camunda:formField id="errorInfo" label="Problem description" type="string" defaultValue="Block did not arrive on conveyor belt. Put it back on it&#39;s initial position in the grid." />
             <camunda:formField id="additionalErrorInfo" label="Event overview" type="string" defaultValue="Below are all events and their status">
               <camunda:properties />
             </camunda:formField>
