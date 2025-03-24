@@ -2,7 +2,7 @@ namespace Inventory.Database;
 
 public sealed class MessageStore
 {
-    private const int MaxMessages = 32;
+    private const int MaxMessages = 128;
 
     private readonly List<Notification> _notifications = [];
 
