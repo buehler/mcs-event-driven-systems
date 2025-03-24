@@ -15,7 +15,7 @@ public class AutoRetryServiceTask implements JavaDelegate {
 
         // Retrieve 'maxRetry' and 'retryCount' variables
         Integer maxRetry = (Integer) execution.getVariable("maxRetry");
-        Integer retryCount = (Integer) execution.getVariable("retryCount");
+        Long retryCount = (Long) execution.getVariable("retryCount");
 
         if (maxRetry == null || retryCount == null) {
             log.error("'maxRetry' or 'retryCount' is not set. Ensure both variables are defined in the process context.");
@@ -25,7 +25,7 @@ public class AutoRetryServiceTask implements JavaDelegate {
         log.info("Retrieved process variables: maxRetry = {}, retryCount = {}", maxRetry, retryCount);
 
         // Determine if an auto retry can still be performed
-        boolean canAutoRetry = retryCount < maxRetry;
+        boolean canAutoRetry = retryCount < maxRetry; // Java auto-unboxes and converts Integer to Long for comparison here
 
         if (canAutoRetry) {
             log.info("Auto retry is allowed. Incrementing 'retryCount' and setting 'autoRetry' to true.");
