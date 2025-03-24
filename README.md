@@ -3,6 +3,30 @@
 This is the project implementation for the event driven and process oriented architecture
 course. The project works with the provided robot simulator in the lab.
 
+## How to run the project in dev mode
+
+- build and deploy with dev setting by running `just compose-dev build` and `just compose-dev up -d`
+- If the proto files from protobuf have not been generated yet, run `buf generate` in the root directory
+- Run the Manager application in dev mode:
+1. Open the manager directory in IntelliJ
+2. Go on services - Springboot and select the ManagerApplication
+3. Right click and select `Edit Configurations`
+4. Add `dev` to the Active Profiles
+5. If you ran an instance before that did not complete, you might need to delete the `camunda-h2-database.mv.db` folder in the root directory. There currently is a single instance only restriction. 
+6. Run the application
+- Camunda is running on `localhost:8080` with the credentials `StorageManager/demo`
+- the frontend is running on `http://localhost:3000`
+- the kafka broker is running on `localhost:9092`
+- to see all the commands and events that can be fired to mimic the hardware run `just`
+- 
+
+
+
+## Syntax for Just commands
+- NFC sensor is: `sensor-nfc-value yes`, `sensor-nfc-value no`, the sensor remembers its last state, so a no must be run sometimes to correctly fire a yes. 
+
+
+
 ## General workflow
 
 The project will be set up in microservices and communicates via Kafka. The general idea

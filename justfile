@@ -24,6 +24,7 @@
     echo "send MQTT right distance sensor value {{value}}"
     just mqtt "HumanWS" "distance_IR_short" "TG2" '"distance": {{value}}'
 
+
 @sensor-rotary-value value:
     #!/bin/bash
     echo "send MQTT rotary sensor value {{value}}"
@@ -34,17 +35,42 @@
     echo 'send MQTT NFC sensor value {{ if hasTag == "yes" { "with tag" } else { "without tag" } }}'
     just mqtt "Conveyor" "nfc" "22Mp" '{{ if hasTag == "yes" { "\"ID\": \"foobar\"" } else { " \"foo\": 1 " } }}'
 
+@send-sensor-right-object-detected-event:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "events" "RightObjectDetected" "$result"
+
+
 @send-block-sorted-event color:
     #!/bin/bash
     result='{"color": "BLOCK_COLOR_{{uppercase(color)}}"}'
     echo "send $result"
     just produce "events" "BlockSorted" "$result"
 
-@send-shipement-processed-event:
+@send-right-object-detected-event:
     #!/bin/bash
-    result='{"shipment_id": "shipment-123"}'
+    result="{}"
     echo "send $result"
-    just produce "events" "ShipmentProcessed" "$result"
+    just produce "events" "RightObjectDetected" "$result"
+
+@send-right-object-removed-event:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "events" "RightObjectRemoved" "$result"
+
+@send-left-object-detected-event:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "events" "LeftObjectDetected" "$result"
+
+@send-left-object-removed-event:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "events" "LeftObjectRemoved" "$result"
 
 @send-move-block-on-conveyor-command:
     #!/bin/bash
