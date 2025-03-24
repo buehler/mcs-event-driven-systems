@@ -23,19 +23,29 @@ public class MoveToColorBucketServiceTask implements JavaDelegate {
         log.info("Executing task in class: {}", this.getClass().getSimpleName());
 
         // Retrieve process variables if needed
-        String currentBlock = (String) execution.getVariable("currentBlock");
-        log.info("Block to move from NFC to Green Bucket: {}", currentBlock);
+        String currentBlockColorString = (String) execution.getVariable("currentBlockColor");
+        log.info("Retrieved Current Block Colour: {}", currentBlockColorString);
 
-        BlockColor currentBlockColor = BlockColor.forNumber(BlockColor.BLOCK_COLOR_GREEN_VALUE);
+
+        // Convert the string to BlockColor
+        BlockColor currentBlockColor = BlockColor.valueOf(currentBlockColorString);
+
 
         // Build the Protobuf command
         SortBlock command = SortBlock.newBuilder()
                 .setColor(currentBlockColor)
                 .build();
 
+        // Add a delay of 2 seconds
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("Thread was interrupted", e);
+        }
+
         // Send the command using the CommandProducer
         commandProducer.sendCommand(command, "SortBlock");
-
 
 
         // Add your business logic here
