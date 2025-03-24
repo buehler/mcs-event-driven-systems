@@ -20,6 +20,7 @@ builder.Services.AddSingleton(config);
 builder.Services.AddSingleton<KafkaFactory>();
 builder.Services.AddSingleton<KafkaEventsListener>();
 
+builder.Services.AddHostedService<KafkaAllMessageListener>();
 builder.Services.AddHostedService<KafkaListenerService>();
 builder.Services.AddHostedService<BlockSortedListener>();
 builder.Services.AddHostedService<ShipmentProcessedListener>();
@@ -31,6 +32,7 @@ builder.Services.AddResponseCompression();
 
 builder.Services.AddSingleton<BlockStore>();
 builder.Services.AddSingleton<NotificationStore>();
+builder.Services.AddSingleton<MessageStore>();
 
 var app = builder.Build();
 

@@ -1,6 +1,6 @@
 namespace Inventory.Database;
 
-public class NotificationStore
+public sealed class NotificationStore
 {
     private readonly List<Notification> _notifications =
     [

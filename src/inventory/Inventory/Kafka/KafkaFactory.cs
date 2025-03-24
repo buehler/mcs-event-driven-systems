@@ -10,7 +10,7 @@ namespace Inventory.Kafka;
 
 public class KafkaFactory(IServiceProvider serviceProvider)
 {
-    public IProducer<string, T> CreateProducer<T>() where T : IMessage<T>
+    private IProducer<string, T> CreateProducer<T>() where T : IMessage<T>
     {
         var settings = serviceProvider.GetRequiredService<KafkaSettings>();
         var config = new ProducerConfig

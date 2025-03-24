@@ -1,0 +1,53 @@
+﻿@page "/kafka"
+
+@using Inventory.Database
+@inject MessageStore Messages
+@rendermode InteractiveServer
+@implements IDisposable
+
+<PageTitle>Kafka Events</PageTitle>
+
+<MudLink Href="/">
+    <MudButton>
+        <MudIcon Icon="@Icons.Material.Filled.ArrowLeft"/>
+        Back to Dashboard
+    </MudButton>
+</MudLink>
+
+<MudText Typo="Typo.h4" GutterBottom="true">Kafka Events</MudText>
+
+<MudCard>
+    <MudCardContent>
+        <div style="height: 48rem; overflow: auto">
+            @foreach (var notification in Messages.Notifications)
+            {
+                <MudPaper Outlined="true" Class="mb-4 pa-2">
+                    <MudGrid>
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.subtitle2">@notification.Title</MudText>
+                            @if (notification.Detail is not null)
+                            {
+                                <MudText Typo="Typo.body2">@notification.Detail</MudText>
+                            }
+                            <MudText Typo="Typo.caption">@notification.Date.ToString("dd.MM.yyyy - HH:mm:ss")</MudText>
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            }
+        </div>
+    </MudCardContent>
+</MudCard>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        Messages.OnChange += NotificationReceived;
+        await base.OnInitializedAsync();
+    }
+
+    public void Dispose() => Messages.OnChange -= NotificationReceived;
+
+    private void NotificationReceived() => InvokeAsync(StateHasChanged);
+
+}
