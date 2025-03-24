@@ -3,7 +3,6 @@ package ch.unisg.edpo.manager.tasks.picker;
 import ch.unisg.edpo.manager.producer.CommandProducer;
 import ch.unisg.edpo.proto.commands.machines.v1.MoveBlockFromShipmentToNfc;
 import ch.unisg.edpo.proto.models.v1.PickupPosition;
-import ch.unisg.edpo.manager.producer.EventProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;

@@ -1,5 +1,6 @@
 package ch.unisg.edpo.manager.listeners;
 
+import ch.unisg.edpo.proto.events.machines.v1.BlockSorted;
 import org.camunda.bpm.engine.RuntimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,6 +76,10 @@ public class EventListener {
 
             case "LeftObjectRemoved":
                 handleLeftObjectRemoved(payload);
+                break;
+
+            case "BlockSorted":
+                handleBlockSorted(payload);
                 break;
 
 
@@ -248,6 +253,36 @@ public class EventListener {
             logger.info("Message `BlockPositionedOnColorDetector` successfully correlated in Camunda.");
         } catch (Exception e) {
             logger.error("Error while processing `BlockPositionedOnColorDetector` event:", e);
+        }
+    }
+
+    /**
+     * Handles the 'BlockSorted' message.
+     * Correlates the event in Camunda and logs the process variable for the block's color.
+     */
+    private void handleBlockSorted(byte[] payload) {
+        try {
+            logger.info("Handling 'BlockSorted' event...");
+
+            BlockSorted blockSorted = BlockSorted.parseFrom(payload);
+
+            String sortedBlockColor = blockSorted.getColor().toString();
+            logger.info("Block color from 'BlockSorted' event: {}", sortedBlockColor);
+
+            runtimeService.createMessageCorrelation("BlockSorted").correlateAll();
+
+            // Fetch the runtime process variable 'currentBlockColor'
+            runtimeService.createProcessInstanceQuery()
+                    .list()
+                    .forEach(instance -> {
+                        String currentBlockColor = (String) runtimeService.getVariable(instance.getProcessInstanceId(), "currentBlockColor");
+
+                        // Log the variable details
+                        logger.info("Block color from process variable 'currentBlockColor': {}", currentBlockColor);
+                    });
+
+        } catch (Exception e) {
+            logger.error("Error while processing 'BlockSorted' message:", e);
         }
     }
 }
