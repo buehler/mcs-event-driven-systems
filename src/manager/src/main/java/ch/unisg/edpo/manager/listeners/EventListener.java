@@ -271,16 +271,6 @@ public class EventListener {
 
             runtimeService.createMessageCorrelation("BlockSorted").correlateAll();
 
-            // Fetch the runtime process variable 'currentBlockColor'
-            runtimeService.createProcessInstanceQuery()
-                    .list()
-                    .forEach(instance -> {
-                        String currentBlockColor = (String) runtimeService.getVariable(instance.getProcessInstanceId(), "currentBlockColor");
-
-                        // Log the variable details
-                        logger.info("Block color from process variable 'currentBlockColor': {}", currentBlockColor);
-                    });
-
         } catch (Exception e) {
             logger.error("Error while processing 'BlockSorted' message:", e);
         }
