@@ -1,6 +1,6 @@
 namespace Inventory.Database;
 
-public class BlockStore
+public sealed class BlockStore
 {
     private readonly List<Block> _blocks = new();
 
