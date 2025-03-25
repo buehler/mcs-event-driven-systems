@@ -27,7 +27,7 @@ RUN go build -tags dynamic -a -installsuffix cgo -o sensors ./cmd
 FROM debian:stable-slim
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y librdkafka1 ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y librdkafka1 ca-certificates curl && rm -rf /var/lib/apt/lists/*
 
 COPY --from=go_builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=go_builder /src/sensors /app/sensors

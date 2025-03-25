@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - main
-    # paths:
-    #   - doc/**/*.md
+    paths:
+      - doc/**/*.md
 
 concurrency:
   group: build-gh-pages
@@ -102,6 +102,7 @@ jobs:
           args: >-
             --output=./${{ steps.vars.outputs.ex_pdf }}
             --resource-path=doc/
+            --resource-path=doc/exercises/
             --resource-path=.
             ${{ matrix.file }}
 

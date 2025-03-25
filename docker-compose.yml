@@ -34,7 +34,7 @@ services:
       zookeeper:
         condition: service_healthy
 
-  inventory-system:
+  inventory:
     build:
       context: .
       dockerfile: src/inventory/Dockerfile
@@ -44,6 +44,13 @@ services:
     depends_on:
       kafka:
         condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/healthz']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+      start_interval: 3s
 
   sensors:
     build:
@@ -58,6 +65,24 @@ services:
       - KAFKA_PORT=29092
       - KAFKA_TOPIC=events
       - MQTT_HOST=mqtt
+
+  manager:
+    build:
+      context: .
+      dockerfile: src/manager/Dockerfile
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    depends_on:
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/healthz']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+      start_interval: 3s
 
   conveyor:
     build:
@@ -74,8 +99,6 @@ services:
       retries: 3
       start_period: 30s
       start_interval: 3s
-    environment:
-      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:29092
 
   colors:
     build:
@@ -92,8 +115,6 @@ services:
       retries: 3
       start_period: 30s
       start_interval: 3s
-    environment:
-      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:29092
 
   picker:
     build:
@@ -110,5 +131,3 @@ services:
       retries: 3
       start_period: 30s
       start_interval: 3s
-    environment:
-      - SPRING_KAFKA_BOOTSTRAP-SERVERS=kafka:29092
