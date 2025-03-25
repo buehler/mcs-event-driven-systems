@@ -6,3 +6,8 @@ demo/
 **/*.g.cs
 **/bin
 **/obj
+**/build
+**/.gradle
+.github/
+exercise*/
+**/.idea
