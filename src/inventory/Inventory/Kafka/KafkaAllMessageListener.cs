@@ -1,9 +1,6 @@
-using System.Reflection;
 using System.Text;
 
 using Confluent.Kafka;
-
-using Google.Protobuf;
 
 using Inventory.Config;
 using Inventory.Database;

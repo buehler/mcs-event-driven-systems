@@ -1,13 +1,8 @@
-using Confluent.Kafka;
-
 using Inventory.Components;
 using Inventory.Config;
 using Inventory.Database;
 using Inventory.Kafka;
 using Inventory.Kafka.Listener;
-using Inventory.Proto.Commands.Inventory.V1;
-using Inventory.Proto.Events.Inventory.V1;
-using Inventory.Proto.Events.Machines.V1;
 
 using MudBlazor.Services;
 
@@ -16,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration.GetRequiredSection("Kafka").Get<KafkaSettings>() ??
              throw new ApplicationException("Config not parsed.");
 builder.Services.AddSingleton(config);
+
+builder.Services.AddHealthChecks();
 
 builder.Services.AddSingleton<KafkaFactory>();
 builder.Services.AddSingleton<KafkaEventsListener>();
@@ -48,5 +45,6 @@ app.UseResponseCompression();
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+app.MapHealthChecks("/healthz");
 
 await app.RunAsync();

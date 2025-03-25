@@ -10,7 +10,7 @@ RUN buf generate
 FROM gradle:8.13-jdk21 AS builder
 WORKDIR /src
 
-COPY --from=proto_builder /src/src/picker .
+COPY --from=proto_builder /src/src/manager .
 
 RUN gradle clean build --no-daemon
 
