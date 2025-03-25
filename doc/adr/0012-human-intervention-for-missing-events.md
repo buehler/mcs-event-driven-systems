@@ -4,7 +4,7 @@ Date: 2025-03-21
 
 ## Status
 
-Accepted
+Superceded by [13. Stateful Resilience Pattern-for-missing-Events](0013-stateful-resilience-pattern-for-missing-events)
 
 ## Context
 
