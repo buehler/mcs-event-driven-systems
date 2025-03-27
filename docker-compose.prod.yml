@@ -1,0 +1,35 @@
+services:
+  sensors:
+    environment:
+      - MQTT_HOST=ftsim.weber.ics.unisg.ch
+      - MQTT_USER=ftsim
+      - MQTT_PASS=unisg
+      - SENSORS_ROTARY_TOPIC=Tinkerforge/HumanWS/rotary_KVx
+      - SENSORS_NFC_TOPIC=Tinkerforge/Conveyor/nfc_22Mp
+      - SENSORS_RIGHT_DIST_TOPIC=Tinkerforge/Conveyor/distance_IR_short_2a7C
+      - SENSORS_RIGHT_DIST_THRESHOLD=9.2
+      - SENSORS_LEFT_DIST_TOPIC=Tinkerforge/Conveyor/distance_IR_short_TFu
+      - SENSORS_LEFT_DIST_THRESHOLD=9.2
+      - SENSORS_CLEARANCE_BTN_TOPIC=Tinkerforge/HumanWS/rgb_button_24dY
+
+  #  conveyor:
+
+  # colors:
+  #   build:
+  #     context: .
+  #     dockerfile: src/colors/Dockerfile
+  #   restart: unless-stopped
+  #   depends_on:
+  #     kafka:
+  #       condition: service_healthy
+  #   healthcheck:
+  #     test: ['CMD', 'curl', '-f', 'http://localhost:8080/healthz']
+  #     interval: 30s
+  #     timeout: 5s
+  #     retries: 3
+  #     start_period: 30s
+  #     start_interval: 3s
+
+  picker:
+    environment:
+      - ROBOT_SERVER=192.168.0.43:5001
