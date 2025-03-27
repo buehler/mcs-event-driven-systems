@@ -35,6 +35,8 @@ services:
         condition: service_healthy
       mqtt:
         condition: service_healthy
+    environment:
+      - MQTT_HOST=mqtt
 
   mock-robot:
     image: mockserver/mockserver

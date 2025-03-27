@@ -38,6 +38,7 @@ jobs:
             --output=./adrs.pdf
             --resource-path=doc/adr
             --resource-path=.
+            -V geometry:margin=2.5cm
             ${{ steps.files_list.outputs.files }}
 
       - uses: actions/upload-artifact@v4
@@ -56,6 +57,7 @@ jobs:
             --output=./contribution.pdf
             --resource-path=doc/
             --resource-path=.
+            -V geometry:margin=2.5cm
             doc/contributions_log.md
 
       - uses: actions/upload-artifact@v4
@@ -104,6 +106,7 @@ jobs:
             --resource-path=doc/
             --resource-path=doc/exercises/
             --resource-path=.
+            -V geometry:margin=2.5cm
             ${{ matrix.file }}
 
       - uses: actions/upload-artifact@v4

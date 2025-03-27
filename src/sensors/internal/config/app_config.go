@@ -12,11 +12,13 @@ type AppConfig struct {
 	KafkaPort  uint16 `envconfig:"KAFKA_PORT" default:"9092"`
 	KafkaTopic string `envconfig:"KAFKA_TOPIC" default:"events"`
 
-	SensorsRotaryTopic       string `envconfig:"SENSORS_ROTARY_TOPIC" default:"Tinkerforge/HumanWS/rotary_KVx"`
-	SensorsNFCTopic          string `envconfig:"SENSORS_NFC_TOPIC" default:"Tinkerforge/Conveyor/nfc_22Mp"`
-	SensorsLeftDistTopic     string `envconfig:"SENSORS_LEFT_DIST_TOPIC" default:"Tinkerforge/Conveyor/distance_IR_short_TFu"`
-	SensorsRightDistTopic    string `envconfig:"SENSORS_RIGHT_DIST_TOPIC" default:"Tinkerforge/HumanWS/distance_IR_short_TG2"`
-	SensorsClearanceBtnTopic string `envconfig:"SENSORS_CLEARANCE_BTN_TOPIC" default:"Tinkerforge/HumanWS/rgb_button_24dY"`
+	SensorsRotaryTopic        string  `envconfig:"SENSORS_ROTARY_TOPIC" default:"Tinkerforge/HumanWS/rotary_KVx"`
+	SensorsNFCTopic           string  `envconfig:"SENSORS_NFC_TOPIC" default:"Tinkerforge/Conveyor/nfc_22Mp"`
+	SensorsLeftDistTopic      string  `envconfig:"SENSORS_LEFT_DIST_TOPIC" default:"Tinkerforge/Conveyor/distance_IR_short_TFu"`
+	SensorsLeftDistThreshold  float32 `envconfig:"SENSORS_LEFT_DIST_THRESHOLD" default:"9.2"`
+	SensorsRightDistTopic     string  `envconfig:"SENSORS_RIGHT_DIST_TOPIC" default:"Tinkerforge/Conveyor/distance_IR_short_2a7C"`
+	SensorsRightDistThreshold float32 `envconfig:"SENSORS_RIGHT_DIST_THRESHOLD" default:"9.2"`
+	SensorsClearanceBtnTopic  string  `envconfig:"SENSORS_CLEARANCE_BTN_TOPIC" default:"Tinkerforge/HumanWS/rgb_button_24dY"`
 }
 
 var config AppConfig

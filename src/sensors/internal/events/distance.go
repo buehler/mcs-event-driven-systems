@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	v1 "github.com/buehler/mcs-event-driven-systems/sensors/gen/events/sensors/v1"
+	"github.com/buehler/mcs-event-driven-systems/sensors/internal/config"
 	"github.com/buehler/mcs-event-driven-systems/sensors/internal/publisher"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/sirupsen/logrus"
@@ -12,9 +13,8 @@ import (
 type distanceSensor = byte
 
 const (
-	leftDist      distanceSensor = 0
-	rightDist     distanceSensor = 1
-	distThreshold float32        = 40
+	leftDist  distanceSensor = 0
+	rightDist distanceSensor = 1
 )
 
 type Distance struct {
@@ -44,6 +44,14 @@ func processDistMessageReceived(dist distanceSensor, msg mqtt.Message) {
 	if err := json.Unmarshal(msg.Payload(), &event); err != nil {
 		logrus.Errorf("Failed to unmarshal distance event: %v", err)
 		return
+	}
+
+	appConfig := config.GetConfig()
+	distThreshold := float32(0)
+	if dist == leftDist {
+		distThreshold = appConfig.SensorsLeftDistThreshold
+	} else {
+		distThreshold = appConfig.SensorsRightDistThreshold
 	}
 
 	if !distanceSensorsStates[dist] && event.Distance <= distThreshold {

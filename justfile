@@ -7,6 +7,9 @@
 @compose-dev +ARGS:
     docker compose -f docker-compose.yml -f docker-compose.dev.yml {{ARGS}}
 
+@compose-prod +ARGS:
+    docker compose -f docker-compose.yml -f docker-compose.prod.yml {{ARGS}}
+
 @sensor-button-press:
     #!/bin/bash
     echo "send MQTT sensor button press"
