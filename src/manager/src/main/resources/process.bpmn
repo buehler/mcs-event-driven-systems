@@ -19,7 +19,7 @@
       <bpmn:outgoing>Flow_0nnae34</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="Event_1er4gee" name="Shipment Processed">
-      <bpmn:incoming>Flow_1kj9j4t</bpmn:incoming>
+      <bpmn:incoming>Flow_087rfws</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:exclusiveGateway id="Gateway_1xvi4bm" name="Blocks Remaining">
       <bpmn:incoming>Flow_0nnae34</bpmn:incoming>
@@ -1058,7 +1058,7 @@
       </bpmn:textAnnotation>
       <bpmn:association id="Association_0ekx086" associationDirection="None" sourceRef="TextAnnotation_1ulprx9" targetRef="Event_0ac4j0h" />
     </bpmn:subProcess>
-    <bpmn:sequenceFlow id="Flow_1kj9j4t" name="No" sourceRef="Gateway_1xvi4bm" targetRef="Event_1er4gee">
+    <bpmn:sequenceFlow id="Flow_1kj9j4t" name="No" sourceRef="Gateway_1xvi4bm" targetRef="Activity_1gtn4hp">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${blocksRemaining == 0}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0z2tfqu" sourceRef="block_processing" targetRef="Activity_0ky1td3" />
@@ -1082,6 +1082,11 @@
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_12jz36l" sourceRef="Activity_02ksbl1" targetRef="block_processing" />
     <bpmn:sequenceFlow id="Flow_1y1p5c7" sourceRef="Activity_0ky1td3" targetRef="Gateway_1xvi4bm" />
+    <bpmn:sequenceFlow id="Flow_087rfws" sourceRef="Activity_1gtn4hp" targetRef="Event_1er4gee" />
+    <bpmn:serviceTask id="Activity_1gtn4hp" name="Shipment processed" camunda:class="ch.unisg.edpo.manager.tasks.process.EndProcessServiceTask">
+      <bpmn:incoming>Flow_1kj9j4t</bpmn:incoming>
+      <bpmn:outgoing>Flow_087rfws</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_1c1q2y5">
       <bpmn:text>Button press, loading area clear</bpmn:text>
     </bpmn:textAnnotation>
@@ -1169,6 +1174,10 @@
           <dc:Bounds x="625" y="322" width="89" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0crd6df_di" bpmnElement="Activity_1gtn4hp">
+        <dc:Bounds x="750" y="130" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0cqlibj" bpmnElement="block_processing" isExpanded="false">
         <dc:Bounds x="890" y="320" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -1193,6 +1202,11 @@
         <dc:Bounds x="420" y="170" width="220" height="40" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_087rfws_di" bpmnElement="Flow_087rfws">
+        <di:waypoint x="850" y="170" />
+        <di:waypoint x="1100" y="170" />
+        <di:waypoint x="1100" y="276" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Group_13bjj0g_di" bpmnElement="Group_13bjj0g" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
         <dc:Bounds x="150" y="80" width="960" height="40" />
         <bpmndi:BPMNLabel>
@@ -1226,8 +1240,7 @@
       <bpmndi:BPMNEdge id="BPMNEdge_0t7zmbc" bpmnElement="Flow_1kj9j4t">
         <di:waypoint x="670" y="269" />
         <di:waypoint x="670" y="170" />
-        <di:waypoint x="1100" y="170" />
-        <di:waypoint x="1100" y="276" />
+        <di:waypoint x="750" y="170" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="682" y="243" width="15" height="14" />
         </bpmndi:BPMNLabel>
