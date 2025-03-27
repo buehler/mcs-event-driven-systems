@@ -1,5 +1,4 @@
 package com.experiments;
-
 import org.apache.kafka.clients.admin.*;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.clients.producer.*;
@@ -8,6 +7,13 @@ import org.apache.kafka.common.TopicPartitionInfo;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.jupiter.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,6 +31,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class KafkaFailoverDockerTest {
+    private static final String fileTimestamp;
+    static {
+        // Dynamically set the current.date property for the log file name
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        fileTimestamp = dateFormat.format(new Date());
+        System.setProperty("current.date", fileTimestamp);
+    }
+
+
+    private static final Logger logger = LoggerFactory.getLogger(KafkaFailoverDockerTest.class);
 
     private final String topic = "test-replication-topic"; // Test topic name
     private KafkaProducer<String, String> producer;
@@ -47,6 +63,21 @@ public class KafkaFailoverDockerTest {
     // Counters for tracking partition reassignments during consumer rebalance
     private final AtomicInteger revokedPartitionsCount = new AtomicInteger();
     private final AtomicInteger assignedPartitionsCount = new AtomicInteger();
+
+    // Node failure tracking
+    private final AtomicLong lastProducedBeforeNodeFailure = new AtomicLong(0);
+    private final AtomicLong firstProducedAfterNodeFailure = new AtomicLong(0);
+    private final AtomicLong lastConsumedBeforeNodeFailure = new AtomicLong(0);
+    private final AtomicLong firstConsumedAfterNodeFailure = new AtomicLong(0);
+
+    // Node recovery tracking
+    private final AtomicLong lastProducedBeforeNodeRecovery = new AtomicLong(0);
+    private final AtomicLong firstProducedAfterNodeRecovery = new AtomicLong(0);
+    private final AtomicLong lastConsumedBeforeNodeRecovery = new AtomicLong(0);
+    private final AtomicLong firstConsumedAfterNodeRecovery = new AtomicLong(0);
+
+    private final AtomicBoolean isRecovering = new AtomicBoolean(false);
+    private final AtomicBoolean isFailing = new AtomicBoolean(false);
 
 
     @BeforeAll
@@ -76,7 +107,7 @@ public class KafkaFailoverDockerTest {
     }
 
     @AfterAll
-    public void cleanup() {
+    public void cleanup() throws IOException {
         try {
             if (producer != null) producer.close(Duration.ofSeconds(30)); // Graceful producer shutdown
             if (adminClient != null) adminClient.close();
@@ -90,41 +121,46 @@ public class KafkaFailoverDockerTest {
     @Test
     public void testKafkaFailover() throws Exception {
         List<Thread> producerThreads = new ArrayList<>();
-        // Use AtomicLong for tracking timestamps
-        AtomicLong lastProducedBeforeFailure = new AtomicLong(0);
-        AtomicLong firstProducedAfterRecovery = new AtomicLong(0);
-        AtomicLong lastConsumedBeforeFailure = new AtomicLong(0);
-        AtomicLong firstConsumedAfterRecovery = new AtomicLong(0);
+        // Create a "data" marker
+        Marker dataMarker = MarkerFactory.getMarker("DATA");
+//        logger.info(dataMarker, String.join(";",
+//                "eventType",
+//                "event",
+//                "threadNumber",
+//                "value",
+//                "partition",
+//                "offset"
+//        ));
 
-        // Use AtomicBoolean for failure state
-        AtomicBoolean isFailing = new AtomicBoolean(false);
+
+
 
         // Create and start multiple producer threads
         for (int i = 1; i <= 3; i++) {
             int threadNumber = i; // For thread identification
             Thread producerThread = new Thread(() -> {
+
+
                 // Each thread will have a separate producer
                 try (KafkaProducer<String, String> producer = createProducer()) {
                     startProducingMessages(producer, timestamp -> {
-                        if (isFailing.get()) {
-                            // Track lastProducedBeforeFailure
-                            if (lastProducedBeforeFailure.compareAndSet(0, timestamp)) {
-                                System.out.printf("[Failing - Thread-%d] Captured lastProducedBeforeFailure at %s%n", threadNumber, formatTimestamp(timestamp));
-                            }
-                        } else {
-                            // Track firstProducedAfterRecovery
-                            if (firstProducedAfterRecovery.get() == 0 && lastProducedBeforeFailure.get() > 0) {
-                                firstProducedAfterRecovery.compareAndSet(0, timestamp);
-                                System.out.printf("[Recovering - Thread-%d] Captured firstProducedAfterRecovery at %s%n", threadNumber, formatTimestamp(timestamp));
-                            }
-                        }
                     });
+
+
                 } catch (Exception e) {
                     System.err.printf("Exception in Producer Thread-%d: %s%n", threadNumber, e.getMessage());
                 }
             });
 
             producerThread.setName("Producer-Thread-" + i);
+//            logger.info(dataMarker, String.join(";",
+//                    "event",
+//                    "Producer thread started",
+//                    String.valueOf(threadNumber),
+//                    "-",
+//                    "-",
+//                    "-"
+//            ));
             producerThread.start();
             // Add thread to the list for later management
             producerThreads.add(producerThread);
@@ -132,25 +168,32 @@ public class KafkaFailoverDockerTest {
 
         // Start consuming messages with tracking
         Thread consumerThread = new Thread(() -> startConsumingMessages(timestamp -> {
-            if (isFailing.get()) {
-                if (lastConsumedBeforeFailure.compareAndSet(0, timestamp)) {
-                    System.out.printf("[Failing] Captured lastConsumedBeforeFailure at %s%n", formatTimestamp(timestamp));
-                }
-            } else {
-                if (firstConsumedAfterRecovery.get() == 0 && lastConsumedBeforeFailure.get() > 0) {
-                    // Ensure we only capture "firstConsumedAfterRecovery" AFTER "lastConsumedBeforeFailure" has been set
-                    firstConsumedAfterRecovery.compareAndSet(0, timestamp);
-                    System.out.printf("[Recovering] Captured firstConsumedAfterRecovery at %s%n", formatTimestamp(timestamp));
-                }
-            }
         }));
+//        logger.info(dataMarker, String.join(";",
+//                "event",
+//                "Consumer thread started",
+//                "4",
+//                "-",
+//                "-",
+//                "-"
+//        ));
         consumerThread.start();
 
-        // Stabilize for 10 seconds
+        logger.info(dataMarker, String.join(";",
+                "event",
+                "start",
+                "-",
+                "-",
+                "-"
+        ));
+
+        // Stabilize for 10 seconds 10000 ms
         Thread.sleep(10000);
 
         // Simulate broker failure
-        isFailing.set(true); // Set failure state
+        firstProducedAfterNodeFailure.set(0);
+        firstConsumedAfterNodeFailure.set(0);
+        isRecovering.set(false);
         long killStartTime = System.currentTimeMillis();
         killBroker("kafka1");
         long timeToKillBroker = System.currentTimeMillis() - killStartTime;
@@ -161,20 +204,29 @@ public class KafkaFailoverDockerTest {
         long failoverStartTime = System.currentTimeMillis();
         boolean allLeadersElected = waitForLeaderElection();
         long failoverTime = System.currentTimeMillis() - failoverStartTime;
+        logger.info(dataMarker, String.join(";",
+                "event",
+                "Leader Election Completed",
+                String.valueOf(failoverTime), // value
+                "-", // partition
+                "-" // offset
+        ));
+
         testMetrics.put("Leader Election Time (ms)", failoverTime);
 
         assertTrue(allLeadersElected, "Leader election did not complete successfully");
 
-        // Wait for 10 seconds for cluster recovery
-        Thread.sleep(30000);
+        // Wait for 30 seconds for cluster recovery
+        Thread.sleep(10000);
 
         // Restart the failed broker
+        firstProducedAfterNodeRecovery.set(0);
+        firstConsumedAfterNodeRecovery.set(0);
         long restartStartTime = System.currentTimeMillis();
         restartBroker("kafka1");
         long restartTime = System.currentTimeMillis() - restartStartTime;
         testMetrics.put("Broker Restart Time (ms)", restartTime);
         System.out.println("Broker kafka1 restarted.");
-        isFailing.set(false); // Reset failure state
 
         // Wait for 10 seconds for cluster recovery
         Thread.sleep(10000);
@@ -187,33 +239,26 @@ public class KafkaFailoverDockerTest {
             producerThread.join(3000); // Wait for each producer thread to stop
         }
         consumerThread.join(3000);       // Wait for consumer thread to stop
+        logger.info(dataMarker, String.join(";",
+                "event",
+                "end",
+                "-",
+                "-",
+                "-"
+        ));
         System.out.println("Producer and consumer threads stopped.");
 
         // Calculate producer-consumer lag
         long producerLag = totalProducedMessages - totalConsumedMessages;
         testMetrics.put("Consumer Lag (Messages)", totalConsumedMessages > 0 ? producerLag : "No messages consumed");
 
-        // Log recovery-specific metrics
-        if (lastProducedBeforeFailure.get() > 0 && firstProducedAfterRecovery.get() > 0) {
-            long producerRecoveryDuration = Duration.ofMillis(firstProducedAfterRecovery.get()).toNanos()
-                    - Duration.ofMillis(lastProducedBeforeFailure.get()).toNanos();
-            testMetrics.put("Producer Recovery Time (ms)", producerRecoveryDuration / 1_000_000); // Convert nanoseconds to ms
-        }
-        if (lastConsumedBeforeFailure.get() > 0 && firstConsumedAfterRecovery.get() > 0) {
-            long failoverDurationForConsumer = Duration.ofMillis(firstConsumedAfterRecovery.get()).toNanos() - Duration.ofMillis(lastConsumedBeforeFailure.get()).toNanos();
-            testMetrics.put("Consumer Recovery Time (ms)", failoverDurationForConsumer/ 1_000_000);
-        }
 
         // Record produced and consumed message counts
         testMetrics.put("Total Produced Messages", totalProducedMessages);
         testMetrics.put("Total Consumed Messages", totalConsumedMessages);
         testMetrics.put("Test Successful", allLeadersElected && totalConsumedMessages > 0);
 
-        // Add timestamp metrics to the report
-        testMetrics.put("Last Produced Before Failure (Readable Time)", formatTimestamp(lastProducedBeforeFailure.get()));
-        testMetrics.put("First Produced After Recovery (Readable Time)", formatTimestamp(firstProducedAfterRecovery.get()));
-        testMetrics.put("Last Consumed Before Failure (Readable Time)", formatTimestamp(lastConsumedBeforeFailure.get()));
-        testMetrics.put("First Consumed After Recovery (Readable Time)", formatTimestamp(firstConsumedAfterRecovery.get()));
+
         testMetrics.put("Revoked Partitions Count", revokedPartitionsCount.get());
         testMetrics.put("Assigned Partitions Count", assignedPartitionsCount.get());
     }
@@ -230,6 +275,8 @@ public class KafkaFailoverDockerTest {
         }
         return TIMESTAMP_FORMATTER.format(Instant.ofEpochMilli(timestamp));
     }
+
+
 
     /** Delete all topics using Kafka AdminClient */
     private void deleteAllTopics() throws ExecutionException, InterruptedException {
@@ -281,12 +328,23 @@ public class KafkaFailoverDockerTest {
 
     /** Stop a Kafka broker using Docker */
     private void killBroker(String brokerName) throws Exception {
+        Marker dataMarker = MarkerFactory.getMarker("DATA");
+
         System.out.printf("Stopping broker [%s]...%n", brokerName);
         Runtime.getRuntime().exec(String.format("docker stop %s", brokerName));
+        logger.info(dataMarker, String.join(";",
+                "event",
+                "kafka1 broker stopped",
+                "-",
+                "-",
+                "-"
+        ));
+        isFailing.set(true);
     }
 
     /** Restart a Kafka broker */
     private void restartBroker(String brokerName) throws Exception {
+        Marker dataMarker = MarkerFactory.getMarker("DATA");
         System.out.printf("\nRestarting broker '%s'...\n", brokerName);
 
         // Dynamically get the current working directory
@@ -304,6 +362,7 @@ public class KafkaFailoverDockerTest {
 
         // Start the process
         Process process = processBuilder.start();
+        isRecovering.set(true);
 
         // Capture and print the output
         StringBuilder output = new StringBuilder();
@@ -319,6 +378,13 @@ public class KafkaFailoverDockerTest {
         int exitCode = process.waitFor();
         if (exitCode == 0) {
             System.out.printf("Broker '%s' restarted successfully.\n", brokerName);
+            logger.info(dataMarker, String.join(";",
+                    "event",
+                    "kafka1 broker restarted",
+                    "-",
+                    "-",
+                    "-"
+            ));
         } else {
             throw new IllegalStateException(String.format("Failed to restart broker '%s'. Exit code: %d\nOutput: %s", brokerName, exitCode, output));
         }
@@ -326,6 +392,7 @@ public class KafkaFailoverDockerTest {
 
     /** Wait for leader election to finish and log partition changes */
     private boolean waitForLeaderElection() throws InterruptedException, ExecutionException {
+        Marker dataMarker = MarkerFactory.getMarker("DATA");
         final long timeout = System.currentTimeMillis() + 30000; // 30 seconds max timeout
         Map<Integer, String> currentLeaders = new HashMap<>();
 
@@ -359,7 +426,9 @@ public class KafkaFailoverDockerTest {
                 System.out.println("All partitions have transitioned to new leaders:");
                 currentLeaders.forEach((partition, leader) -> {
                     System.out.printf("Partition %d: New leader = %s%n", partition, leader);
-                });
+                }
+                );
+
                 return true;
             }
 
@@ -371,6 +440,7 @@ public class KafkaFailoverDockerTest {
         return false;
     }
 
+
     /** Start producing messages with a tracking callback */
     private void startProducingMessages(KafkaProducer<String, String> producer, java.util.function.LongConsumer trackingCallback) {
         try {
@@ -381,91 +451,246 @@ public class KafkaFailoverDockerTest {
                 String messageKey = Integer.toString(key); // Optional: Use this key for Kafka's default partitioning
                 long startTime = System.currentTimeMillis();
 
-                // Let Kafka handle partitioning by not explicitly defining the partition
                 producer.send(new ProducerRecord<>(topic, messageKey, value), (metadata, exception) -> {
                     if (exception == null) {
+                        // Get current thread name
+                        String threadName = Thread.currentThread().getName();
+                        String threadNumber = threadName.replaceAll(".*-(\\d+)$", "$1");
+
                         long elapsedTime = System.currentTimeMillis() - startTime;
-                       // System.out.printf("Produced: %s in %d ms (partition=%s, offset=%s)%n", value, elapsedTime, metadata.partition(), metadata.offset());
+
+                        // Log for graph
+                        Marker dataMarker = MarkerFactory.getMarker("DATA");
+                        logger.info(dataMarker, String.join(";",
+                                "producer",
+                                threadNumber,                                value,
+                                String.valueOf(metadata.partition()),
+                                String.valueOf(metadata.offset())
+                        ));
+
+//                        System.out.printf(
+//                                "Produced: %s in %d ms (partition=%s, offset=%s, startTime=%d)%n",
+//                                value,
+//                                elapsedTime,
+//                                metadata.partition(),
+//                                metadata.offset(),
+//                                startTime
+//                        );
+
+
+                        if (!isFailing.get() && !isRecovering.get()) {
+                            lastProducedBeforeNodeFailure.set(startTime);
+                        //    System.out.println("lastProducedBeforeNodeFailure set to: " + startTime);
+                        } else {
+                            // After leader election completed
+                            if (isFailing.get() && !isRecovering.get() && firstProducedAfterNodeFailure.get() == 0) {
+                                // Track the first successfully produced message *after* failover
+                                firstProducedAfterNodeFailure.compareAndSet(0, startTime);
+                                System.out.println("firstProducedAfterNodeFailure set to: " + startTime);                            }
+                        }
+
+                        if (!isRecovering.get() && isFailing.get()) {
+                            lastProducedBeforeNodeRecovery.set(startTime); // Set once
+                        //    System.out.println("lastProducedBeforeNodeRecovery set to: " + startTime);
+                        } else {
+                            if (isRecovering.get() && isFailing.get() && firstProducedAfterNodeRecovery.get() == 0) {
+                                // Track the first successfully produced message after recovery
+                                firstProducedAfterNodeRecovery.compareAndSet(0, startTime);
+                                System.out.println("firstProducedAfterNodeRecovery set to: " + startTime);
+                            }
+                        }
+
+
 
                         // Tracking callback for additional monitoring
                         trackingCallback.accept(startTime);
                     } else {
-                        System.err.printf("Failed to produce message: %s - %s%n", value, exception.getMessage());
+                        synchronized (System.err) {
+                            System.err.printf("Failed to produce message: %s - %s%n", value, exception.getMessage());
+                        }
                         failedProducerCount.incrementAndGet();
                     }
                 });
 
                 totalProducedMessages++;
-                Thread.sleep(10); // ~20 messages per second
+                Thread.sleep(40);
                 key++;
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            System.out.println("Producer thread interrupted.");
+            synchronized (System.out) {
+                System.out.println("Producer thread interrupted.");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Producer thread stopped.");
+            synchronized (System.out) {
+                System.out.println("Producer thread stopped.");
+            }
         }
     }
 
-    /** Start consuming messages with a tracking callback */
+    /**
+     * Start consuming messages with a tracking callback.
+     */
     private void startConsumingMessages(java.util.function.LongConsumer trackingCallback) {
         try (KafkaConsumer<String, String> consumer = createConsumer()) {
+
+            // Subscribe to the topic with a rebalance listener
             consumer.subscribe(Collections.singleton(topic), new ConsumerRebalanceListener() {
                 @Override
                 public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
-                    System.out.println("Partitions revoked. Preparing for reassignment: " + partitions);
+                    synchronized (System.out) {
+                        System.out.println("Partitions revoked. Preparing for reassignment: " + partitions);
+                    }
                     revokedPartitionsCount.addAndGet(partitions.size());
                 }
 
                 @Override
                 public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-                    System.out.println("Partitions assigned after rebalance: " + partitions);
+                    synchronized (System.out) {
+                        System.out.println("Partitions assigned after rebalance: " + partitions);
+                    }
                     assignedPartitionsCount.addAndGet(partitions.size());
                 }
             });
 
-            System.out.println("Subscribed to topic: " + topic);
+            synchronized (System.out) {
+                System.out.println("Subscribed to topic: " + topic);
+            }
 
+            // Poll messages while running
             while (running.get()) {
-                // Poll records from the topic
-                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
-                long pollStartTime = System.currentTimeMillis();
-                Map<Integer, Integer> partitionMessageCount = new HashMap<>();
-
-                for (ConsumerRecord<String, String> record : records) {
-                    long processingLatency = System.currentTimeMillis() - pollStartTime;
-
-                    partitionMessageCount.merge(record.partition(), 1, Integer::sum);
-
-               //     System.out.printf("Consumed: key=%s, value=%s, partition=%d, offset=%d, latency=%d ms%n",
-                 //           record.key(), record.value(), record.partition(), record.offset(), processingLatency);
-
-                    trackingCallback.accept(pollStartTime);
-
-                    totalConsumedMessages++;
-                }
-
                 try {
-                    consumer.commitSync();
-             //       System.out.println("Offsets have been successfully committed.");
-                } catch (Exception ex) {
-                    System.err.println("Failed to commit offsets: " + ex.getMessage());
-                    ex.printStackTrace();
+                    // Poll records from the topic
+                    ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+                    final long pollStartTime = System.currentTimeMillis();
+
+                    // Get current thread name
+                    String threadName = Thread.currentThread().getName();
+                    String threadNumber = threadName.replaceAll(".*-(\\d+)$", "$1");
+
+                    // Log for graph
+                    Marker dataMarker = MarkerFactory.getMarker("DATA");
+
+
+                    // Use a map to track messages per partition
+                    Map<Integer, Integer> partitionMessageCount = new HashMap<>();
+                    for (ConsumerRecord<String, String> record : records) {
+                        long processingLatency = System.currentTimeMillis() - pollStartTime;
+
+                        // Increment message count for each partition
+                        partitionMessageCount.merge(record.partition(), 1, Integer::sum);
+
+                        // Print consumed message details
+                        logger.info(dataMarker, String.join(";",
+                                "consumer",
+                                threadNumber,
+                                record.value(),
+                                String.valueOf(record.partition()),
+                                String.valueOf(record.offset())
+                        ));
+
+
+//                        synchronized (System.out) {
+//                            System.out.printf(
+//                                    "Consumed: key=%s, value=%s, partition=%d, offset=%d, latency=%d ms, pollStartTime=%s%n",
+//                                    record.key(),
+//                                    record.value(),
+//                                    record.partition(),
+//                                    record.offset(),
+//                                    processingLatency,
+//                                    pollStartTime
+//                            );
+//                        }
+
+                        // Tracking callback with message timestamp
+                        trackingCallback.accept(pollStartTime);
+
+                        // Handle failover and recovery tracking
+                        trackConsumptionState(pollStartTime);
+
+                        // Increment total consumed count
+                        totalConsumedMessages++;
+                    }
+
+                    // Commit offsets after processing
+                    commitOffsets(consumer);
+                } catch (Exception e) {
+                    handleConsumptionError(e);
                 }
             }
         } catch (Exception e) {
-            System.err.println("Error while consuming messages: " + e.getMessage());
-            e.printStackTrace();
+            handleConsumerCreationError(e);
         }
+    }
+
+    /** Track consumption timestamps for failover/recovery */
+    private void trackConsumptionState(long pollStartTime) {
+        if (!isFailing.get() && !isRecovering.get()) {
+            // During failure: Track the last successfully produced message before failure
+            lastConsumedBeforeNodeFailure.set(pollStartTime); // Set once
+        //    System.out.println("lastConsumedBeforeNodeFailure set to: " + lastConsumedBeforeNodeFailure);
+
+        } else {
+            // After leader election completed
+            if (isFailing.get() && !isRecovering.get() && firstConsumedAfterNodeFailure.get() == 0) {
+                // Track the first successfully consumed message *after* failover
+                firstConsumedAfterNodeFailure.compareAndSet(0, pollStartTime);
+                System.out.println("firstConsumedAfterNodeFailure set to: " + firstConsumedAfterNodeFailure);
+
+            }
+        }
+
+        if (!isRecovering.get() && isFailing.get()) {
+            // During failure: Track the last successfully consumed message before failure
+            lastConsumedBeforeNodeRecovery.set(pollStartTime); // Set once
+        //    System.out.println("lastConsumedBeforeNodeRecovery set to: " + lastConsumedBeforeNodeRecovery);
+
+        } else {
+            // After leader election completed
+            if (isRecovering.get() && isFailing.get() && firstConsumedAfterNodeRecovery.get() == 0) {
+                // Track the first successfully consumed message *after* failover
+                firstConsumedAfterNodeRecovery.compareAndSet(0, pollStartTime);
+                System.out.println("firstConsumedAfterNodeRecovery set to: " + firstConsumedAfterNodeRecovery);
+            }
+        }
+
+    }
+
+    /** Commit consumer offsets with proper error handling */
+    private void commitOffsets(KafkaConsumer<String, String> consumer) {
+        try {
+            consumer.commitSync();
+        } catch (Exception ex) {
+            synchronized (System.err) {
+                System.err.printf("Failed to commit offsets: %s%n", ex.getMessage());
+            }
+            ex.printStackTrace();
+        }
+    }
+
+    /** Handle errors during message consumption */
+    private void handleConsumptionError(Exception e) {
+        synchronized (System.err) {
+            System.err.printf("Error while consuming messages: %s%n", e.getMessage());
+        }
+        e.printStackTrace();
+    }
+
+    /** Handle errors during consumer creation or setup */
+    private void handleConsumerCreationError(Exception e) {
+        synchronized (System.err) {
+            System.err.printf("Error while creating or configuring the consumer: %s%n", e.getMessage());
+        }
+        e.printStackTrace();
     }
 
 
     // Kafka setup method (returns a producer instance)
     public KafkaProducer<String, String> createProducer() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "192.168.1.173:9092,192.168.1.173:9093,192.168.1.173:9094");
+        props.put("bootstrap.servers", "130.82.26.193:9092,130.82.26.193:9093,130.82.26.193:9094");
         props.put("key.serializer", StringSerializer.class.getName());
         props.put("value.serializer", StringSerializer.class.getName());
         props.put("acks", "all"); // Wait for all replicas to acknowledge
@@ -483,7 +708,7 @@ public class KafkaFailoverDockerTest {
 
     private KafkaConsumer<String, String> createConsumer() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "192.168.1.173:9092,192.168.1.173:9093,192.168.1.173:9094");
+        props.put("bootstrap.servers", "130.82.26.193:9092,130.82.26.193:9093,130.82.26.193:9094");
         props.put("group.id", "test-consumer-group");
         props.put("key.deserializer", StringDeserializer.class.getName());
         props.put("value.deserializer", StringDeserializer.class.getName());
@@ -505,7 +730,8 @@ public class KafkaFailoverDockerTest {
 
     public void setupAdminClient() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "192.168.1.173:9092,192.168.1.173:9093,192.168.1.173:9094");
+        // Set correct address here
+        props.put("bootstrap.servers", "130.82.26.193:9092,130.82.26.193:9093,130.82.26.193:9094");
         adminClient = AdminClient.create(props);
     }
 
@@ -521,20 +747,36 @@ public class KafkaFailoverDockerTest {
         System.out.println("\n========== Kafka Failover Test Report ==========");
         testMetrics.forEach((key, value) -> System.out.printf("%s: %s%n", key, value));
 
-        // Additional logging for new metrics:
-        if (testMetrics.containsKey("Last Produced Before Failure (ms)")) {
-            System.out.printf("Last Produced Before Failure: %d ms%n", testMetrics.get("Last Produced Before Failure (ms)"));
+        if (lastProducedBeforeNodeFailure.get() > 0 && firstProducedAfterNodeFailure.get() > 0) {
+            long producerFailoverRecoveryTime = firstProducedAfterNodeFailure.get() - lastProducedBeforeNodeFailure.get();
+            testMetrics.put("Producer Recovery Time (Node Failure)", producerFailoverRecoveryTime);
         }
-        if (testMetrics.containsKey("First Produced After Recovery (ms)")) {
-            System.out.printf("First Produced After Recovery: %d ms%n", testMetrics.get("First Produced After Recovery (ms)"));
+        System.out.println("Producer Recovery Time (Node Failure): " +
+                testMetrics.get("Producer Recovery Time (Node Failure)") + " ms");
+
+        if (lastConsumedBeforeNodeFailure.get() > 0 && firstConsumedAfterNodeFailure.get() > 0) {
+            long consumerFailoverRecoveryTime = firstConsumedAfterNodeFailure.get() - lastConsumedBeforeNodeFailure.get();
+            testMetrics.put("Consumer Recovery Time (Node Failure)", consumerFailoverRecoveryTime);
         }
-        if (testMetrics.containsKey("Last Consumed Before Failure (ms)")) {
-            System.out.printf("Last Consumed Before Failure: %d ms%n", testMetrics.get("Last Consumed Before Failure (ms)"));
+        System.out.println("Consumer Recovery Time (Node Failure): " +
+                testMetrics.get("Consumer Recovery Time (Node Failure)") + " ms");
+
+        if (lastProducedBeforeNodeRecovery.get() > 0 && firstProducedAfterNodeRecovery.get() > 0) {
+            long producerRecoveryRecoveryTime = firstProducedAfterNodeRecovery.get() - lastProducedBeforeNodeRecovery.get();
+            testMetrics.put("Producer Recovery Time (Node Recovery)", producerRecoveryRecoveryTime);
         }
-        if (testMetrics.containsKey("First Consumed After Recovery (ms)")) {
-            System.out.printf("First Consumed After Recovery: %d ms%n", testMetrics.get("First Consumed After Recovery (ms)"));
+        System.out.println("Producer Recovery Time (Node Recovery): " +
+                testMetrics.get("Producer Recovery Time (Node Recovery)") + " ms");
+
+        if (lastConsumedBeforeNodeRecovery.get() > 0 && firstConsumedAfterNodeRecovery.get() > 0) {
+            long consumerRecoveryRecoveryTime = firstConsumedAfterNodeRecovery.get() - lastConsumedBeforeNodeRecovery.get();
+            testMetrics.put("Consumer Recovery Time (Node Recovery)", consumerRecoveryRecoveryTime);
         }
+        System.out.println("Consumer Recovery Time (Node Recovery): " +
+                testMetrics.get("Consumer Recovery Time (Node Recovery)") + " ms");
+
 
         System.out.println("===============================================");
     }
+
 }

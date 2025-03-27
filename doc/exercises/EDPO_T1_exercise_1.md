@@ -9,8 +9,21 @@ All code for the experiments regarding exercise 2 are exclusively under /exercis
 
 This means all commands shown below must be run from the corresponding path.
 ### Basic setup
-Set the correct KAFKA_ADVERTISED_HOST_NAME in [docker-compose.yml](../../exercise1/docker/docker-compose.yml) (exercise1/docker/)
+#### Setting your IP address
+Set the correct KAFKA_ADVERTISED_HOST_NAME and KAFKA_ADVERTISED_LISTENERS in [docker-compose.yml](../../exercise1/docker/docker-compose.yml) (exercise1/docker/)
 
+Also set the correct address here [KafkaFailoverDockerTest.java](../../exercise1/faultToleranceTest/src/test/java/com/experiments/KafkaFailoverDockerTest.java) for the fault tolerance test.
+There are several places to replace the address, search and replace is your friend.
+
+```
+        props.put("bootstrap.servers", "10.0.73.164:9092,10.0.73.164:9093,10.0.73.164:9094");
+``` 
+
+#### Build packages
+Don't forget to build the packages. Must be run from the folder with the .pom file.
+```
+$  mvn clean package
+``` 
 
 ### 1. Producer Experiments
 Start docker with the producer profile (run from /experiments1/docker)
