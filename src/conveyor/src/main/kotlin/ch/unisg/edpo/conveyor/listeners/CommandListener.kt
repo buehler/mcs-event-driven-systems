@@ -3,6 +3,7 @@ package ch.unisg.edpo.conveyor.listeners
 import ch.unisg.edpo.conveyor.ConveyorBelt
 import ch.unisg.edpo.conveyor.producer.EventProducer
 import ch.unisg.edpo.proto.events.sensors.v1.ConveyorSpeedChanged
+import kotlinx.coroutines.delay
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.messaging.handler.annotation.Header
@@ -22,6 +23,7 @@ class CommandListener(private val conveyorBelt: ConveyorBelt, private val eventP
             "ConveyorMoveBlock" -> {
                 logger.info("Received command to move block")
                 conveyorBelt.moveBlock()
+                delay(4000)
                 eventProducer.sendBlockMoved()
             }
             "ConveyorSpeedChanged"-> {
