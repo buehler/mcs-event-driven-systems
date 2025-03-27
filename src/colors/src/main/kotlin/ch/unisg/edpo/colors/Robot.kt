@@ -42,7 +42,7 @@ class Robot {
 
         return when {
             colorSensorData.red -> BlockColor.BLOCK_COLOR_RED
-            colorSensorData.green -> BlockColor.BLOCK_COLOR_YELLOW
+            colorSensorData.yellow -> BlockColor.BLOCK_COLOR_YELLOW
             colorSensorData.blue -> BlockColor.BLOCK_COLOR_BLUE
             else -> throw IllegalArgumentException("Unknown color")
         }
@@ -73,9 +73,9 @@ class Robot {
 
 @Serializable
 private data class ColorSensorData(val color: BooleanArray) {
-    val red = color[0]
+    val red = color[0] && !color[1] && !color[2]
 
-    val green = color[1]
+    val yellow = !color[0] && !color[1] && !color[2]
 
-    val blue = color[2]
+    val blue = !color[0] && !color[1] && color[2]
 }
