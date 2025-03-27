@@ -60,14 +60,29 @@ class Robot {
     }
 
     private suspend fun executeCommand(command: String): Response {
-        val response = get("http://$server/$command")
-        if (response.statusCode > 299) {
-            logger.error("Failed to execute command $command: ${response.statusCode} - ${response.text}")
-        } else {
-            logger.info("Executed command $command")
+        var lastException: Exception? = null
+        repeat(3) { attempt ->
+            try {
+                val response = get("http://$server/$command")
+                if (response.statusCode > 299) {
+                    logger.error("Failed to execute command $command: ${response.statusCode} - ${response.text}")
+                    throw Exception("Failed to execute command $command: ${response.statusCode} - ${response.text}")
+                } else {
+                    logger.info("Executed command $command")
+                    return response
+                }
+            } catch (ex: Exception) {
+                logger.error("Attempt ${attempt + 1} failed for command $command: ${ex.message}")
+                lastException = ex
+            }
         }
 
-        return response
+        // After 3 attempts, if still failing, throw the last encountered exception or a generic error
+        if (lastException != null) {
+            throw lastException as Exception
+        } else {
+            throw IllegalStateException("Failed to execute command $command after 3 attempts")
+        }
     }
 }
 
