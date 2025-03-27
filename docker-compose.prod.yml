@@ -14,7 +14,7 @@ services:
 
   manager:
     environment:
-      - ROBOT_TIMEOUT_DURATION=PT15S
+      - ROBOT_TIMEOUT_DURATION=PT30S
 
   picker:
     environment:
@@ -23,3 +23,7 @@ services:
   conveyor:
     environment:
       - CONVEYOR_SERVER=192.168.0.43:5000
+
+  colors:
+    environment:
+      - ROBOT_SERVER=192.168.0.43:5000
