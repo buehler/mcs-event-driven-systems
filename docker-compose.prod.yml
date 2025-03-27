@@ -12,9 +12,10 @@ services:
       - SENSORS_LEFT_DIST_THRESHOLD=9.2
       - SENSORS_CLEARANCE_BTN_TOPIC=Tinkerforge/HumanWS/rgb_button_24dY
 
-  manager:
-    environment:
-      - ROBOT_TIMEOUT_DURATION=PT10S
+#  manager:
+#    environment:
+#      - ROBOT_TIMEOUT_DURATION=PT45S
+#      - ROBOT_TIMEOUT_DURATION2=PT30S
 
   picker:
     environment:

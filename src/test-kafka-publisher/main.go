@@ -69,6 +69,10 @@ func main() {
 		msgData = encode[*sensorEvts.LeftObjectDetected](jsonData)
 	case "LeftObjectRemoved":
 		msgData = encode[*sensorEvts.LeftObjectRemoved](jsonData)
+	case "NFCDistDetected":
+        msgData = encode[*sensorEvts.NFCDistDetected](jsonData)
+    case "NFCDistRemoved":
+        msgData = encode[*sensorEvts.NFCDistRemoved](jsonData)
 	default:
 		panic("Invalid event type")
 	}

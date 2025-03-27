@@ -50,6 +50,10 @@ public class EventListener {
                 handleNFCObjectRemoved(payload);
                 break;
 
+            case "NFCDistDetected":
+            handleNFCDistDetected(payload);
+            break;
+
             case "BlockPositionedOnConveyor":
                 handleBlockPositionedOnConveyor(payload);
                 break;
@@ -159,6 +163,20 @@ public class EventListener {
             logger.info("Message `NFCObjectRemoved` successfully correlated in Camunda.");
         } catch (Exception e) {
             logger.error("Error while processing `NFCObjectRemoved` event:", e);
+        }
+    }
+
+    /**
+     * Handles the 'NFCDistDetected' message.
+     * Correlates the message NFCDistDetected in Camunda.
+     */
+    private void handleNFCDistDetected(byte[] payload) {
+        try {
+            logger.info("Handling 'NFCDistDetected' event.");
+            runtimeService.createMessageCorrelation("NFCDistDetected").correlateAll();
+            logger.info("Message `NFCDistDetected` successfully correlated in Camunda.");
+        } catch (Exception e) {
+            logger.error("Error while processing `NFCDistDetected` event:", e);
         }
     }
 

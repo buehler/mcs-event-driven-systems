@@ -44,6 +44,17 @@
     echo "send $result"
     just produce "events" "RightObjectDetected" "$result"
 
+@send-sensor-nfc-object-detected-event:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "events" "NFCDistDetected" "$result"
+
+@send-sensor-nfc-object-removed-event:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "events" "NFCDistRemoved" "$result"
 
 @send-block-sorted-event color:
     #!/bin/bash
