@@ -25,7 +25,7 @@ class ConveyorBelt {
     @Value("\${conveyor.distance}")
     private val distance = 0
 
-    var speed = 0
+    var speed = 100
         set(value) {
             val calcSpeed = minSpeed + (((value * -1) + maxSpeed) / 6)
             field = when {
