@@ -15,6 +15,7 @@ type distanceSensor = byte
 const (
 	leftDist  distanceSensor = 0
 	rightDist distanceSensor = 1
+	nfcDist   distanceSensor = 2
 )
 
 type Distance struct {
@@ -34,9 +35,16 @@ func OnRightDistMessageReceived(_ mqtt.Client, msg mqtt.Message) {
 	processDistMessageReceived(rightDist, msg)
 }
 
+func OnNFCDistMessageReceived(_ mqtt.Client, msg mqtt.Message) {
+	logger := logrus.WithField("topic", msg.Topic())
+	logger.Info("Handle received message")
+	processDistMessageReceived(nfcDist, msg)
+}
+
 var distanceSensorsStates = map[distanceSensor]bool{
 	leftDist:  false,
 	rightDist: false,
+	nfcDist:   false,
 }
 
 func processDistMessageReceived(dist distanceSensor, msg mqtt.Message) {
@@ -50,8 +58,10 @@ func processDistMessageReceived(dist distanceSensor, msg mqtt.Message) {
 	distThreshold := float32(0)
 	if dist == leftDist {
 		distThreshold = appConfig.SensorsLeftDistThreshold
-	} else {
+	} else if dist == rightDist {
 		distThreshold = appConfig.SensorsRightDistThreshold
+	} else {
+		distThreshold = appConfig.SensorsNFCDistThreshold
 	}
 
 	if !distanceSensorsStates[dist] && event.Distance <= distThreshold {
@@ -59,9 +69,12 @@ func processDistMessageReceived(dist distanceSensor, msg mqtt.Message) {
 		if dist == leftDist {
 			publisher.SendKafkaEvent(&v1.LeftObjectDetected{})
 			logrus.Info("Left distance sensor object detected")
-		} else {
+		} else if dist == rightDist {
 			publisher.SendKafkaEvent(&v1.RightObjectDetected{})
 			logrus.Info("Right distance sensor object detected")
+		} else {
+			publisher.SendKafkaEvent(&v1.NFCDistDetected{})
+			logrus.Info("NFC distance sensor object detected")
 		}
 		distanceSensorsStates[dist] = true
 	} else if distanceSensorsStates[dist] && event.Distance > distThreshold {
@@ -69,9 +82,12 @@ func processDistMessageReceived(dist distanceSensor, msg mqtt.Message) {
 		if dist == leftDist {
 			publisher.SendKafkaEvent(&v1.LeftObjectRemoved{})
 			logrus.Info("Left distance sensor object removed")
-		} else {
+		} else if dist == rightDist {
 			publisher.SendKafkaEvent(&v1.RightObjectRemoved{})
 			logrus.Info("Right distance sensor object removed")
+		} else {
+			publisher.SendKafkaEvent(&v1.NFCDistRemoved{})
+			logrus.Info("NFC distance sensor object removed")
 		}
 		distanceSensorsStates[dist] = false
 	} else {

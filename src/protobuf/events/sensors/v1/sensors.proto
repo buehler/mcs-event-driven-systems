@@ -19,6 +19,12 @@ message NFCObjectDetected {}
 // and sorted to the green inventory.
 message NFCObjectRemoved {}
 
+// Object detected on top of the NFC reader (with the distance sensor).
+message NFCDistDetected {}
+
+// If an object has been detected, it will be removed afterwards.
+message NFCDistRemoved {}
+
 // The distance sensor on the right (near the picker robot)
 // has detected an object in front.
 message RightObjectDetected {}

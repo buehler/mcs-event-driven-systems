@@ -53,6 +53,11 @@ func StartMQTTListener(ctx context.Context) {
 		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
 	}
 
+	// Subscribe to NFC distance sensor data
+	if token := client.Subscribe(appConfig.SensorsNFCDistTopic, 0, events.OnNFCDistMessageReceived); token.Wait() && token.Error() != nil {
+		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
+	}
+
 	// Subscribe to clearance button sensor data
 	if token := client.Subscribe(appConfig.SensorsClearanceBtnTopic, 0, events.OnClearanceBtnMessageReceived); token.Wait() && token.Error() != nil {
 		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
