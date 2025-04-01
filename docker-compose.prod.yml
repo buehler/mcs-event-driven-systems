@@ -6,6 +6,8 @@ services:
       - MQTT_PASS=unisg
       - SENSORS_ROTARY_TOPIC=Tinkerforge/HumanWS/rotary_KVx
       - SENSORS_NFC_TOPIC=Tinkerforge/Conveyor/nfc_22Mp
+      - SENSORS_NFC_DIST_TOPIC=Tinkerforge/HumanWS/distance_IR_short_TG2
+      - SENSORS_NFC_DIST_THRESHOLD=7.0
       - SENSORS_RIGHT_DIST_TOPIC=Tinkerforge/Conveyor/distance_IR_short_2a7C
       - SENSORS_RIGHT_DIST_THRESHOLD=9.2
       - SENSORS_LEFT_DIST_TOPIC=Tinkerforge/Conveyor/distance_IR_short_TFu
