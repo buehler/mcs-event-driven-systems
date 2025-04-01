@@ -39,6 +39,7 @@ public class CommandListener {
         // Route message based on type
         switch (messageType) {
             case "ProcessNewShipment":
+                logger.info("Case for command message with type: {} detected.", messageType);
                 handleProcessNewShipment(payload);
                 break;
 
