@@ -73,6 +73,8 @@ func main() {
         msgData = encode[*sensorEvts.NFCDistDetected](jsonData)
     case "NFCDistRemoved":
         msgData = encode[*sensorEvts.NFCDistRemoved](jsonData)
+    case "BlockPositionedOnNfc":
+        msgData = encode[*machineEvts.BlockPositionedOnNfc](jsonData)
 	default:
 		panic("Invalid event type")
 	}
