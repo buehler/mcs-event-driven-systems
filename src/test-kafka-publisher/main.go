@@ -83,8 +83,22 @@ func main() {
 		msgData = encode[*sensorEvts.NFCDistDetected](jsonData)
 	case "NFCDistRemoved":
 		msgData = encode[*sensorEvts.NFCDistRemoved](jsonData)
+	case "NFCObjectDetected":
+		msgData = encode[*sensorEvts.NFCObjectDetected](jsonData)
+	case "NFCObjectRemoved":
+		msgData = encode[*sensorEvts.NFCObjectRemoved](jsonData)
 	case "BlockPositionedOnNfc":
 		msgData = encode[*machineEvts.BlockPositionedOnNfc](jsonData)
+	case "BlockPositionedOnConveyor":
+		msgData = encode[*machineEvts.BlockPositionedOnConveyor](jsonData)
+	case "BlockPositionedOnColorDetector":
+		msgData = encode[*machineEvts.BlockPositionedOnColorDetector](jsonData)
+	case "ConveyorBlockMoved":
+		msgData = encode[*machineEvts.ConveyorBlockMoved](jsonData)
+	case "AreaClearButtonPressed":
+		msgData = encode[*sensorEvts.AreaClearButtonPressed](jsonData)
+	case "ColorDetected":
+		msgData = encode[*sensorEvts.ColorDetected](jsonData)
 	default:
 		panic("Invalid event type")
 	}
