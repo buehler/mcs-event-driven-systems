@@ -98,6 +98,12 @@
     echo "send $result"
     just produce "events" "BlockPositionedOnNfc" "$result"
 
+@send-block-positioned-on-conveyor-event:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "events" "BlockPositionedOnConveyor" "$result"
+
 @send-block-to-nfc-command position="top_left":
     #!/bin/bash
     result='{"position": "PICKUP_POSITION_{{uppercase(position)}}"}'
