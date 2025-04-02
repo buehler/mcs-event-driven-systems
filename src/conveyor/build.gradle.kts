@@ -27,7 +27,7 @@ sourceSets {
 }
 
 dependencies {
-    implementation("com.google.protobuf:protobuf-kotlin:4.30.1")
+    implementation("com.google.protobuf:protobuf-kotlin:4.30.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
