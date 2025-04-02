@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"reflect"
@@ -10,11 +11,17 @@ import (
 	inventoryEvts "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/events/inventory/v1"
 	machineEvts "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/events/machines/v1"
 	sensorEvts "github.com/buehler/mcs-event-driven-systems/test-kafka-publisher/gen/events/sensors/v1"
+	"github.com/kelseyhightower/envconfig"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 )
+
+type AppConfig struct {
+	KafkaHost string `envconfig:"KAFKA_HOST" default:"localhost"`
+	KafkaPort uint16 `envconfig:"KAFKA_PORT" default:"9092"`
+}
 
 func encode[T proto.Message](jsonData string) []byte {
 	msg := reflect.New(reflect.TypeOf((*T)(nil)).Elem().Elem()).Interface().(T)
@@ -26,6 +33,9 @@ func encode[T proto.Message](jsonData string) []byte {
 }
 
 func main() {
+	var config AppConfig
+	envconfig.Process("sensors", &config)
+
 	args := os.Args[1:]
 
 	if len(args) < 3 {
@@ -37,7 +47,7 @@ func main() {
 	jsonData := args[2]
 
 	cfg := kafka.ConfigMap{
-		"bootstrap.servers": "localhost:9092",
+		"bootstrap.servers": fmt.Sprintf("%s:%d", config.KafkaHost, config.KafkaPort),
 	}
 
 	p, _ := kafka.NewProducer(&cfg)
@@ -70,11 +80,11 @@ func main() {
 	case "LeftObjectRemoved":
 		msgData = encode[*sensorEvts.LeftObjectRemoved](jsonData)
 	case "NFCDistDetected":
-        msgData = encode[*sensorEvts.NFCDistDetected](jsonData)
-    case "NFCDistRemoved":
-        msgData = encode[*sensorEvts.NFCDistRemoved](jsonData)
-    case "BlockPositionedOnNfc":
-        msgData = encode[*machineEvts.BlockPositionedOnNfc](jsonData)
+		msgData = encode[*sensorEvts.NFCDistDetected](jsonData)
+	case "NFCDistRemoved":
+		msgData = encode[*sensorEvts.NFCDistRemoved](jsonData)
+	case "BlockPositionedOnNfc":
+		msgData = encode[*machineEvts.BlockPositionedOnNfc](jsonData)
 	default:
 		panic("Invalid event type")
 	}

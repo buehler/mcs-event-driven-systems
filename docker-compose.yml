@@ -132,3 +132,17 @@ services:
       retries: 3
       start_period: 30s
       start_interval: 3s
+
+  test-publisher:
+    build:
+      context: .
+      dockerfile: src/test-kafka-publisher/Dockerfile
+    profiles:
+      - testing
+    restart: no
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=29092
