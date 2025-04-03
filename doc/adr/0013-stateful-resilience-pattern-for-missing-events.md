@@ -14,23 +14,31 @@ Within our event-driven and process-oriented workflow architecture, certain even
 This missing event scenario can halt the progression of our workflow, creating risks to the overall system's reliability and throughput.  
 At the moment, we expect this to happen at three stages, where it can be detected automatically:
 
-1. **Picker robot: Block moved to conveyor belt**
-    - Event from picker robot missing (block positioned on NFC reader).
+1. **Picker robot: Block moved to NFC reader**
+   - Event from picker robot missing (block positioned on NFC reader).
+   - Event from nfc (distance) sensor missing (block detection).
+2. **Picker robot: Block moved to conveyor belt**
+    - Event from nfc (distance) sensor missing (block removal).
     - Event from right sensor missing (block detection).
     - Event from robot missing (block placed on conveyor belt).
 2. **Picker robot: Block sorted in green basket**
+    - Event from nfc (distance) sensor missing (block removal).
+    - Event from nfc (tag) sensor missing (tag removal).
     - Event from picker robot missing (green block sorted).
 3. **Conveyor belt: Block moved to color robot pickup point**
     - Event from left sensor missing (block detection).
     - Event from right sensor missing (block removal).
     - Event from conveyor belt missing (block movement).
 4. **Color robot: Block moved to color sensor**
-    - Event from color sensor service missing.
+    - Event from color sensor service missing (color detection).
     - Event from left sensor missing (block removal).
+    - Event from color robot missing (block positioned on color sensor).
 5. **Color robot: Block sorted in non-green basket**
     - Event from color robot missing (block sorted).
 
+Within a timeout period the process waits for all events to arrive, otherwise the error handling is triggered.
 ![process_error_handling.png](imges/process_error_handling.png)
+
 
 ## Decision
 
@@ -43,7 +51,8 @@ It is configurable via [`application.properties`](../../src/manager/src/main/res
 This allows configuring the error handling based on tests with the actual hardware.
 
 If the automatic retries fail, the process will always end in manual intervention.
-
+The auto-retry mechanism can only be triggered, if certain events are missing. Mainly the distance sensors determine if a block is still in its original position and a auto-retry could therefore be successful.
+The manual user task can be skipped with the are clear button, for testing purposes.
 ![process_error_handling_detail.png](imges/process_error_handling_detail.png)
 
 ## Rationale
