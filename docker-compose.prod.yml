@@ -16,8 +16,9 @@ services:
 
   manager:
     environment:
-      - ROBOT_TIMEOUT_DURATION=PT30S
+      - ROBOT_TIMEOUT_DURATION=PT15S
       - ROBOT_TIMEOUT_DURATION2=PT6S
+      - ROBOT_AUTO_RETRY_GRID=true
 
   picker:
     environment:
