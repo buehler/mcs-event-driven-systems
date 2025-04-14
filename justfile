@@ -10,6 +10,10 @@
 @compose-prod +ARGS:
     docker compose -f docker-compose.yml -f docker-compose.prod.yml {{ARGS}}
 
+@restart-camunda env="dev":
+    just compose-{{env}} down manager inventory
+    just compose-{{env}} up -d
+
 @sensor-button-press:
     #!/bin/bash
     echo "send MQTT sensor button press"
