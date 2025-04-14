@@ -1,6 +1,6 @@
 services:
   zookeeper:
-    image: bitnami/zookeeper:latest
+    image: bitnami/zookeeper:3.9.3
     environment:
       ALLOW_ANONYMOUS_LOGIN: yes
     restart: unless-stopped
@@ -13,7 +13,7 @@ services:
       - 2181:2181
 
   kafka:
-    image: bitnami/kafka:latest
+    image: bitnami/kafka:3.9.0
     ports:
       - 9092:9092
       - 7203:7203
