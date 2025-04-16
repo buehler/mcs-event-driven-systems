@@ -6,6 +6,8 @@ Date: 2025-03-18
 
 Accepted 
 
+Superceded by [14. Reducing Kafka topics to two](0014-reducing-kafka-topics-to-two.md)
+
 ## Context
 
 To move forward with the implementation, how and what topics for Kafka will be used, need to be decided. 

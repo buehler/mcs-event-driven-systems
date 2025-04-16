@@ -1,4 +1,4 @@
-# Exercise 3 - Suggestions for Software Project
+# Exercise 3&4 - Suggestions for Software Project
 
 The implementations that have already been developed have been pushed to our public repo: `https://github.com/buehler/mcs-event-driven-systems/`. 
 

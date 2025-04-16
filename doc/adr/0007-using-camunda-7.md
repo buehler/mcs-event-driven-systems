@@ -12,7 +12,7 @@ To move forward without BPMN model, and its implementation we needed to decide w
 
 ## Decision
 
-Due to the local Camunda7 being able to be deployed locally, we decided to go with Camunda7. It will make the process of integrating the java services a little bit more manual, however it will save us from finding some new implementation of our Kafka servers for the robots in the lab to pick up commands. 
+Due to the local Camunda7 being able to be deployed locally, we decided to go with Camunda7. It will make the process of integrating the java services a little bit more manual, however it will save us from finding some new implementation of our Kafka servers for the robots in the lab to pick up commands. This is as we need to connect the locally running hardwear in the lab with
 
 ## Consequences
 
