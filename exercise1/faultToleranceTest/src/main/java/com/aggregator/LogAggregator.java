@@ -9,7 +9,7 @@ import java.util.*;
 public class LogAggregator {
 
     // Settings
-    private static final double timeIntervalInSeconds = 1.0;
+    private static final double timeIntervalInSeconds = 0.5;
     private static final String LOG_DIRECTORY_PATH = "./exercise1/faultToleranceTest/logs";
 
     public static void main(String[] args) {
@@ -97,14 +97,14 @@ public class LogAggregator {
                     LocalDateTime roundedTimestamp = LocalDateTime.ofInstant(Instant.ofEpochMilli(roundedMillis), ZoneOffset.UTC);
 
                     // Parse threads value and aggregate for this event type and timestamp
-                    int threads = Integer.parseInt(threadsStr);
                     AggregatedKey key = new AggregatedKey(roundedTimestamp, eventType);
-
                     if ("producer".equals(eventType)) {
-                        producerAggregationMap.put(key, producerAggregationMap.getOrDefault(key, 0) + threads);
+                        producerAggregationMap.put(key, producerAggregationMap.getOrDefault(key, 0) + 1);
                     } else if ("consumer".equals(eventType)) {
-                        consumerAggregationMap.put(key, consumerAggregationMap.getOrDefault(key, 0) + threads);
+                        consumerAggregationMap.put(key, consumerAggregationMap.getOrDefault(key, 0) + 1);
                     }
+
+
                 } else if ("event".equals(eventType)) {
                     // Handle all entries where eventType = "event" and add them to the event list
                     eventList.add(String.format("%s;%s", timestampStr, threadsStr));

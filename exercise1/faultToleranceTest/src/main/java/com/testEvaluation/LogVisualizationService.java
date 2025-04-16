@@ -32,7 +32,7 @@ import java.util.List;
 public class LogVisualizationService {
 
     private static final String LOG_DIRECTORY_PATH = "./exercise1/faultToleranceTest/logs/aggregated";
-    private static final double AGGREGATION_INTERVAL_SECONDS = 1.0; // Configurable aggregation interval
+    private static final double AGGREGATION_INTERVAL_SECONDS = 0.5; // Configurable aggregation interval
 
     public static void main(String[] args) {
         System.out.println("Starting Log Visualization Service...");

@@ -690,7 +690,7 @@ public class KafkaFailoverDockerTest {
     // Kafka setup method (returns a producer instance)
     public KafkaProducer<String, String> createProducer() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "130.82.26.193:9092,130.82.26.193:9093,130.82.26.193:9094");
+        props.put("bootstrap.servers", "192.168.1.173:9092,192.168.1.173:9093,192.168.1.173:9094");
         props.put("key.serializer", StringSerializer.class.getName());
         props.put("value.serializer", StringSerializer.class.getName());
         props.put("acks", "all"); // Wait for all replicas to acknowledge
@@ -708,7 +708,7 @@ public class KafkaFailoverDockerTest {
 
     private KafkaConsumer<String, String> createConsumer() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "130.82.26.193:9092,130.82.26.193:9093,130.82.26.193:9094");
+        props.put("bootstrap.servers", "192.168.1.173:9092,192.168.1.173:9093,192.168.1.173:9094");
         props.put("group.id", "test-consumer-group");
         props.put("key.deserializer", StringDeserializer.class.getName());
         props.put("value.deserializer", StringDeserializer.class.getName());
@@ -731,7 +731,7 @@ public class KafkaFailoverDockerTest {
     public void setupAdminClient() {
         Properties props = new Properties();
         // Set correct address here
-        props.put("bootstrap.servers", "130.82.26.193:9092,130.82.26.193:9093,130.82.26.193:9094");
+        props.put("bootstrap.servers", "192.168.1.173:9092,192.168.1.173:9093,192.168.1.173:9094");
         adminClient = AdminClient.create(props);
     }
 
