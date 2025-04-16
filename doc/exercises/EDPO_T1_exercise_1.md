@@ -243,118 +243,178 @@ Therefore we conclude:
 ---
 ### 3. Fault Tolerance & Reliability
 #### Broker Failures & Leader Elections
-Start docker with the fault profile
-
+Start docker with the fault profile (from the exercise 1 folder)
+```
+$ cd exercise1/docker
+``` 
 ```
 $  docker compose --profile fault up -d
 ``` 
 
-Run test from
+The test consist of two parts:
+1. gather the statistics
+2. aggregate and visualize the results
+
+##### Gather the statistics
+To gahter the statistics run the test once. The console will also output some interesting numbers.
 ```
 ../faultToleranceTest
+``` 
+```
+$ cd exercise1/faultToleranceTest
 ``` 
 
 ```
 $  mvn test -Dtest=com.experiments.KafkaFailoverDockerTest
 ``` 
+This will produce a new log file in [logs](../../exercise1/faultToleranceTest/logs)
+
+##### Aggregate and visualize the results
+To aggregate and visualize the results run the [LogVisualizationService.java](../../exercise1/faultToleranceTest/src/main/java/com/testEvaluation/LogVisualizationService.java) class.
+We run it directly within IntelliJ.
+
+###### Possible settings
+The aggregate interval can be changed in [LogAggregator.java](../../exercise1/faultToleranceTest/src/main/java/com/aggregator/LogAggregator.java)
+Just play with the following parameter in line 12:
+```
+timeIntervalInSeconds = 0.5
+``` 
+The interval must also be changed in [LogVisualizationService.java](../../exercise1/faultToleranceTest/src/main/java/com/testEvaluation/LogVisualizationService.java)
+
+```
+AGGREGATION_INTERVAL_SECONDS = 0.5
+``` 
+
 
 ##### Experiment Setup
-This experiment was conducted to observe the behavior of a Kafka cluster during a broker failover scenario. The setup consisted of a Kafka cluster with three brokers, and a topic configured with three partitions and a replication factor of three. The test involved managing graceful and ungraceful shutdowns, monitoring leader elections, and assessing the cluster’s recovery performance. Key aspects of the setup include the following:
+This experiment was conducted to evaluate the resilience and recovery behavior of an Apache Kafka cluster during broker failover and recovery scenarios. The setup emulates a real-world distributed streaming environment using Dockerized Kafka brokers, designed to assess leader election latency, message availability, and consumer recovery times.
 
 - Test Topic: `test-replication-topic`
 - Producers: Three concurrent producer threads sending messages to the topic.
 - Consumers: One consumer thread consuming messages from the topic.
 - Failure Simulation: The Docker container `kafka1` was stopped to simulate broker failure, and later restarted for recovery.
 
-##### Producer Settings (selection)
+###### Cluster Configuration
 
-- `acks`: `all`
-- `retries`: `3`
-- `retry.backoff.ms`: `500`
-- `request.timeout.ms`: `15000`
-- `metadata.max.age.ms`: `1000`
-- `linger.ms`: `5`
-- `max.in.flight.requests.per.connection`: `5`
-- `delivery.timeout.ms`: `30000`
-- `reconnect.backoff.ms`: `500`
-- `reconnect.backoff.max.ms`: `10000`
+- Kafka Cluster Size: 3 brokers (`kafka1`, `kafka2`, `kafka3`)
+- Topic Setup:
+  - Topic Name: `test-replication-topic`
+  - Partitions: 3
+  - Replication Factor: 3
 
-##### Consumer Settings (selection)
+###### Producer Settings (selection)
 
-- `auto.offset.reset`: `latest`
-- `enable.auto.commit`: `false`
-- `max.poll.interval.ms`: `60000`
-- `fetch.max.wait.ms`: `500`
-- `max.poll.records`: `500`
-- `session.timeout.ms`: `10000`
-- `heartbeat.interval.ms`: `1000`
-- `request.timeout.ms`: `40000`
-- `fetch.min.bytes`: `1`
-- `reconnect.backoff.ms`: `1000`
-- `reconnect.backoff.max.ms`: `10000`
+| Setting                         | Value    |
+|---------------------------------|----------|
+| `acks`                          | `all`    |
+| `retries`                       | `3`      |
+| `retry.backoff.ms`             | `500`    |
+| `request.timeout.ms`           | `15000`  |
+| `metadata.max.age.ms`          | `1000`   |
+| `linger.ms`                    | `5`      |
+| `max.in.flight.requests.per.connection` | `5` |
+| `delivery.timeout.ms`          | `30000`  |
+| `reconnect.backoff.ms`         | `500`    |
+| `reconnect.backoff.max.ms`     | `10000`  |
 
 
-##### Metrics Measured
+###### Consumer Settings (selection)
+
+| Setting                         | Value     |
+|---------------------------------|-----------|
+| `auto.offset.reset`            | `latest`  |
+| `enable.auto.commit`           | `false`   |
+| `max.poll.interval.ms`         | `60000`   |
+| `fetch.max.wait.ms`            | `500`     |
+| `max.poll.records`             | `500`     |
+| `session.timeout.ms`           | `10000`   |
+| `heartbeat.interval.ms`        | `1000`    |
+| `request.timeout.ms`           | `40000`   |
+| `fetch.min.bytes`              | `1`       |
+| `reconnect.backoff.ms`         | `1000`    |
+| `reconnect.backoff.max.ms`     | `10000`   |
+
+###### Metrics Measured
 
 - Broker Kill Time (ms): Time taken to simulate a broker failure.
 - Leader Election Time (ms): Time taken for the Kafka cluster to elect new leaders for the partitions previously managed by the failed broker.
 - Broker Restart Time (ms): Time taken to restart the stopped broker and rejoin the cluster.
 - Consumer Lag (Messages): The difference between the total number of messages produced and consumed throughout the duration of the experiment.
-- Producer Recovery Time (ms): Time taken by producers to return to normal operation after the broker restarts.
-- Consumer Recovery Time (ms): Time taken by consumers to start receiving messages after the broker is restarted.
+- Producer Recovery Time (Node Failure): Time taken by producers to return to normal operation after the broker restarts.
+- Consumer Recovery Time (Node Failure): Time taken by consumers to start receiving messages after the broker is restarted.
+- Producer Recovery Time (Node Recovery): Time taken for producer to resume message delivery after broker restoration.
+- Consumer Recovery Time (Node Recovery): Time taken for consumer to resume processing after broker recovery.
 - Total Produced Messages: Total number of messages produced during the experiment.
 - Total Consumed Messages: Total number of messages consumed during the experiment.
 - Partitions Revoked and Assigned: The number of partition reassignment events observed during the consumer's rebalancing process.
 
+All produced and consumed messages are logged. Also all events are logged. Those logs are used to plot the graph of all produced and consumed messages and the occurrences of events.
+
 
 ##### Experiment Results
-The experiment results are summarized in the following table:
+The experiment results are summarized in the following table. When running the test, these numbers get output to the console.
+The console ouput mentioned in this report can be found here [consoleOutput_2025-04-16_11-01-04.log](../../exercise1/faultToleranceTest/logs/Console%20Output/consoleOutput_2025-04-16_11-01-04.log)
 
-| Metric                    | Value                        |
-|--------------------------------|----------------------------------|
-| Test Name                      | Kafka Broker Failover Test       |
-| Topic Name                     | test-replication-topic           |
-| Broker Kill Time (ms)          | 10                               |
-| Leader Election Time (ms)      | 26                               |
-| Broker Restart Time (ms)       | 3294                             |
-| Consumer Lag (Messages)        | 719                              |
-| Producer Recovery Time (ms)    | 33329                            |
-| Consumer Recovery Time (ms)    | 33329                            |
-| Total Produced Messages        | 13574                            |
-| Total Consumed Messages        | 12855                            |
-| Test Successful                | true                             |
-| Last Produced Before Failure   | 2025-03-02 18:10:31.305          |
-| First Produced After Recovery  | 2025-03-02 18:11:04.634          |
-| Last Consumed Before Failure   | 2025-03-02 18:10:31.312          |
-| First Consumed After Recovery  | 2025-03-02 18:11:04.641          |
-| Revoked Partitions Count       | 3                                |
-| Assigned Partitions Count      | 3                                |
+| Metric                                 | Value                         |
+|----------------------------------------|-------------------------------|
+| Test Name                              | Kafka Broker Failover Test    |
+| Topic Name                             | test-replication-topic        |
+| Broker Kill Time (ms)                  | 10                            |
+| Leader Election Time (ms)              | 53                            |
+| Broker Restart Time (ms)               | 131                           |
+| Consumer Lag (Messages)                | 199                           |
+| Total Produced Messages                | 2057                          |
+| Total Consumed Messages                | 1858                          |
+| Test Successful                        | true                          |
+| Revoked Partitions Count               | 3                             |
+| Assigned Partitions Count              | 3                             |
+| Producer Recovery Time (Node Failure)  | 41 ms                         |
+| Consumer Recovery Time (Node Failure)  | 42 ms                         |
+| Producer Recovery Time (Node Recovery) | 43 ms                         |
+| Consumer Recovery Time (Node Recovery) | 45 ms                         |
 
+
+The following graph was plotted with [LogVisualizationService.java](../../exercise1/faultToleranceTest/src/main/java/com/testEvaluation/LogVisualizationService.java). 
+The logs used for this graph can be found here [exercise1_faultToleranceTest_2025-04-16_11-01-04.log](../../exercise1/faultToleranceTest/logs/exercise1_faultToleranceTest_2025-04-16_11-01-04.log)
+![exercise1_faultToleranceTest.png](assets/exercise1_faultToleranceTest.png)
 
 ##### Observations
-1. During the broker failover, all partitions transitioned to new leaders. The new leaders chosen for the partitions were as follows:
-- Partition 0: New leader = 2
-- Partition 1: New leader = 2
-- Partition 2: New leader = 3
+1. Partition Leadership Transition  
+   During the broker failover, all partitions transitioned to new leaders:
+   - Partition 0: New leader = 2 
+   - Partition 1: New leader = 3 
+   - Partition 2: New leader = 2
 
-2. The Kafka producers and consumer did not resume operation until the broker (`kafka1`) was restarted. Following the successful restart of the broker:
-- The first message production after recovery was captured at 2025-03-02 18:11:04.634.
-- The first message consumption after recovery was captured at 2025-03-02 18:11:04.641.
 
-3. Several disconnection and connection failure warnings were logged by the producers and consumers while attempting to reconnect to the unavailable broker (`kafka1`). Examples include:
-- _`Connection to node 1 (/192.168.1.173:9092) could not be established. Node may not be available.`_
-- Multiple failures were observed across the producer threads (`producer-1`, `producer-2`, `producer-3`) and the consumer thread.
+2. Producer/Consumer Recovery Behavior  
+   Both producers and the consumer resumed operations almost immediately after the leadership transition. The recovery time was minimal:
+    - `kafka1` stopped: `11:01:24.619`
+    - The first message produced after failover: `11:01:24.627`
+    - The first message consumed after failover: `11:01:24.636`
 
-4. The cluster resumed normal operations only after `kafka1` was successfully restarted, with new leaders continuing to manage partitions. This behavior indicates that while brokers transitioned leadership effectively, the client applications (producers, consumers) required the restarted broker to continue their workflows.
+3. Minimal Cluster Impact  
+   Disabling one broker (`kafka1`) had minimal impact on the system. The cluster handled leader election efficiently, and the producers and consumer continued functioning with only a slight delay. This demonstrates the robustness of Kafka's failover mechanism.
 
-5. Successfully restarting `kafka1` reintroduced it to the cluster:
-- Restart logs showed that the broker was started successfully.
-- The broker was able to fully recover and rejoin the cluster.
+4Partition Reassignment Events  
+   The consumer experienced a rebalance, during which all three topic partitions were reassigned:
+  - Partitions revoked: 3
+  - Partitions assigned: 3  
+    These transitions were handled automatically by Kafka with no loss in message processing continuity.
 
 ##### Key Insights for our project
-This behavior emphasizes that while the Kafka cluster ensures no data loss and maintains partition leadership upon broker failover, the client applications (producers and consumers) must handle the detection of broker failures and react accordingly, if waiting for the broker is no option.
-    
+- Kafka handles failover efficiently  
+  Leader election and client recovery occurred in under 100 ms, with minimal disruption (~10 ms). Kafka's built-in replication and failover mechanisms proved highly reliable.
 
+- No data loss observed  
+  Message delivery remained consistent, and consumer lag was low despite the broker failure.
+
+- Clients recover automatically  
+  Producers and consumers handled disconnections gracefully without manual intervention.
+
+- Seamless partition rebalancing  
+  Partition reassignment and rebalancing occurred without affecting message flow or logic.
+
+**Project implications**: We can rely on Kafka’s fault tolerance out of the box. With proper replication (≥ 3) and basic retry settings, the system remains highly available even during broker failures.
 
 
 
