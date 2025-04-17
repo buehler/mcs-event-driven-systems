@@ -16,4 +16,5 @@ Due to the local Camunda7 being able to be deployed locally, we decided to go wi
 
 ## Consequences
 
-Our BPMB will be created and deployed using Camunda7. It will result in us needing to do some extra implementations to call the services, while making it eaier when sending commands to the robots.
+Our BPMB will be created and deployed using Camunda7. It will result in us needing to do some extra implementations to call the services, while making it easier when sending commands to the robots.
+One of the biggest drawback of not using Camunda8 is that Camunda7 does, in comparison, not have an implemented logic for message queueing. Th
