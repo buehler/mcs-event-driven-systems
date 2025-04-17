@@ -2,7 +2,7 @@
 
 - Simon: implementation of tests, documentation & evaluation
 - Christoph: supporting
-- Gero:
+- Gero: joining team :)
 
 # Ex 2
 

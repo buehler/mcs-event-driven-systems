@@ -1,7 +1,5 @@
 # Assignment 1 - Mid-Term Report Software Project
 
-TO-DO: Update ADR 11
-
 TO-DO: Update ADR Sensor business Idee
 
 
