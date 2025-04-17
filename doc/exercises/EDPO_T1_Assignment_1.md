@@ -1,6 +1,5 @@
 # Assignment 1 - Mid-Term Report Software Project
 
-### General description;
 
 For the software project for this course we have decided to go and implement a colour soring worklfow as provided in the Lab. The goal is to sort the provided coloured block, in blue, yellow, green and red, into the corresponing bucket. For this there are two Debot Robots arms, a conveyor belt between the two robots and a handful of different sensors. The sensors that are provided are a colour sensors, severals distance sensors and a NFC-reader. The NFC reader is important as the color sensor cannot distinguish between green and yellow. Therefore, the green blocks have been equipped with NFC tags so that they can be differentiated by the existence of an NFC-tag from the yellow blocks. There is also a button provided. We have used this button to have the user mark "area clear". Further, we 3D printed a 3x3 grid that fits 9 of these coloured blocks. This grid serves as our delivery bay, here blocks are placed to be then processed by the robots. A note on the robots in use. They are both the same type and are relatively "dumb", which however makes them rather simple to work with for rigid workflows. Movement patters are recorded manually, which create a script of movements. This scipt can then simply be called and the robot will repeat the recorded movements. This however requires the block to always be quite precisly in the same place. Otherwise the robot will miss the block and has no way to correct for the slightly altered position.
 
@@ -41,7 +40,9 @@ Here you can access the video to see the whole workflow in action of the robots 
 
 [EDPO-midterm-error-HD 1080p.mov](https://universitaetstgallen-my.sharepoint.com/:v:/g/personal/geroalexander_traem_student_unisg_ch/EVOex_pPVH1Crxjys2ReOpoBzwyE8BhbSZX7UaVVDdJPTg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=l6mkjg)
 
-### Implementation at a conceptual level;
+### Implementation at a conceptual level
+
+Following an overview of the most important implementations at a conceptual level.
 
 ##### Kafka implementation
 
