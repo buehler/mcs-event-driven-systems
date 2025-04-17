@@ -12,9 +12,9 @@ In the current implementation some features, such as the conveyor belt is attach
 
 ## Decision
 
-Peniding technical feasiblity all of these services are to separated out, into seperate microservices so that these services are decoupled and processes may happen in parallel. 
+Pending technical feasibility all of these services are to separated out, into separate microservices so that these services are decoupled and processes may happen in parallel. 
 
 ## Consequences
 
-Technical feasiblilty will need to be checked. Especially the independence of the API. Questions that need to be revisited before fully implementing seperate service: Can the robot and theconveyer be called at the same time or does the robots current task need to be complete before calling to theconveyer belt.
-On an architectual level the consequence for this is more services that allow for seperation of concern. This is also important as especially during error scenarios having the conveyer belt seperate may allow the system to clear the workspace/conveyer so that other processes can continue to complete different task without the whole system coming to a standstil.
+Technical feasibility will need to be checked. Especially the independence of the API. Questions that need to be revisited before fully implementing separate service: Can the robot and the conveyor be called at the same time or does the robots current task need to be complete before calling to the conveyor belt.
+On an architectural level the consequence for this is more services that allow for separation of concern. This is also important as especially during error scenarios having the conveyor belt separate may allow the system to clear the workspace/conveyor so that other processes can continue to complete different task without the whole system coming to a standstill.

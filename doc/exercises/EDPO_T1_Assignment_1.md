@@ -1,9 +1,5 @@
 # Assignment 1 - Mid-Term Report Software Project
 
-TO-DO: Update ADR Sensor business Idee
-
-
-
 ### General description;
 
 For the software project for this course we have decided to go and implement a colour soring worklfow as provided in the Lab. The goal is to sort the provided coloured block, in blue, yellow, green and red, into the corresponing bucket. For this there are two Debot Robots arms, a conveyor belt between the two robots and a handful of different sensors. The sensors that are provided are a colour sensors, severals distance sensors and a NFC-reader. The NFC reader is important as the color sensor cannot distinguish between green and yellow. Therefore, the green blocks have been equipped with NFC tags so that they can be differentiated by the existence of an NFC-tag from the yellow blocks. There is also a button provided. We have used this button to have the user mark "area clear". Further, we 3D printed a 3x3 grid that fits 9 of these coloured blocks. This grid serves as our delivery bay, here blocks are placed to be then processed by the robots. A note on the robots in use. They are both the same type and are relatively "dumb", which however makes them rather simple to work with for rigid workflows. Movement patters are recorded manually, which create a script of movements. This scipt can then simply be called and the robot will repeat the recorded movements. This however requires the block to always be quite precisly in the same place. Otherwise the robot will miss the block and has no way to correct for the slightly altered position.
@@ -27,17 +23,11 @@ Below is a diagram depicting the set-up in the lab.
 
 ![img.png](img.png)
 
-
-
 This is the front-end that we have created to allow the user to fill in the delivery notice. Here the delivery person can select which slots of the grid have blocks that need to be sorted.
-
 
 ![img_2.png](img_2.png)
 
-
-
 There is also a simple web page that shows the current status of the inventory. It is updated once a block is sorted into the corresponding bucket.
-
 
 ![img_3.png](img_3.png)
 
@@ -51,7 +41,6 @@ Here you can access the video to see the whole workflow in action of the robots 
 
 [EDPO-midterm-error-HD 1080p.mov](https://universitaetstgallen-my.sharepoint.com/:v:/g/personal/geroalexander_traem_student_unisg_ch/EVOex_pPVH1Crxjys2ReOpoBzwyE8BhbSZX7UaVVDdJPTg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=l6mkjg)
 
-
 ### Implementation at a conceptual level;
 
 ##### Kafka implementation
@@ -60,13 +49,13 @@ We have decided to go with two Kafka topics for our implementation. This decisio
 
 - Event-bus
 
-Here updates from different services are emitted. This can for example be one of the robots notifying that they are done or a sensor that they have detected a block at their location. The events that are emitted here transmit information. 
+Here updates from different services are emitted. This can for example be one of the robots notifying that they are done or a sensor that they have detected a block at their location. The events that are emitted here transmit information.
 
-In most cases multiple of these are needed for the workflow can be moved on to the next stage. For example, before the workflow can move on to the conveyor belt, the event of the robot that the last workflow is finished needs to be received as well sa the event from the proximity sensor on the conveyor belt. 
+In most cases multiple of these are needed for the workflow can be moved on to the next stage. For example, before the workflow can move on to the conveyor belt, the event of the robot that the last workflow is finished needs to be received as well sa the event from the proximity sensor on the conveyor belt.
 
 - Command-bus
 
-The command-bus has the sole purpose to send instructions to a service. This is a strict 1:1 communication. Here it is expected that there is an action take by the service that received the command. 
+The command-bus has the sole purpose to send instructions to a service. This is a strict 1:1 communication. Here it is expected that there is an action take by the service that received the command.
 
 ##### Microservices
 
@@ -80,8 +69,6 @@ The command-bus has the sole purpose to send instructions to a service. This is 
 ##### Camunda workflow
 
 To conceptualise the implementation of this, below is a simplified version of the overall Camunda workflow. The full workflow that is depoyed in the manager service can be found here: `/src/manager/src/main/resources/separate_robot_movement_v2.bpmn`
-
-
 
 ![img_1.png](img_1.png)
 
@@ -97,42 +84,33 @@ To conceptualise the implementation of this, below is a simplified version of th
 - Once there are no workpieces remaining there is an event that is sent out showing that the shipment has been processed. The system is now ready for the next shipment.
 - With the current implementation there is only allowed to be one shipment at a time. This makes sense as there cannot be a new delivery while a process is running. This is as the grid with the block represents a full shipment (one can think of this of a delivery truck parking in a loading bay). This does not change until the shipment is processed and the next "truck" is ready to be unloaded
 
-
-### Concepts and Implementation 
-
-DELETE: • explicit references to the concepts of the lecture and exercises and how they are covered by the project5;
+### Concepts and Implementation
 
 -> Event-based state transfer for the blocks
 
+-> Event notification
+
+-> Orchestration vs Choreography
+
+### Discussions, trade-offs, decisions, results and insights
 
 
+-> Protbuf
+Please see ADR 4.
 
--> Event notification 
+-> Implementation of sensor service
+Please see ADR 17.
 
-
-### Discussions, trade-offs, decisions, results and insights 
-
-DELETE • a discussion of trade-offs and important architectural decisions whenever relevant (can be complemented with ADRs);
-
--> protbuf
-
-
--> Aggregator model 
+-> Aggregator model
 Show the difference between the event-based and the command-based model. The event-based model is more flexible and allows for more complex workflows, but it is also more complex to implement and maintain. The command-based model is simpler and easier to understand, but it is less flexible and can lead to more tightly coupled systems.
 
 ![img_6.png](img_6.png)
 
 ### Results and Insights
 
-
-
 -> Semantic Coupling
-One of the pr
 
-**Semantic Coupling**
-– Inherent coupling that exists in the problem domain
-
-
+Inherent coupling that exists in the problem domain
 
 -> Unavailabiltiy of services
 It is important to note, that we have a very coupled system on the hardware side. This is because the physical workflow is very sequential and there is no opportunity (in the current implementation) to manage a queue.
@@ -141,17 +119,15 @@ In the current system however, when the color robot is down, the rest of the sys
 Similarly, if the picker robot is down, the color robot can keep working as long as there are blocks on the conveyor belt. This is a trade-off between flexibility and complexity.
 
 -> Camunda great -> changing business logic not changing services
-We enjoyed using camunda, especially as we started to change the workflow 
+We enjoyed using camunda, especially as we started to change the workflow
 
 -> Timing issues
-Physical execution of task takes time but there are also time-outs needed. A good example of this is the NFC-reader. Here we need a timeout, after the robot has moved the block to the NFC reader to determine, that a block has no NFC tag if nothing is detected within a certain amount of time. Getting these timings right, finding a good trade-off between real-world performance, i.e. having a fault tolerant system and getting the tasks done, without waiting too long for things to time out is issue that needs testing and fine tuning to optimize the system. At this point 
+Physical execution of task takes time but there are also time-outs needed. A good example of this is the NFC-reader. Here we need a timeout, after the robot has moved the block to the NFC reader to determine, that a block has no NFC tag if nothing is detected within a certain amount of time. Getting these timings right, finding a good trade-off between real-world performance, i.e. having a fault tolerant system and getting the tasks done, without waiting too long for things to time out is issue that needs testing and fine tuning to optimize the system. At this point
 To facilitate further testing and optimization these time-out times can be adjusted in the build file to allow easy changing of this parameter.
 
 -> when you “miss” the event, you need to make sure there is some sort of queueing logic in the system
 
-
 -> Error handling - Manual retry with user task and auto-retry with service task
-
 An error handling workflow can be seen below. This is a simple example of how the error handling works. The workflow will wait for an event from the sensor and/or events that one of the robots is done, if this event is not received within a certain time frame, the workflow will throw an error.
 There is a possibility for an auto retry, which will retry the process automatically. This is done by sending a command to the robot to retry the last movement. If this does not work, the workflow will throw an error and a user task will be created. The auto-retry can be toggled on and off. From testing our set-up we usually run it without the auto retry.
 The reasining for this is that the auto retry only works in the case where the block was not picked up by the sucction of the robot but remained in the same place. In our tests this actually never happened. Errors were sometime more severe and required directly user intervention.
@@ -164,15 +140,9 @@ In the example below, one can see that the block did not arrive on the conveyor 
 
 ![img_4.png](img_4.png)
 
-
 ### Release
 
-
-DELETE : • a link to a release version of your software application for Assignment 1 within your Git repository and additional descriptions/links related to your implementation if necessary;
-
--> TO_DO: make a release version and post link here
-
-
+-> Link to release
 
 The contributions of the different team members can be found under [contributions_log.md](../contributions_log.md) in the Git repository.
 
