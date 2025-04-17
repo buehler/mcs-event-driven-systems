@@ -60,10 +60,5 @@ services:
       - ./src/mockserver/robot_and_conveyor.json:/tmp/mockserver/robot_and_conveyor.json:ro
     restart: unless-stopped
 
-  manager:
-    environment:
-      - ROBOT_TIMEOUT_DURATION=PT15S
-      - ROBOT_TIMEOUT_DURATION2=PT6S
-
 volumes:
   mqtt:
