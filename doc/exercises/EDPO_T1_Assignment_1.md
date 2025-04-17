@@ -176,6 +176,6 @@ DELETE : • a link to a release version of your software application for Assign
 
 
 
-The contributions of the different team members can be found under`/doc/contributions_log` in the Git repository.
+The contributions of the different team members can be found under [contributions_log.md](../contributions_log.md) in the Git repository.
 
 Some of the exercises were also updated and can be found under `/doc/exercises`.

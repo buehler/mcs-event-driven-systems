@@ -6,6 +6,8 @@ Date: 2025-03-18
 
 Accepted 
 
+Superceded by [16. Orchestrated Workflow with single Camunda](0016-orchestrated-workflow-with-single-camunda.md)
+
 ## Context
 
 As we have seen in the lecture, multiple instances of Camunda may be run depending on the set up and workflow of the application. In the example from the lecture, the workflows for payment and order fullfilment were seperated out into seperate instances in Camunda. This allows for further decoupling. For our project we need to decide if multiple workflows make sense and if they do how they would be split and implemented. 
