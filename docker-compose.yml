@@ -1,6 +1,6 @@
 services:
   zookeeper:
-    image: bitnami/zookeeper:3.9.3
+    image: bitnami/zookeeper:3.9.0
     environment:
       ALLOW_ANONYMOUS_LOGIN: yes
     restart: unless-stopped
@@ -65,7 +65,7 @@ services:
     environment:
       - KAFKA_HOST=kafka
       - KAFKA_PORT=29092
-      - KAFKA_TOPIC=events
+      - KAFKA_TOPIC=sensors
 
   manager:
     build:

@@ -13,19 +13,6 @@ managed:
 
 plugins:
   - remote: buf.build/protocolbuffers/go
-    out: src/sensors/gen
-    opt:
-      - paths=source_relative
-      - Mcommands/inventory/v1/inventory.proto=github.com/buehler/mcs-event-driven-systems/sensors/gen/commands/inventory/v1
-      - Mcommands/machines/v1/conveyor.proto=github.com/buehler/mcs-event-driven-systems/sensors/gen/commands/machines/v1
-      - Mcommands/machines/v1/robot.proto=github.com/buehler/mcs-event-driven-systems/sensors/gen/commands/machines/v1
-      - Mevents/inventory/v1/inventory.proto=github.com/buehler/mcs-event-driven-systems/sensors/gen/events/inventory/v1
-      - Mevents/machines/v1/conveyor.proto=github.com/buehler/mcs-event-driven-systems/sensors/gen/events/machines/v1
-      - Mevents/machines/v1/robot.proto=github.com/buehler/mcs-event-driven-systems/sensors/gen/events/machines/v1
-      - Mevents/sensors/v1/sensors.proto=github.com/buehler/mcs-event-driven-systems/sensors/gen/events/sensors/v1
-      - Mmodels/v1/block.proto=github.com/buehler/mcs-event-driven-systems/sensors/gen/models/v1
-      - Mmodels/v1/shipment.proto=github.com/buehler/mcs-event-driven-systems/sensors/gen/models/v1
-  - remote: buf.build/protocolbuffers/go
     out: src/test-kafka-publisher/gen
     opt:
       - paths=source_relative

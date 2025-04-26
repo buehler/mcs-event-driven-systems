@@ -1,12 +1,3 @@
-FROM bufbuild/buf:1.50 AS proto_builder
-WORKDIR /src
-
-COPY ./buf* ./
-COPY ./src ./src
-
-RUN buf generate
-
-
 FROM golang:1.23 AS go_builder
 WORKDIR /src
 
@@ -19,7 +10,7 @@ ENV KAFKA_NO_VENDOR=1 \
 COPY src/sensors/go.mod src/sensors/go.sum ./
 RUN --mount=type=cache,target=/go/pkg/mod go mod download
 
-COPY --from=proto_builder /src/src/sensors .
+COPY src/sensors .
 
 RUN go build -tags dynamic -a -installsuffix cgo -o sensors ./cmd
 

@@ -5,10 +5,12 @@ import (
 	"fmt"
 
 	"github.com/buehler/mcs-event-driven-systems/sensors/internal/config"
-	"github.com/buehler/mcs-event-driven-systems/sensors/internal/events"
+	"github.com/buehler/mcs-event-driven-systems/sensors/internal/publisher"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/sirupsen/logrus"
 )
+
+const mqttTopic = "Tinkerforge/#"
 
 func StartMQTTListener(ctx context.Context) {
 	appConfig := config.GetConfig()
@@ -33,33 +35,8 @@ func StartMQTTListener(ctx context.Context) {
 	}
 	defer client.Disconnect(250)
 
-	// Subscribe to NFC sensor data
-	if token := client.Subscribe(appConfig.SensorsNFCTopic, 0, events.OnNFCMessageReceived); token.Wait() && token.Error() != nil {
-		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
-	}
-
-	// Subscribe to rotary sensor data
-	if token := client.Subscribe(appConfig.SensorsRotaryTopic, 0, events.OnRotaryMessageReceived); token.Wait() && token.Error() != nil {
-		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
-	}
-
-	// Subscribe to left distance sensor data
-	if token := client.Subscribe(appConfig.SensorsLeftDistTopic, 0, events.OnLeftDistMessageReceived); token.Wait() && token.Error() != nil {
-		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
-	}
-
-	// Subscribe to right distance sensor data
-	if token := client.Subscribe(appConfig.SensorsRightDistTopic, 0, events.OnRightDistMessageReceived); token.Wait() && token.Error() != nil {
-		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
-	}
-
-	// Subscribe to NFC distance sensor data
-	if token := client.Subscribe(appConfig.SensorsNFCDistTopic, 0, events.OnNFCDistMessageReceived); token.Wait() && token.Error() != nil {
-		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
-	}
-
-	// Subscribe to clearance button sensor data
-	if token := client.Subscribe(appConfig.SensorsClearanceBtnTopic, 0, events.OnClearanceBtnMessageReceived); token.Wait() && token.Error() != nil {
+	// Subscribe to all sensor MQTT data
+	if token := client.Subscribe(mqttTopic, 0, onMessageReceived); token.Wait() && token.Error() != nil {
 		logrus.WithError(token.Error()).Fatal("Failed to subscribe to MQTT topic")
 	}
 
@@ -73,4 +50,10 @@ func onConnect(_ mqtt.Client) {
 
 func onConnectionLost(_ mqtt.Client, err error) {
 	logrus.WithError(err).Fatal("Connection to MQTT broker lost")
+}
+
+func onMessageReceived(_ mqtt.Client, msg mqtt.Message) {
+	logger := logrus.WithField("topic", msg.Topic())
+	logger.Info("Handle received message")
+	publisher.SendKafkaEvent(msg.Payload())
 }
