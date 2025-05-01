@@ -30,17 +30,21 @@ plugins:
     opt:
       - base_namespace=
       - file_extension=.g.cs
-  - remote: buf.build/protocolbuffers/kotlin
+  - remote: buf.build/protocolbuffers/kotlin:v30.2
     out: src/conveyor/src/main/proto/kotlin
-  - remote: buf.build/protocolbuffers/java
+  - remote: buf.build/protocolbuffers/java:v30.2
     out: src/conveyor/src/main/proto/java
-  - remote: buf.build/protocolbuffers/kotlin
+  - remote: buf.build/protocolbuffers/kotlin:v30.2
     out: src/colors/src/main/proto/kotlin
-  - remote: buf.build/protocolbuffers/java
+  - remote: buf.build/protocolbuffers/java:v30.2
     out: src/colors/src/main/proto/java
-  - remote: buf.build/protocolbuffers/kotlin
+  - remote: buf.build/protocolbuffers/kotlin:v30.2
     out: src/picker/src/main/proto/kotlin
-  - remote: buf.build/protocolbuffers/java
+  - remote: buf.build/protocolbuffers/java:v30.2
     out: src/picker/src/main/proto/java
-  - remote: buf.build/protocolbuffers/java
+  - remote: buf.build/protocolbuffers/kotlin:v30.2
+    out: src/streams/src/main/proto/kotlin
+  - remote: buf.build/protocolbuffers/java:v30.2
+    out: src/streams/src/main/proto/java
+  - remote: buf.build/protocolbuffers/java:v30.2
     out: src/manager/src/main/proto/java

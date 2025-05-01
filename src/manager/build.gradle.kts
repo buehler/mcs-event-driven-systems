@@ -52,7 +52,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     // Protobuf support
-    implementation("com.google.protobuf:protobuf-java:4.+")
+    implementation("com.google.protobuf:protobuf-java:4.30.2")
 
     // Testing dependencies
     testImplementation("org.springframework.boot:spring-boot-starter-test")
