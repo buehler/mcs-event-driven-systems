@@ -165,11 +165,11 @@ services:
       - KAFKA_HOST=kafka
       - KAFKA_PORT=29092
 
-  grafana:
-    image: grafana/grafana-enterprise:latest
-    restart: unless-stopped
-    ports:
-      - 3001:3000
-    depends_on:
-      kafka:
-        condition: service_healthy
+  # grafana:
+  #   image: grafana/grafana-enterprise:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - 3001:3000
+  #   depends_on:
+  #     kafka:
+  #       condition: service_healthy
