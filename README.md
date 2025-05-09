@@ -14,7 +14,7 @@ course. The project works with the provided robot simulator in the lab.
 4. Add `dev` to the Active Profiles
 5. If you ran an instance before that did not complete, you might need to delete the `camunda-h2-database.mv.db` folder in the root directory. There currently is a single instance only restriction. 
 6. Run the application
-- Camunda is running on `localhost:8080` with the credentials `StorageManager/demo`
+- Camunda is running on `localhost:8080` with the credentials `a/a`
 - the frontend is running on `http://localhost:3000`
 - the kafka broker is running on `localhost:9092`
 - to see all the commands and events that can be fired to mimic the hardware run `just`

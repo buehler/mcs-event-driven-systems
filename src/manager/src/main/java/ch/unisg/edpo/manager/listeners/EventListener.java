@@ -1,6 +1,10 @@
 package ch.unisg.edpo.manager.listeners;
+import ch.unisg.edpo.manager.testing.TestingStatusService;
 
+import ch.unisg.edpo.proto.events.machines.v1.BlockPositionedOnNfc;
 import ch.unisg.edpo.proto.events.machines.v1.BlockSorted;
+import ch.unisg.edpo.proto.events.sensors.v1.NFCDistDetected;
+import ch.unisg.edpo.proto.events.sensors.v1.NFCObjectDetected;
 import org.camunda.bpm.engine.RuntimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,15 +15,21 @@ import org.springframework.stereotype.Service;
 import ch.unisg.edpo.proto.events.sensors.v1.ColorDetected;
 import ch.unisg.edpo.proto.models.v1.BlockColor;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EventListener {
 
     private final Logger logger = LoggerFactory.getLogger(EventListener.class);
     private final RuntimeService runtimeService; // Camunda RuntimeService dependency for managing processes
+    private final TestingStatusService testingStatusService;
+
 
     // Constructor to inject dependencies
-    public EventListener(RuntimeService runtimeService) {
+    public EventListener(RuntimeService runtimeService, TestingStatusService testingStatusService) {
         this.runtimeService = runtimeService;
+        this.testingStatusService =testingStatusService;
     }
 
     @KafkaListener(
@@ -92,6 +102,10 @@ public class EventListener {
 
             case "BlockSorted":
                 handleBlockSorted(payload);
+                break;
+            // all following cases will only be handled when in testing mode. Otherwise this are unhandled events
+            case "ShipmentProcessed":
+                handleShipmentProcessed(payload);
                 break;
 
 
@@ -327,6 +341,62 @@ public class EventListener {
 
         } catch (Exception e) {
             logger.error("Error while processing 'BlockSorted' message:", e);
+        }
+    }
+
+    /**
+     * All following event handler are only active when in testing mode!!
+     */
+
+    /**
+     * Handles the 'ShipmentProcessed' event when in testing mode.
+     */
+    private void handleShipmentProcessed(byte[] payload) {
+        try {
+            // Check if testing mode is active
+            if (testingStatusService.isTestingRunning()) {
+                logger.info("Testing: Processing ShipmentProcessed event");
+
+                // Get all blocks from the testing service
+                List<TestingStatusService.BlockStatus> blocks = testingStatusService.getBlocks();
+
+                // Check if all blocks have checkedForNFC = 1 and all non-green blocks have colorChecked = 1
+                boolean allBlocksProcessed = blocks.stream().allMatch(block ->
+                        block.getCheckedForNFC() == 1 &&
+                                (block.getColor().equalsIgnoreCase("GREEN") || block.getColorChecked() == 1)
+                );
+
+                if (allBlocksProcessed) {
+                    logger.info("Testing: All blocks have been successfully processed");
+                    // Stop testing mode since all conditions are met
+                    testingStatusService.stopTesting();
+                    logger.info("Testing: Test run completed successfully");
+                } else {
+                    // Log which blocks haven't been fully processed
+                    List<TestingStatusService.BlockStatus> unprocessedBlocks = blocks.stream()
+                            .filter(block ->
+                                    block.getCheckedForNFC() == 0 ||
+                                            (!block.getColor().equalsIgnoreCase("GREEN") && block.getColorChecked() == 0)
+                            )
+                            .collect(Collectors.toList());
+
+                    logger.warn("Testing: Shipment processed but {} blocks were not fully handled",
+                            unprocessedBlocks.size());
+
+                    for (TestingStatusService.BlockStatus block : unprocessedBlocks) {
+                        logger.warn("Testing: Block {} ({}): NFC checked={}, Color checked={}, Requires color check: {}",
+                                block.getBlockNumber(),
+                                block.getColor(),
+                                block.getCheckedForNFC(),
+                                block.getColorChecked(),
+                                !block.getColor().equalsIgnoreCase("GREEN"));
+                    }
+                }
+            } else {
+                logger.warn("Unhandled command type: ShipmentProcessed");
+            }
+        } catch (Exception e) {
+            logger.error("Error handling ShipmentProcessed event: {}", e.getMessage(), e);
         }
     }
 }

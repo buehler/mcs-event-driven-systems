@@ -389,7 +389,7 @@ This experiment was conducted to evaluate the resilience and recovery behavior o
 
 - Broker Kill Time (ms): Time taken to simulate a broker failure.
 - Leader Election Time (ms): Time taken for the Kafka cluster to elect new leaders for the partitions previously managed by the failed broker.
-- Broker Restart Time (ms): Time taken to restart the stopped broker and rejoin the cluster.
+- Broker Restart Time (ms): Time taken to restart the stopped broker and rejoin the cluster (time begining after restart is initiated, not after stopping).
 - Consumer Lag (Messages): The difference between the total number of messages produced and consumed throughout the duration of the experiment.
 - Producer Recovery Time (Node Failure): Time taken by producers to return to normal operation after the broker restarts.
 - Consumer Recovery Time (Node Failure): Time taken by consumers to start receiving messages after the broker is restarted.
@@ -426,6 +426,7 @@ The console ouput mentioned in this report can be found here [consoleOutput_2025
 
 The following graph was plotted with [LogVisualizationService.java](../../exercise1/faultToleranceTest/src/main/java/com/testEvaluation/LogVisualizationService.java).
 The logs used for this graph can be found here [exercise1_faultToleranceTest_2025-04-16_11-01-04.log](../../exercise1/faultToleranceTest/logs/exercise1_faultToleranceTest_2025-04-16_11-01-04.log)
+Note: The interval time is the aggregation interval of all collected logs. The timestamp is as follows: hh:mm:ss.ms
 ![exercise1_faultToleranceTest.png](assets/exercise1_faultToleranceTest.png)
 
 ##### Observations
@@ -447,12 +448,15 @@ The logs used for this graph can be found here [exercise1_faultToleranceTest_202
 3. Minimal Cluster Impact  
    Disabling one broker (`kafka1`) had minimal impact on the system. The cluster handled leader election efficiently, and the producers and consumer continued functioning with only a slight delay. This demonstrates the robustness of Kafka's failover mechanism.
 
-4Partition Reassignment Events  
+4. Partition Reassignment Events  
  The consumer experienced a rebalance, during which all three topic partitions were reassigned:
 
 - Partitions revoked: 3
 - Partitions assigned: 3  
   These transitions were handled automatically by Kafka with no loss in message processing continuity.
+
+5. Total Produced and Consumed Messages is not matching.  
+   This is due to the fact, that the producer was started before the consumer and the test was finished, before the consumer was able to catch up. The difference is the Consumer Lag.
 
 ##### Key Insights for our project
 
