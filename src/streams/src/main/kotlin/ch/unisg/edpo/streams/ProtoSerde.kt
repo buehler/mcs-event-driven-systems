@@ -1,6 +1,8 @@
 package ch.unisg.edpo.streams
 
+import ch.unisg.edpo.proto.commands.machines.v1.ConveyorMoveBlock
 import ch.unisg.edpo.proto.events.machines.v1.BlockSorted
+import ch.unisg.edpo.proto.events.machines.v1.ConveyorBlockMoved
 import com.google.protobuf.GeneratedMessage
 import org.apache.kafka.common.header.Headers
 import org.apache.kafka.common.serialization.Deserializer
@@ -24,6 +26,8 @@ class GeneratedMessageDeserializer : Deserializer<GeneratedMessage> {
         val messageType = headers.lastHeader("messageType")?.value()?.toString(Charsets.UTF_8)
         return when (messageType) {
             "BlockSorted" -> BlockSorted.parseFrom(data)
+            "ConveyorMoveBlock" -> ConveyorMoveBlock.parseFrom(data)
+            "ConveyorBlockMoved" -> ConveyorBlockMoved.parseFrom(data)
             else -> null
         }
     }

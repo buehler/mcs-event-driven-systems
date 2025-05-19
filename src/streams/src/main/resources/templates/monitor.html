@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Monitor</title>
+    <meta http-equiv="refresh" content="1" />
+  </head>
+  <body>
+    <h1>Your fancy monitoring tool.</h1>
+    <h2>Blocks Status</h2>
+    <table>
+      <tr>
+        <th>Color</th>
+        <th>Window Start</th>
+        <th>Window End</th>
+        <th>Count</th>
+      </tr>
+      <tr th:each="entry : ${windowedData}">
+        <td th:text="${entry.color}"></td>
+        <td th:text="${entry.windowStart}"></td>
+        <td th:text="${entry.windowEnd}"></td>
+        <td th:text="${entry.count}"></td>
+      </tr>
+    </table>
+    <h2>Avg Conveyor Belt Transportation</h2>
+    <p th:text="${avgConveyorSpeed}"></p>
+  </body>
+</html>

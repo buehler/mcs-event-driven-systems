@@ -20,23 +20,19 @@ class BlocksHandledTable {
     private val eventsTopic = ""
 
     @Autowired
-    fun blocksHandledTable(sb: StreamsBuilder): KTable<BlockColor, Int> {
-        val table = sb
-            .stream(eventsTopic, Consumed.with(Serdes.String(), GeneratedMessageSerdes()))
-            .filter { _, v -> v is BlockSorted }
-            .groupBy(
-                { _, v -> (v as BlockSorted).color },
-                Grouped.with(EnumSerde(BlockColor::class.java), GeneratedMessageSerdes())
-            )
-            .aggregate(
-                { -> 0 },
-                { _, _, agg -> agg + 1 },
-                Materialized
-                    .`as`<BlockColor, Int, KeyValueStore<Bytes, ByteArray>>("blocks-handled-table")
-                    .withKeySerde(EnumSerde(BlockColor::class.java))
-                    .withValueSerde(Serdes.Integer()),
-            )
-
-        return table
-    }
+    fun blocksHandledTable(sb: StreamsBuilder): KTable<BlockColor, Int> = sb
+        .stream(eventsTopic, Consumed.with(Serdes.String(), GeneratedMessageSerdes()))
+        .filter { _, v -> v is BlockSorted }
+        .groupBy(
+            { _, v -> (v as BlockSorted).color },
+            Grouped.with(EnumSerde(BlockColor::class.java), GeneratedMessageSerdes())
+        )
+        .aggregate(
+            { -> 0 },
+            { _, _, agg -> agg + 1 },
+            Materialized
+                .`as`<BlockColor, Int, KeyValueStore<Bytes, ByteArray>>("blocks-handled-table")
+                .withKeySerde(EnumSerde(BlockColor::class.java))
+                .withValueSerde(Serdes.Integer()),
+        )
 }

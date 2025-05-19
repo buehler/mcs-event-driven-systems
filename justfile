@@ -96,6 +96,12 @@
     echo "send $result"
     just produce "commands" "ConveyorMoveBlock" "$result"
 
+@send-conveyor-block-moved-event:
+    #!/bin/bash
+    result="{}"
+    echo "send $result"
+    just produce "events" "ConveyorBlockMoved" "$result"
+
 @send-block-positioned-on-nfc-event:
     #!/bin/bash
     result="{}"

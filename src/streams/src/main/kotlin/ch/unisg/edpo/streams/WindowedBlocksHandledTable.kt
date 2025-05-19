@@ -18,24 +18,20 @@ class WindowedBlocksHandledTable {
     private val eventsTopic = ""
 
     @Autowired
-    fun windowedBlocksHandledTable(sb: StreamsBuilder): KTable<Windowed<BlockColor>, Int> {
-        val table = sb
-            .stream(eventsTopic, Consumed.with(Serdes.String(), GeneratedMessageSerdes()))
-            .filter { _, v -> v is BlockSorted }
-            .groupBy(
-                { _, v -> (v as BlockSorted).color },
-                Grouped.with(EnumSerde(BlockColor::class.java), GeneratedMessageSerdes())
-            )
-            .windowedBy(TimeWindows.ofSizeWithNoGrace(Duration.ofMinutes(15)))
-            .aggregate(
-                { -> 0 },
-                { _, _, agg -> agg + 1 },
-                Materialized
-                    .`as`<BlockColor, Int, WindowStore<Bytes, ByteArray>>("windowed-blocks-handled-table")
-                    .withKeySerde(EnumSerde(BlockColor::class.java))
-                    .withValueSerde(Serdes.Integer()),
-            )
-
-        return table
-    }
+    fun windowedBlocksHandledTable(sb: StreamsBuilder): KTable<Windowed<BlockColor>, Int> = sb
+        .stream(eventsTopic, Consumed.with(Serdes.String(), GeneratedMessageSerdes()))
+        .filter { _, v -> v is BlockSorted }
+        .groupBy(
+            { _, v -> (v as BlockSorted).color },
+            Grouped.with(EnumSerde(BlockColor::class.java), GeneratedMessageSerdes())
+        )
+        .windowedBy(TimeWindows.ofSizeWithNoGrace(Duration.ofSeconds(30)))
+        .aggregate(
+            { -> 0 },
+            { _, _, agg -> agg + 1 },
+            Materialized
+                .`as`<BlockColor, Int, WindowStore<Bytes, ByteArray>>("windowed-blocks-handled-table")
+                .withKeySerde(EnumSerde(BlockColor::class.java))
+                .withValueSerde(Serdes.Integer()),
+        )
 }
