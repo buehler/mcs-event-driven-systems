@@ -1,93 +1,158 @@
 # Event Driven Architecture
 
-This is the project implementation for the event driven and process oriented architecture
-course. The project works with the provided robot simulator in the lab.
+This repository contains the implementation for the event-driven and process-oriented architecture course. The project works with the provided robot simulator in the lab and is structured as a set of microservices communicating via Kafka.
 
-## How to run the project in dev mode
+## Project Overview & Workflow
 
-- build and deploy with dev setting by running `just compose-dev build` and `just compose-dev up -d`
-- If the proto files from protobuf have not been generated yet, run `buf generate` in the root directory
-- Run the Manager application in dev mode:
-1. Open the manager directory in IntelliJ
-2. Go on services - Springboot and select the ManagerApplication
-3. Right click and select `Edit Configurations`
-4. Add `dev` to the Active Profiles
-5. If you ran an instance before that did not complete, you might need to delete the `camunda-h2-database.mv.db` folder in the root directory. There currently is a single instance only restriction. 
-6. Run the application
-- Camunda is running on `localhost:8080` with the credentials `a/a`
-- the frontend is running on `http://localhost:3000`
-- the kafka broker is running on `localhost:9092`
-- to see all the commands and events that can be fired to mimic the hardware run `just`
-- 
+The system models a delivery and inventory process in a warehouse with automated robots. The general workflow is as follows:
 
+1. A delivery service brings a package to the warehouse.
+2. An inventory manager places the package in a predefined spot and announces the delivery via the web UI.
+3. The warehouse inventory system checks the delivery:
+   - Robots pick up parts from a 3x3 grid, place them on an NFC reader.
+   - Parts are moved onto a conveyor belt, pass a color sensor, and are sorted by robots.
 
+Error scenarios (e.g., failed pickups, incorrect delivery info, lost parts) are handled with manual intervention after a 5-second timeout.
 
-## Syntax for Just commands
-- NFC sensor is: `sensor-nfc-value yes`, `sensor-nfc-value no`, the sensor remembers its last state, so a no must be run sometimes to correctly fire a yes. 
+## Getting Started
 
+You can run the project either using Docker (recommended for most users) or manually (for development/debugging purposes).
 
+### 1. Running with Docker (Recommended)
 
-## General workflow
+Docker will handle building, protobuf generation, and running all services for you.
 
-The project will be set up in microservices and communicates via Kafka. The general idea
-of the process that is modelled is as follows:
+- **Build and start all services:**
 
-A delivery service will deliver a package from a supplier to a warehouse. The warehouse
-has an automated inventory system. An inventory person can set the package on the
-predefined spot and then access the web UI to announce a delivery with the respective
-delivery notice. Then, the warehouse inventory system will start the process of checking
-the delivery. The happy-path includes:
+  ```sh
+  just compose-dev build
+  just compose-dev up -d
+  ```
 
-- Each part is picked up by the robot in one of the 3x3 grid cells of the predefined location
-- Then the robot places the part onto the NFC reader and associates the part with a unique ID
-- The robot then places the part onto the conveyor belt
-- The part on the belt is driven down to the color sensor
-- The second robot will pick it up and puts it onto the color sensor
-- After the color has been determined, the robot puts it back to the conveyor
-- After being driven back, the first robot sorts the color onto the respective stack
-- With a small chance, the orchestrator will deem a part "broken" and put it onto the broken stack
+  - `compose-dev build` will build all services and generate protobuf files automatically.
+  - `compose-dev up -d` will start the entire application stack in the background.
 
-## Sequence
+- **Service Endpoints:**
 
-Please take note that the event based communication is not part of the following sequence diagram.
-The diagram shows the happy path if all services are working correctly.
+  - Camunda: [http://localhost:8080](http://localhost:8080) (credentials: `a/a`)
+  - Frontend: [http://localhost:3000](http://localhost:3000)
+  - Kafka broker: `localhost:9092`
 
-```mermaid
-sequenceDiagram
-  actor u as User
-  participant i as Inventory UI
-  participant o as Orchestrator
-  participant p as Picker Robot
-  participant belt as Conveyor
-  participant c as Color Robot
+- **Listing available commands:**
+  ```sh
+  just
+  ```
 
-  u ->> i: fill in delivery notice
-  i ->> o: notify about delivery
+### 2. Manual Development/Debugging (Without Docker)
 
-  loop For each part
-    o ->> p: get part
-    p ->> belt: put onto
-    belt -->> c: drive to color bot
-    c ->> belt: get part
-    c ->> c: check color
-    c ->> belt: put back
-    belt -->> p: drive back
-    p ->> p: check for defects
-    p ->> p: stack accordingly
-    p ->> o: notfiy
-  end
+If you want to run or debug services manually (e.g., in your IDE):
 
-  o ->> i: notify
+1. **Generate protobuf files:**
+
+   - This step is required before running any services manually.
+   - Run:
+     ```sh
+     buf generate
+     ```
+
+2. **Start services in development mode:**
+
+   - Start each service as needed, ensuring the `dev` Spring Boot profile is active for the Manager application.
+
+3. **Service Endpoints:**
+   - Camunda: [http://localhost:8080](http://localhost:8080) (credentials: `a/a`)
+   - Frontend: [http://localhost:3000](http://localhost:3000)
+   - Kafka broker: `localhost:9092`
+
+## Using the `just` Command
+
+[`just`](https://github.com/casey/just) is a command runner used to manage project-specific commands defined in the `justfile` at the root of this repository.
+
+### Installation
+
+On macOS, install with Homebrew:
+
+```sh
+brew install just
 ```
 
-## Possible error scenarios
+Or see the [just GitHub releases page](https://github.com/casey/just/releases) for other platforms.
 
-- In general: if a robot is not able to pick up a certain part
-- If the delivery contains wrong information about the amount of parts
-- If during the inventoring process, parts are lost
+### Usage
 
+- List all available recipes:
+  ```sh
+  just --list
+  ```
+- Run a specific recipe:
+  ```sh
+  just <recipe-name>
+  ```
+- Example (simulate NFC sensor):
+  ```sh
+  just sensor-nfc-value yes
+  ```
 
-## Process Model Information
-### Error Scenarios
-Error scenarios are currently managed with manual intervention. We decided to wait for 5 seconds for events to occur. 
-Otherwise a manual intervention is triggered. After resolving the last step is repeated.
+## Syntax for Just Commands
+
+- NFC sensor: `just sensor-nfc-value yes` or `just sensor-nfc-value no` (the sensor remembers its last state, so use `no` before firing another `yes`)
+
+## Error Handling
+
+- If a robot cannot pick up a part, if delivery info is wrong, or if parts are lost, the system waits 5 seconds for events. If unresolved, manual intervention is triggered and the last step is repeated.
+
+## Further Information
+
+For more details on the process model, error scenarios, and available commands, see the `justfile` and the documentation in the `doc/` directory.
+
+## Testing: Happy Path and Error Path
+
+Automated testing of the process, including both the happy path and error scenarios, is supported via dedicated HTTP endpoints implemented in the `MockRunController` (see `manager/src/main/java/ch/unisg/edpo/manager/controllers/MockRunController.java`).
+
+### General Idea
+
+- The testing endpoints allow you to simulate a full process run (happy path) or inject errors at specific points (error path) without manual interaction with the UI or hardware.
+- The controller manages the test state, simulates events, and can trigger failures at configurable steps in the process.
+
+### How to Start a Test
+
+1. **Start a test by sending a POST request to `/mock/testing`**
+
+   - The request body must include:
+
+     - `shipment_id`: Unique identifier for the shipment.
+     - `blocks`: List of blocks and their colors, e.g., `[true:green, false:red, true:blue]` (see the controller for the exact format).
+     - `defaultTimeout` and `defaultTimeoutTwo`: ISO-8601 durations (e.g., `"PT5S"` for 5 seconds) to configure timeouts.
+     - `simulatedRobotTime`: Integer (milliseconds) to simulate robot action duration.
+     - `failingPoint`: (Optional) String to inject an error at a specific process step (`grid`, `conveyor`, `green`, `color`, `sorting`, or `none`).
+
+   - Example request (using `curl`):
+     ```sh
+     curl -X POST http://localhost:8080/mock/testing \
+       -H 'Content-Type: application/json' \
+       -d '{
+         "shipment_id": "test-shipment-1",
+         "blocks": "[true:green, false:red, true:blue]",
+         "defaultTimeout": "PT5S",
+         "defaultTimeoutTwo": "PT5S",
+         "simulatedRobotTime": "2000",
+         "failingPoint": "none"
+       }'
+     ```
+   - The test will start and simulate the process according to the provided configuration.
+
+2. **End a test by sending a POST request to `/mock/endTest`**
+   - This will stop the test, clean up resources, and terminate any active process instance.
+   - Example:
+     ```sh
+     curl -X POST http://localhost:8080/mock/endTest
+     ```
+
+### Configuration Options
+
+- **Happy Path:** Set `failingPoint` to `none` to run the process without injected errors.
+- **Error Path:** Set `failingPoint` to one of the supported values (`grid`, `conveyor`, `green`, `color`, `sorting`) to simulate a failure at that step. The system will trigger manual intervention logic as described in the process model.
+- **Timeouts and Robot Time:** Adjust `defaultTimeout`, `defaultTimeoutTwo`, and `simulatedRobotTime` to control the timing of events and error handling.
+
+For more details, see the implementation in `MockRunController.java` and
+the [Testing Documentation](doc/Testing Documentation.md)
