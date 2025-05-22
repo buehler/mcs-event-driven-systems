@@ -123,7 +123,7 @@ Automated testing of the process, including both the happy path and error scenar
      - `shipment_id`: Unique identifier for the shipment.
      - `blocks`: List of blocks and their colors, e.g., `[true:green, false:red, true:blue]` (see the controller for the exact format).
      - `defaultTimeout` and `defaultTimeoutTwo`: ISO-8601 durations (e.g., `"PT5S"` for 5 seconds) to configure timeouts.
-     - `simulatedRobotTime`: Integer (milliseconds) to simulate robot action duration.
+     - `simulatedRobotTime`: Integer (seconds) to simulate robot action duration.
      - `failingPoint`: (Optional) String to inject an error at a specific process step (`grid`, `conveyor`, `green`, `color`, `sorting`, or `none`).
 
    - Example request (using `curl`):
@@ -154,4 +154,4 @@ Automated testing of the process, including both the happy path and error scenar
 - **Timeouts and Robot Time:** Adjust `defaultTimeout`, `defaultTimeoutTwo`, and `simulatedRobotTime` to control the timing of events and error handling.
 
 For more details, see the implementation in `MockRunController.java` and
-the [Testing Documentation](doc/Testing Documentation.md)
+the doc/Testing Documentation.md file.
