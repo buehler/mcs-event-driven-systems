@@ -127,16 +127,15 @@ Automated testing of the process, including both the happy path and error scenar
      - `failingPoint`: (Optional) String to inject an error at a specific process step (`grid`, `conveyor`, `green`, `color`, `sorting`, or `none`).
 
    - Example request (using `curl`):
-     ```sh
+     ```bash
      curl -X POST http://localhost:8080/mock/testing \
-       -H 'Content-Type: application/json' \
+       -H "Content-Type: application/json" \
        -d '{
-         "shipment_id": "test-shipment-1",
-         "blocks": "[true:green, false:red, true:blue]",
-         "defaultTimeout": "PT5S",
-         "defaultTimeoutTwo": "PT5S",
-         "simulatedRobotTime": "2000",
-         "failingPoint": "none"
+         "shipment_id": "happy-path-test",
+         "blocks": "[true:blue, true:green, true:red, false:yellow, false:red, false:green, false:blue,  false:blue, false:green]",
+         "defaultTimeout": "PT20S",
+         "defaultTimeoutTwo": "PT6S",
+         "simulatedRobotTime": 5
        }'
      ```
    - The test will start and simulate the process according to the provided configuration.
