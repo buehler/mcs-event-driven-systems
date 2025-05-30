@@ -4,7 +4,7 @@ Date: 2025-04-17
 
 ## Status
 
-Accepted
+Superceded by [24. reducing scope of sensor service](0024-reducing-scope-of-sensor-service.md)
 
 ## Context
 

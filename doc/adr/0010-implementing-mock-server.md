@@ -6,6 +6,8 @@ Date: 2025-03-18
 
 Accepted 
 
+Superceded by [25. Building a happy path](0025-building-a-happy-path.md)
+
 ## Context
 
 The hardware for this porject is not readily available online for us to use and needs to be accessed via the local network in the lab. This makes testing our system and devloping for it more difficult. 

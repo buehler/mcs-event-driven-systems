@@ -1,21 +1,10 @@
 # Changelog
 
 A record of all notable changes to this project, including both documentation and implementation updates.
-
-Example table:
-
-| Date       | Type           | Change Type | Description                                                                      | References |
-|------------|----------------|-------------|----------------------------------------------------------------------------------|------------|
-| YYYY-MM-DD | Documentation  | New         | Brief description of the new documentation addition                              | [Link to doc](path/to/file.md) |
-| YYYY-MM-DD | Documentation  | Update      | Brief description of the documentation update                                    | [Link to doc](path/to/file.md) |
-| YYYY-MM-DD | Implementation | New         | Brief description of the new code/implementation                                 |  |
-| YYYY-MM-DD | Implementation | Update      | Brief description of the code/implementation change                              |  |
-| YYYY-MM-DD | Bug Fix        | Fix         | Brief description of the bug and fix                                             |  |
-| YYYY-MM-DD | Feature        | New         | Brief description of the new feature                                             | |
-
-
-
 | Date       | Type           | Change Type | Description                                                                                                                                                                    | References |
-|------------|----------------|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+|------------|----------------|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| 2025-05-29 | Documentation  | Update      | Updated documentation with: <br/>• Fixed spelling and typos <br/>• Added example to Kafka implementation/command-bus and re-wrote introduction <br/>• Added topology from mid-term and description to kafka implementation <br/>•Updated text for aggregator model <br/>•Error-handling, re-written and re-structured                                                                                 | [EDPO_T1_Assignment_1&2.md](exercises/EDPO_T1_Assignment_1&2.md) |
+| 2025-05-29 | Documentation  | Update      | Added second part to documentation for documenting second half of the semester starting at "Assignment 2 - Kafka & Event-processing"                                                                                                                       | [EDPO_T1_Assignment_1&2.md](exercises/EDPO_T1_Assignment_1&2.md) |
+| 2025-05-29 | Documentation  | Update      | Updated ADR-0005 and ADR-0010 with new content, and added new ADRs (18 and following) documenting Kafka Streams implementation decisions                                                                          | [ADR-0005.md](adr/ADR-0005.md), [ADR-0010.md](adr/ADR-0010.md)|
 | 2025-05-09 | Implementation | New         | Happy-path and error testing. See detailed documentation for details                                                                                                           |[Testing Documentation.md](Testing%20Documentation.md)  |
 | 2025-05-09 | Documentation  | Update      | **Chapter** Experiment Results: Description over the graph. Note: The interval time...  <br/>**Chapter** Observations: 5. Total Produced and Consumed Messages is not matching |  [EDPO_T1_exercise_1.md](exercises/EDPO_T1_exercise_1.md) |

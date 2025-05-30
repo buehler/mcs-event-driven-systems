@@ -4,9 +4,9 @@ Date: 2025-04-16
 
 ## Status
 
-Accepted
-
 Supercedes [9. Three Kafka topics](0009-three-kafka-topics.md)
+
+Superceded by [25. adding sensor kafka topic](0025-adding-sensor-kafka-topic.md)
 
 ## Context
 

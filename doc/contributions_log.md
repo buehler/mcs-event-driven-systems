@@ -27,3 +27,20 @@
 - Christoph: presentation, testing, debugging
 - Simon: presentation, testing, debugging
 - Gero:  presentation, testing, documentation 
+
+# Ex 6
+
+- Christoph: Kafka stateless processing & windowed operations, ADRs
+- Simon: Kafka stateless processing & windowed operations, ADRs
+- Gero:  Kafka stateless processing & windowed operations, ADRs
+
+# Ex 7
+
+- Christoph: KTables & Steams & interactive queries processing, ADRs
+- Simon: KTables & Steams & interactive queries processing, ADRs
+- Gero:  KTables & Steams & interactive queries processing, ADRs
+# Ex 8
+
+- Christoph: presentation, testing end-point, documentatio
+- Simon: presentation, testing end-point, documentatio
+- Gero:  presentation, testing end-point, documentation 
