@@ -1,6 +1,7 @@
 # Changelog
 
 A record of all notable changes to this project, including both documentation and implementation updates.
+
 | Date       | Type           | Change Type | Description                                                                                                                                                                    | References |
 |------------|----------------|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
 | 2025-05-29 | Documentation  | Update      | Updated documentation with: <br/>• Fixed spelling and typos <br/>• Added example to Kafka implementation/command-bus and re-wrote introduction <br/>• Added topology from mid-term and description to kafka implementation <br/>•Updated text for aggregator model <br/>•Error-handling, re-written and re-structured                                                                                 | [EDPO_T1_Assignment_1&2.md](exercises/EDPO_T1_Assignment_1&2.md) |
